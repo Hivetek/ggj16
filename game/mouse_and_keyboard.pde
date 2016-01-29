@@ -1,15 +1,15 @@
 /**** DECLARATIONS ****/
 
-int NUM_INPUT = 16;
-
+final int NUM_INPUT = 16;
+final int KEY_ARRAY_SIZE = 65535;
 
 class Input {
   int id = 0;
   boolean lmb, rmb, mmb;
-  boolean keys[] = new boolean[65535];
-  boolean coded[] = new boolean[65535];
+  boolean keys[] = new boolean[KEY_ARRAY_SIZE];
+  boolean coded[] = new boolean[KEY_ARRAY_SIZE];
   
-  Input() {}
+  //Input() {}
   
   Input clone() {
     Input newInput = new Input();
