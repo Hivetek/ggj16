@@ -50,7 +50,7 @@ Input getPastInput(int num) {
   } else if (num >= inputBuffer.length) {
     return inputBuffer[(currentInputPointer+1)%inputBuffer.length];
   } else {
-    return inputBuffer[(currentInputPointer-num)%inputBuffer.length];
+    return inputBuffer[(inputBuffer.length + currentInputPointer - num)%inputBuffer.length];
   }
 }
 
