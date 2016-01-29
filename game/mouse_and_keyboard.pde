@@ -2,43 +2,68 @@
 boolean lmb, rmb, mmb;
 boolean keys[] = new boolean[65535];
 
+class Input {
+  boolean lmb, rmb, mmb;
+  boolean keys[] = new boolean[65535];
+  boolean coded[] = new boolean[65535];
+  
+  Input() {}
+  
+  Input clone() {
+    Input newInput = new Input();
+    newInput.lmb = lmb;
+    newInput.rmb = rmb;
+    newInput.mmb = mmb;
+    arrayCopy(keys, newInput.keys);
+    arrayCopy(coded, newInput.coded);
+    return newInput;
+  }
+  
+  boolean isPressed(int key) {
+    return coded[key] || keys[key];
+  }
+}
+
+Input inputBuffer[] = new Input[3];
+int currentInputPointer = 0;
+
+Input currentInput() {
+  return inputBuffer[currentInputPointer];
+}
+
 void mousePressed() {
   if (mouseButton == LEFT) {
-    lmb = true;
-  } 
-  else if (mouseButton == RIGHT) {
-    rmb = true;
-  } 
-  else if (mouseButton == CENTER) {
-    mmb = true;
+    currentInput().lmb = true;
+  } else if (mouseButton == RIGHT) {
+    currentInput().rmb = true;
+  } else if (mouseButton == CENTER) {
+    currentInput().mmb = true;
   }
 }
 
 void mouseReleased() {
   if (mouseButton == LEFT) {
-    lmb = false;
-  } 
-  else if (mouseButton == RIGHT) {
-    rmb = false;
-  } 
-  else if (mouseButton == CENTER) {
-    mmb = false;
+    currentInput().lmb = false;
+  } else if (mouseButton == RIGHT) {
+    currentInput().rmb = false;
+  } else if (mouseButton == CENTER) {
+    currentInput().mmb = false;
   }
 }
 
 /**** KEYBOAD ****/
 void keyPressed() {
   if (key == CODED) {
-    keys[255+keyCode] = true;
+    currentInput().coded[keyCode] = true;
   } else {
-    keys[key] = true;
+    currentInput().keys[key] = true;
   }
 }
 
 void keyReleased() {
   if (key == CODED) {
-    keys[255+keyCode] = false;
+    currentInput().coded[keyCode] = false;
   } else {
-    keys[key] = false;
+    currentInput().keys[key] = false;
   }
 }

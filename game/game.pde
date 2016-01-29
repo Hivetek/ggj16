@@ -34,20 +34,22 @@ void draw(){
 }
 
 void update(){
+  goToNextInput();
+  
   drunk = 1.0*mouseX/width;
   
   float direction = dir + drunk*0.4*PI*cos(dirOffset);
-  if(keys[255+LEFT]){
+  if(currentInput().isPressed(LEFT)){
     dir -= turnSpeed;
   }
-  if(keys[255+RIGHT]){
+  if(currentInput().isPressed(RIGHT)){
     dir += turnSpeed;
   }
-  if(keys[255+UP]){
+  if(currentInput().isPressed(UP)){
     x += cos(direction)*moveSpeed;
     y += sin(direction)*moveSpeed;
   }
-  if(keys[255+DOWN]){
+  if(currentInput().isPressed(DOWN)){
     x -= cos(direction)*moveSpeed;
     y -= sin(direction)*moveSpeed;
   }
