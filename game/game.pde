@@ -9,13 +9,10 @@ import ddf.minim.ugens.*;
 import org.gamecontrolplus.*;
 import org.gamecontrolplus.gui.*;*/
 
-final int screenWidth  = 1280;
-final int screenHeight = 720;
-
 Player player;
 
 void setup(){
-  size(screenWidth, screenHeight);
+  size(1280, 720);
   frameRate(60);
   stroke(255);
   noFill();
