@@ -28,7 +28,6 @@ void mouseReleased() {
 
 /**** KEYBOAD ****/
 void keyPressed() {
-  println(keyCode);
   if (key == CODED) {
     keys[255+keyCode] = true;
   } else {
