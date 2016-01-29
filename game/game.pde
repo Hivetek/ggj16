@@ -9,6 +9,9 @@ import ddf.minim.ugens.*;
 import org.gamecontrolplus.*;
 import org.gamecontrolplus.gui.*;*/
 
+final int screenWidth  = 640;
+final int screenHeight = 480;
+
 float moveSpeed = 2.8;
 float turnSpeed = 0.08;
 float radius = 16;
@@ -28,6 +31,9 @@ void setup(){
   dir = -PI/2;
   
   initInputBuffer();
+  
+
+  initQuestions();
 }
 
 void draw(){  
@@ -82,4 +88,6 @@ void render(){
   ellipse(340, 350, 30, 30);
   rect(0, 10, drunk*width, 20);
   line(0, 10, drunk*width, 10);
+  
+  questions.get(0).draw();
 }
