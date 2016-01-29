@@ -28,20 +28,11 @@ void mouseReleased() {
 
 /**** KEYBOAD ****/
 void keyPressed() {
+  println(keyCode);
   if (key == CODED) {
     keys[255+keyCode] = true;
   } else {
     keys[key] = true;
-  }
-  if(key == ESC){
-    key = 0;
-    if(paused){
-      paused = false;
-      noCursor();
-    } else {
-      paused = true;
-      cursor(ARROW);
-    }
   }
 }
 
