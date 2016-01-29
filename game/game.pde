@@ -24,6 +24,8 @@ void setup(){
   x = 320;
   y = 240;
   dir = -PI/2;
+  
+  inputBuffer[currentInputPointer] = new Input();
 }
 
 void draw(){  
@@ -45,4 +47,5 @@ void draw(){
   background(0);
   ellipse(x, y, radius, radius);
   line(x, y, x+cos(dir)*radius, y+sin(dir)*radius);
+  goToNextInput();
 }

@@ -1,6 +1,7 @@
 /**** DECLARATIONS ****/
-boolean lmb, rmb, mmb;
-boolean keys[] = new boolean[65535];
+
+int NUM_INPUT = 16;
+
 
 class Input {
   boolean lmb, rmb, mmb;
@@ -24,11 +25,20 @@ class Input {
   }
 }
 
-Input inputBuffer[] = new Input[3];
+Input inputBuffer[] = new Input[NUM_INPUT];
 int currentInputPointer = 0;
+
+
 
 Input currentInput() {
   return inputBuffer[currentInputPointer];
+}
+
+void goToNextInput() {
+  Input oldInput = currentInput().clone();
+  int newInputPointer = (currentInputPointer + 1) % inputBuffer.length;
+  inputBuffer[newInputPointer] = oldInput;
+  currentInputPointer = newInputPointer;
 }
 
 void mousePressed() {
@@ -53,7 +63,6 @@ void mouseReleased() {
 
 /**** KEYBOAD ****/
 void keyPressed() {
-  println(keyCode);
   if (key == CODED) {
     currentInput().coded[keyCode] = true;
   } else {
