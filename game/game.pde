@@ -31,9 +31,6 @@ void setup(){
   dir = -PI/2;
   
   initInputBuffer();
-  
-
-  initQuestions();
 }
 
 void draw(){  
@@ -88,6 +85,4 @@ void render(){
   ellipse(340, 350, 30, 30);
   rect(0, 10, drunk*width, 20);
   line(0, 10, drunk*width, 10);
-  
-  questions.get(0).draw();
 }
