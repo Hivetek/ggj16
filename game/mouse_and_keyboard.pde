@@ -24,45 +24,30 @@ class Input {
   }
 }
 
-Input currentInput = new Input();
-
 Input inputBuffer[] = new Input[3];
+int currentInputPointer = 0;
+
+Input currentInput() {
+  return inputBuffer[currentInputPointer];
+}
 
 void mousePressed() {
   if (mouseButton == LEFT) {
-    currentInput.lmb = true;
+    currentInput().lmb = true;
   } else if (mouseButton == RIGHT) {
-    currentInput.rmb = true;
+    currentInput().rmb = true;
   } else if (mouseButton == CENTER) {
-    currentInput.mmb = true;
-  }
-  if (mouseButton == LEFT) {
-    lmb = true;
-  } 
-  else if (mouseButton == RIGHT) {
-    rmb = true;
-  } 
-  else if (mouseButton == CENTER) {
-    mmb = true;
+    currentInput().mmb = true;
   }
 }
 
 void mouseReleased() {
   if (mouseButton == LEFT) {
-    currentInput.lmb = false;
+    currentInput().lmb = false;
   } else if (mouseButton == RIGHT) {
-    currentInput.rmb = false;
+    currentInput().rmb = false;
   } else if (mouseButton == CENTER) {
-    currentInput.mmb = false;
-  }
-  if (mouseButton == LEFT) {
-    lmb = false;
-  } 
-  else if (mouseButton == RIGHT) {
-    rmb = false;
-  } 
-  else if (mouseButton == CENTER) {
-    mmb = false;
+    currentInput().mmb = false;
   }
 }
 
@@ -70,26 +55,16 @@ void mouseReleased() {
 void keyPressed() {
   println(keyCode);
   if (key == CODED) {
-    currentInput.coded[keyCode] = true;
+    currentInput().coded[keyCode] = true;
   } else {
-    currentInput.keys[key] = true;
-  }
-  if (key == CODED) {
-    keys[255+keyCode] = true;
-  } else {
-    keys[key] = true;
+    currentInput().keys[key] = true;
   }
 }
 
 void keyReleased() {
   if (key == CODED) {
-    currentInput.coded[keyCode] = false;
+    currentInput().coded[keyCode] = false;
   } else {
-    currentInput.keys[key] = false;
-  }
-  if (key == CODED) {
-    keys[255+keyCode] = false;
-  } else {
-    keys[key] = false;
+    currentInput().keys[key] = false;
   }
 }

@@ -27,17 +27,17 @@ void setup(){
 }
 
 void draw(){  
-  if(currentInput.isPressed(LEFT)){
+  if(currentInput().isPressed(LEFT)){
     dir -= turnSpeed;
   }
-  if(currentInput.isPressed(RIGHT)){
+  if(currentInput().isPressed(RIGHT)){
     dir += turnSpeed;
   }
-  if(currentInput.isPressed(UP)){
+  if(currentInput().isPressed(UP)){
     x += cos(dir)*moveSpeed;
     y += sin(dir)*moveSpeed;
   }
-  if(currentInput.isPressed(DOWN)){
+  if(currentInput().isPressed(DOWN)){
     x -= cos(dir)*moveSpeed;
     y -= sin(dir)*moveSpeed;
   }
