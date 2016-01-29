@@ -25,7 +25,7 @@ void setup(){
   y = 240;
   dir = -PI/2;
   
-  inputBuffer[currentInputPointer] = new Input();
+  initInputBuffer();
 }
 
 void draw(){  

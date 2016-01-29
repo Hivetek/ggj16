@@ -4,6 +4,7 @@ int NUM_INPUT = 16;
 
 
 class Input {
+  int id = 0;
   boolean lmb, rmb, mmb;
   boolean keys[] = new boolean[65535];
   boolean coded[] = new boolean[65535];
@@ -35,11 +36,32 @@ Input currentInput() {
 }
 
 void goToNextInput() {
-  Input oldInput = currentInput().clone();
+  Input oldInput = currentInput();
+  Input newInput = oldInput.clone();
+  newInput.id = oldInput.id + 1;
   int newInputPointer = (currentInputPointer + 1) % inputBuffer.length;
-  inputBuffer[newInputPointer] = oldInput;
+  inputBuffer[newInputPointer] = newInput;
   currentInputPointer = newInputPointer;
 }
+
+Input getPastInput(int num) {
+  if (num <= 0) {
+    return inputBuffer[currentInputPointer];
+  } else if (num >= inputBuffer.length) {
+    return inputBuffer[(currentInputPointer+1)%inputBuffer.length];
+  } else {
+    return inputBuffer[(currentInputPointer-num)%inputBuffer.length];
+  }
+}
+
+
+
+void initInputBuffer() {
+  for (int i = 0; i < inputBuffer.length; i++) {
+    inputBuffer[i] = new Input();
+  } 
+}
+
 
 void mousePressed() {
   if (mouseButton == LEFT) {
