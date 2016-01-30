@@ -6,13 +6,13 @@ ArrayList<Obstacle> staticObstacles = new ArrayList<Obstacle>();
 
 
 class STable {
-  int x;
-  int y;
+  float x;
+  float y;
 
-  int w;
-  int h;
+  float w;
+  float h;
 
-  STable(int x, int y, int w, int h) {
+  STable(float x, float y, float w, float h) {
     this.x = x;
     this.y = y;
 
@@ -38,13 +38,13 @@ class STable {
 }
 
 class Seat {
-  int radius = 16;
-  int x;
-  int y;
+  float radius = 16;
+  float x;
+  float y;
 
   Door door;
 
-  Seat(int x, int y) {
+  Seat(float x, float y) {
     this.x = x;
     this.y = y;
   }
@@ -84,13 +84,13 @@ class Seat {
 }
 
 class Door {
-  int w = 50;
-  int h = 5;
-  int x;
-  int y;
+  float w = 75;
+  float h = 5;
+  float x;
+  float y;
   boolean horizontal;
 
-  Door(int x, int y, boolean horizontal) {
+  Door(float x, float y, boolean horizontal) {
     this.x = x;
     this.y = y;
     this.horizontal = horizontal;
@@ -98,8 +98,8 @@ class Door {
 
   void render() {
     pushStyle();
-
-    fill(255, 255, 255);
+    noFill();
+    stroke(255);
     if (horizontal) {
       rect(x - w/2, y - h/2, w, h);
     } else {
@@ -110,26 +110,24 @@ class Door {
   }
 }
 
-
-
-
 void initScenery() {
   // Tables
   tables.add(new STable(500, 400, 300, 200));
-
 
   for (STable table : tables) {
     staticObstacles.add(table.createObstacle());
   }
 
   // Doors
-  doors.add(new Door(50, 10, true));
-
-  doors.add(new Door(10, 50, false));
+  doors.add(new Door(width/2, 56, true));
+  doors.add(new Door(width/2, height-56, true));
+  doors.add(new Door(width-56, height/2, false));
+  doors.add(new Door(56, height/3-5, false));
+  doors.add(new Door(56, 2*height/3+18, false));
 
   // Seats
   for (int i = 0; i < 10; i++) {
-    seats.add(new Seat(width/2 -200 - i*40, height/2-100));
+    seats.add(new Seat(random(width), random(height)));
   }
 
 

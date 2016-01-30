@@ -12,6 +12,7 @@ import ddf.minim.ugens.*;
 
 PFont comicFont;
 PFont talkFont;
+PImage bgImage;
 
 Obstacle[] obstacles = new Obstacle[22];
 
@@ -27,6 +28,7 @@ void setup() {
 
   comicFont = loadFont("data/fonts/ComicaBDBold-48.vlw");
   talkFont = loadFont("data/fonts/Talkies-60.vlw");
+  bgImage = loadImage("data/images/floor.png");
   textAlign(CENTER, CENTER);
   textFont(comicFont);
 
@@ -75,6 +77,8 @@ void update() {
   for (NPC npc : npcs) {
     npc.update(); 
   }
+  
+  npccontroller.update();
 
   for (Player p : players) {
     //p.drunk = 1.0*mouseX/width;
@@ -83,22 +87,23 @@ void update() {
 }
 
 void render() {
-  background(0);
+
+  image(bgImage, 0, 0);
   
   for (Seat seat : seats) {
     seat.render();
   }
   
   for (NPC npc : npcs) {
-    npc.render(); 
+    npc.render();
   }
-  
+
   for (Player p : players) {
     p.render();
   }
   
   for (STable table : tables) {
-    table.render(); 
+    //table.render(); 
   }
   
   for (Door door : doors) {
@@ -106,21 +111,30 @@ void render() {
   }
   
 
+  for (Obstacle obstacle : staticObstacles) {
+    obstacle.render();
+  }
+
 
   
   fill(255);
   textFont(talkFont);
-  drawRotatedText("9", players[0].x+28+random(3*mouseX/width), players[0].y-50+random(3*mouseX/width), random(0.05*PI*mouseX/width));
+  drawText("9", players[0].x+28+random(3*mouseX/width), players[0].y-50+random(3*mouseX/width), random(0.05*PI*mouseX/width), 0.95+random(0.1));
+  //fill(64, 64, 255, 180); //BLUE
+  //fill(64, 255, 64, 180); //GREEN
+  fill(255, 64, 255, 180); //PINK
+  //fill(255, 255, 64, 180); //YELLOW
   textFont(comicFont);
-  drawRotatedText("!", players[0].x+28+random(6*mouseX/width), players[0].y-60+random(6*mouseX/width), random(0.15*PI*mouseX/width));
+  drawText("!", players[0].x+28+random(6*mouseX/width), players[0].y-60+random(6*mouseX/width), random(0.15*PI*mouseX/width), 0.95+random(0.1));
 }
 
 int sign(float n) {
   return round(n/abs(n));
 }
 
-void drawRotatedText(String text, float x, float y, float a){
+void drawText(String text, float x, float y, float a, float s){
   translate(x, y);
+  scale(s);
   rotate(a);
   text(text, 0, 0);
   resetMatrix();

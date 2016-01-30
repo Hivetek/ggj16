@@ -13,7 +13,8 @@ class Obstacle {
 
   void render() {
     pushStyle();
-    fill(255);
+    noFill();
+    stroke(255);
     if (type == 0) {
       ellipse(x, y, r, r);
     } else if (type == 1) {

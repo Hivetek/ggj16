@@ -1,10 +1,12 @@
 ArrayList<NPC> npcs = new ArrayList<NPC>();
 
+NPCController npccontroller = new NPCController();
+
 enum NPCState {
   ENTERING, 
   LEAVING,
-  WAITING_OUTSIDE,
-  WATINIG,
+  GONE,
+  WAITING,
   REQUESTING
 };
 
@@ -15,9 +17,9 @@ enum NPCState {
   float vy;
   float dir = 0;
 
-  int radius = 20;
+  float radius = 20;
 
-  int speed = 2;
+  float speed = 2;
 
   Seat seat;
 
@@ -32,7 +34,7 @@ enum NPCState {
     } else {
       this.x = seat.x;
       this.y = seat.y;
-      state = NPCState.LEAVING;
+      state = NPCState.WAITING;
     }
   }
 
@@ -46,7 +48,7 @@ enum NPCState {
       y += (dy/dist)*speed;
       
       if (dist < 1) {
-        state = NPCState.LEAVING;
+        state = NPCState.WAITING;
       }
     } else if (state == NPCState.LEAVING) {
       float dx = seat.door.x - x;
@@ -56,7 +58,7 @@ enum NPCState {
       y += (dy/dist)*speed;
       
       if (dist < 1) {
-        state = NPCState.ENTERING;
+        state = NPCState.GONE;
       }
     }
   }
@@ -68,5 +70,21 @@ enum NPCState {
     ellipse(x, y, radius, radius);
 
     line(x, y, x+cos(dir)*radius, y+sin(dir)*radius);
+  }
+}
+
+
+class NPCController {
+  void update() {
+    
+    for (NPC npc : npcs) {
+      // Do meaningful things in these states
+      if (npc.state == NPCState.WAITING) {
+        npc.state = NPCState.REQUESTING;
+      }
+      if (npc.state == NPCState.REQUESTING) {
+        npc.state = NPCState.LEAVING;
+      }
+    }
   }
 }
