@@ -100,9 +100,9 @@ class Door {
 
     fill(255, 255, 255);
     if (horizontal) {
-      rect(x - w/2, y - h/2, x + w/2, y + h/2);
+      rect(x - w/2, y - h/2, w, h);
     } else {
-      rect(x - h/2, y - w/2, x + h/2, y + w/2);
+      rect(x - h/2, y - w/2, h, w);
     }
 
     popStyle();
@@ -128,7 +128,7 @@ void initScenery() {
 
   // Seats
   for (int i = 0; i < 10; i++) {
-    seats.add(new Seat(width/2 - i*40, height/2-100));
+    seats.add(new Seat(width/2 -200 - i*40, height/2-100));
   }
   
   
