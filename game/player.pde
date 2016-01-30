@@ -30,9 +30,12 @@ class Player {
   float speed = 0.0;
 
   float realDirection; 
+  
+  boolean active = false;
 
-  Player(int id, float xx, float yy) {
+  Player(int id, float xx, float yy, boolean active) {
     this.id = id;
+    this.active = active;
     px = x = xx;
     py = y = yy;
     dir = random(2*PI);
@@ -41,6 +44,8 @@ class Player {
   }
 
   void update() {
+    if (!this.active) return;
+    
     int delay = round(drunk*10);
     //int delay = 0; 
 
@@ -57,21 +62,25 @@ class Player {
     ay = 0;
     
     //Movement & controls
-    if (id == 0 && getPastInput(delay).isPressed(UP) || id == 1 && getPastInput(delay).isPressed('w')) {
+    if (id == 0 && getPastInput(delay).isPressed(UP)  || id == 1 && getPastInput(delay).isPressed('w')
+     || id == 2 && getPastInput(delay).isPressed('i') || id == 3 && getPastInput(delay).isPressed('8')) {
       ax += cos(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
       ay += sin(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
     }
-    if (id == 0 && getPastInput(delay).isPressed(DOWN) || id == 1 && getPastInput(delay).isPressed('s')) {
+    if (id == 0 && getPastInput(delay).isPressed(DOWN) || id == 1 && getPastInput(delay).isPressed('s')
+     || id == 2 && getPastInput(delay).isPressed('k') || id == 3 && getPastInput(delay).isPressed('5')) {
       ax -= cos(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
       ay -= sin(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
     }
 
     dirVel -= dirVel*turnAccel*(1.0-drunk*drunkTurnDamp);
 
-    if (id == 0 && getPastInput(delay).isPressed(LEFT) || id == 1 && getPastInput(delay).isPressed('a')) {
+    if (id == 0 && getPastInput(delay).isPressed(LEFT) || id == 1 && getPastInput(delay).isPressed('a')
+     || id == 2 && getPastInput(delay).isPressed('j')  || id == 3 && getPastInput(delay).isPressed('4')) {
       dirVel += (-turnSpeed*(1.0+drunk*drunkTurnSpeed)-dirVel)*turnAccel*2*(1.0-drunk*drunkTurnDamp);
     }
-    if (id == 0 && getPastInput(delay).isPressed(RIGHT) || id == 1 && getPastInput(delay).isPressed('d')) {
+    if (id == 0 && getPastInput(delay).isPressed(RIGHT) || id == 1 && getPastInput(delay).isPressed('d')
+     || id == 2 && getPastInput(delay).isPressed('l')   || id == 3 && getPastInput(delay).isPressed('6')) {
       dirVel += (turnSpeed*(1.0+drunk*drunkTurnSpeed)-dirVel)*turnAccel*2*(1.0-drunk*drunkTurnDamp);
     }
 
@@ -167,9 +176,44 @@ class Player {
   }
 
   void render() {
+    if (!this.active) return;
+    
     noFill();
     ellipse(x, y, radius, radius);
 
     line(x, y, x+cos(realDirection)*radius, y+sin(realDirection)*radius);
+    
+    // --- HUD ---
+     
+    pushStyle();
+
+    // Drunk-meter
+    int drunk_meter_width = 100;
+    int drunk_meter_height = 10;
+    float drunk_meter_x = this.x - drunk_meter_width / 2;
+    float drunk_meter_y = this.y - this.radius*2 - drunk_meter_height;
+
+    stroke(59.2, 2.7, 0.8);
+    noFill();
+    rect(drunk_meter_x, drunk_meter_y, drunk_meter_width, drunk_meter_height);
+    fill(59.2, 2.7, 0.8);
+    rect(drunk_meter_x, drunk_meter_y, min(this.drunk*drunk_meter_width, drunk_meter_width), drunk_meter_height);
+
+    popStyle();
+
+    pushStyle();
+
+    // Drunk-meter
+    int bladder_meter_width = 100;
+    int bladder_meter_height = 10;
+    float bladder_meter_x = this.x - bladder_meter_width / 2;
+    float bladder_meter_y = this.y - this.radius*2 - drunk_meter_height - 5 - bladder_meter_height;
+    stroke(90.2, 90.2, 0);
+    noFill();
+    rect(bladder_meter_x, bladder_meter_y, bladder_meter_width, bladder_meter_height);
+    fill(90.2, 90.2, 0);
+    rect(bladder_meter_x, bladder_meter_y, min(this.bladder*bladder_meter_width, bladder_meter_width), bladder_meter_height);
+
+    popStyle();
   }
 }
