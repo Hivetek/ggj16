@@ -150,8 +150,8 @@ class BeerStation {
   float x;
   float y;
   
-  float w = 100;
-  float h =  50;
+  float w = 95;
+  float h = 40;
   
   Obstacle assocObstacle;
   
@@ -163,7 +163,7 @@ class BeerStation {
   }
   
   void render() {
-    image(beerstationImage, x-w/2-5, y-h/2-7);
+    image(beerstationImage, x-w/2, y-h/2-7);
   }
   
   
@@ -197,8 +197,8 @@ void initScenery() {
     staticObstacles.add(table.assocObstacle);
   }
   
-  beerstations.add(new BeerStation(125,95));
-  beerstations.add(new BeerStation(125,630));
+  beerstations.add(new BeerStation(120,95));
+  beerstations.add(new BeerStation(120,630));
   beerstations.add(new BeerStation(1160,95));
   beerstations.add(new BeerStation(1160,630));
 
