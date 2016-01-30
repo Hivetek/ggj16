@@ -14,7 +14,7 @@ boolean DEBUG = false;
 PFont comicFont;
 PFont talkFont;
 PFont regularFont; 
-PImage bgImage, smallTableImage, bigTableImage; //150x121, 203x164 
+PImage bgImage, smallTableImage, bigTableImage, fratBroImage;  
 
 Obstacle[] obstacles = new Obstacle[22];
 
@@ -35,6 +35,7 @@ void setup() {
   bgImage = loadImage("data/images/floor.png");
   smallTableImage = loadImage("data/images/table_small.png");
   bigTableImage = loadImage("data/images/table_big.png");
+  fratBroImage = loadImage("data/images/frat_bro_eksempel_samlet.png");
   textAlign(CENTER, CENTER);
   textFont(comicFont);
 
