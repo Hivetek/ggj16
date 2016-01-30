@@ -1,4 +1,4 @@
-class Player {
+class Player { //<>// //<>// //<>//
   int id = -1;
 
   //Physics parameters
@@ -17,7 +17,7 @@ class Player {
   float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
   int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
-  float drunkReductionRate = 0.0005; //<>//
+  float drunkReductionRate = 0.0;//0.00025; 
 
   float radius = 12;
 
@@ -35,7 +35,7 @@ class Player {
   boolean active = false;
 
   color playerColor = color(255);
-  
+
   int drinkingTimestamp = millis();
   int drinkingTimeout = 1000;
 
@@ -50,16 +50,16 @@ class Player {
 
     switch(id) {
     case 0: 
-      playerColor = color(0, 0, 255);
-      break;
-    case 1: 
-      playerColor = color(0, 255, 0);
-      break;
-    case 2: 
       playerColor = color(255, 255, 0);
       break;
+    case 1: 
+      playerColor = color(128, 128, 255);
+      break;
+    case 2: 
+      playerColor = color(255, 0, 255);
+      break;
     case 3: 
-      playerColor = color(255, 0, 0);
+      playerColor = color(64, 255, 64);
       break;
     default:
       playerColor = color(255);
@@ -142,8 +142,8 @@ class Player {
     dirOffset += drunkOscillationFreq*speed;
     if (dirOffset > PI*2) dirOffset -= PI*2;
   }
-  
-  void collisionHandling(){
+
+  void collisionHandling() {
     //boundaries
     float bounds = 55.0;
     if (x < radius+bounds || x > width-(radius+bounds))
@@ -211,13 +211,13 @@ class Player {
         }
       }
     }
-    
+
     //TODO: NPC collision
   }
-  
+
   void drink() {
     int now = millis();
-    
+
     if (now - this.drinkingTimestamp >= this.drinkingTimeout) {
       this.drinkingTimestamp = millis();
       if (this.drunk < 1.0) {
@@ -227,17 +227,35 @@ class Player {
         this.bladder += 0.05;
       }
     }
-
   }
 
   void render() {
     if (!this.active) return;
 
-    noFill();
-    stroke(playerColor);
-    ellipse(x, y, radius, radius);
-
-    line(x, y, x+cos(realDirection)*radius, y+sin(realDirection)*radius);
+    image(shadow, x-32, y-32);
+    translate(x, y);
+    rotate(realDirection-PI*0.5);
+    switch(id) {
+    case 0:
+      image(bunny1, -25, -25);
+      break;
+    case 1:
+      image(bunny2, -25, -25);
+      break;
+    case 2:
+      image(bunny3, -25, -25);
+      break;
+    default:
+      image(bunny4, -25, -25);
+      break;
+    }
+    resetMatrix();
+    if (DEBUG) {
+      noFill();
+      stroke(playerColor);
+      ellipse(x, y, radius, radius);
+      line(x, y, x+cos(realDirection)*radius, y+sin(realDirection)*radius);
+    }
 
     // --- HUD ---
 

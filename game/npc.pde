@@ -24,8 +24,10 @@ enum NPCState {
   float speed = 2;
 
   int waitTime = 0;
+  int maxRequestTime = 600;
 
-  float requestChance = 0.1; //40% for beer request
+  float requestChanceBase = 0.10; //15% for beer request
+  float requestChanceAddition =  0.06; //6% higher chance per player
   float spawnChance = 0.2; //20% chance that a new NPC will spawn
 
   Seat seat;
@@ -73,6 +75,14 @@ enum NPCState {
       }
       break;
     case REQUESTING:
+      waitTime++;
+      if (waitTime > maxRequestTime) {
+        waitTime = 0;
+        state = NPCState.LEAVING;
+        for (Player p : players) {
+          p.drink();
+        }
+      }
       break;
     case WAITING:
       if (waitTime > 0) {
@@ -91,7 +101,7 @@ enum NPCState {
       } else {
         waitTime = 0;
         float rand = random(1.0);
-        if (rand <= requestChance) {
+        if (rand <= requestChanceBase + requestChanceAddition*activePlayers) {
           state = NPCState.REQUESTING;
           vx = 0;
           vy = 0;
@@ -276,11 +286,11 @@ enum NPCState {
       if (state == NPCState.REQUESTING) {
         fill(255);
         textFont(talkFont);
-        drawText("9", x+28+random(3), y-50+random(3), random(0.05*PI), 0.95+random(0.1));
+        drawText("9", x+28+random(4.0*waitTime/maxRequestTime), y-50+random(4.0*waitTime/maxRequestTime), random(0.08*PI*waitTime/maxRequestTime), 0.90+random(0.2*waitTime/maxRequestTime));
         //fill(255, 64, 255, 180); //PINK
         fill(255);
         textFont(comicFont);
-        drawText("!", x+28+random(6), y-60+random(6), random(0.15*PI), 0.95+random(0.1));
+        drawText("!", x+28+random(6.0*waitTime/maxRequestTime), y-60+random(6.0*waitTime/maxRequestTime), random(0.15*PI*waitTime/maxRequestTime), 0.90+random(0.2*waitTime/maxRequestTime));
       }
 
       if (DEBUG) {

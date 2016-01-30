@@ -95,20 +95,24 @@ void keyPressed() {
   
   
   
-  if (current.isPressed(UP) || current.isPressed(LEFT) || current.isPressed(DOWN) || current.isPressed(RIGHT)) {
+  if ((current.isPressed(UP) || current.isPressed(LEFT) || current.isPressed(DOWN) || current.isPressed(RIGHT)) && !players[0].active) {
      players[0].active = true;
+     println("Player0 active!");
   }
   
-  if (current.isPressed('w') || current.isPressed('a') || current.isPressed('s') || current.isPressed('d')) {
+  if ((current.isPressed('w') || current.isPressed('a') || current.isPressed('s') || current.isPressed('d')) && !players[1].active) {
      players[1].active = true;
+     println("Player1 active!");
   }
   
-  if (current.isPressed('i') || current.isPressed('j') || current.isPressed('k') || current.isPressed('l')) {
+  if ((current.isPressed('i') || current.isPressed('j') || current.isPressed('k') || current.isPressed('l')) && !players[2].active) {
      players[2].active = true;
+     println("Player2 active!");
   }
   
-  if (current.isPressed('8') || current.isPressed('4') || current.isPressed('5') || current.isPressed('6')) {
+  if ((current.isPressed('8') || current.isPressed('4') || current.isPressed('5') || current.isPressed('6')) && !players[3].active) {
      players[3].active = true;
+     println("Player3 active!");
   }
 }
 
