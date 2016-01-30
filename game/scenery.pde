@@ -147,6 +147,16 @@ void initScenery() {
   npcs.add(new NPC(seats.get(0), true));
   npcs.add(new NPC(seats.get(1), true));
   npcs.add(new NPC(seats.get(2), true));
-  npcs.add(new NPC(seats.get(3), true));
-  npcs.add(new NPC(seats.get(4), true));
+  //npcs.add(new NPC(seats.get(3), true));
+  //npcs.add(new NPC(seats.get(4), true));
+}
+
+boolean seatIsOccupied(Seat seat) {
+  for (NPC npc : npcs) {
+    if (npc.seat == seat) {
+      return false;
+    }
+  }
+  
+  return true;
 }
