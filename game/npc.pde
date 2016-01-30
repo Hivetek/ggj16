@@ -170,10 +170,12 @@ enum NPCState {
         float dist = sqrt(dx*dx+dy*dy);
         //TODO: elastic collisions
         if (dist < p.radius + radius && dist > 0) {
-          if (state == NPCState.REQUESTING) {
+          if (state == NPCState.REQUESTING && p.carryingBeer) {
+
             state = NPCState.WAITING;
             waitTime = 60*3 + round(random(60*20));
- 
+            
+            p.carryingBeer = false;
             p.drinkingTimestamp = millis();
             for (Player otherPlayer : players) {
               if (otherPlayer != p) {

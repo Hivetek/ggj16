@@ -19,6 +19,7 @@ enum TableType {
   float h;
 
   TableType type;
+  Obstacle assocObstacle;
 
   STable(float x, float y, TableType type) {
     this.x = x;
@@ -36,6 +37,8 @@ enum TableType {
       this.h = 164;
       break;
     }
+    
+    this.assocObstacle = createObstacle();
   }
 
   void render() {
@@ -144,9 +147,13 @@ class BeerStation {
   float w = 100;
   float h =  50;
   
+  Obstacle assocObstacle;
+  
   BeerStation(float x, float y) {
     this.x = x;
     this.y = y;
+    
+    this.assocObstacle = createObstacle();
   }
   
   void render() {
@@ -182,7 +189,7 @@ void initScenery() {
   tables.add(new STable(width - 60 - 275, height - 60 - 180, TableType.SMALL));
 
   for (STable table : tables) {
-    staticObstacles.add(table.createObstacle());
+    staticObstacles.add(table.assocObstacle);
   }
   
   beerstations.add(new BeerStation(115,95));
@@ -191,7 +198,7 @@ void initScenery() {
   beerstations.add(new BeerStation(1160,630));
 
   for (BeerStation beerstation : beerstations) {
-    staticObstacles.add(beerstation.createObstacle());
+    staticObstacles.add(beerstation.assocObstacle);
   }
 
   // Doors
