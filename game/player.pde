@@ -24,8 +24,8 @@ class Player {
   float px, py, x, y, vx, vy, ax, ay, dirVel, dir;
   float dirOffset = 0.0;
 
-  // Stats //<>//
-  float drunk = 0.0; //<>//
+  // Stats //<>// //<>//
+  float drunk = 0.0; //<>// //<>//
   float bladder = 0.5;
 
   float speed = 0.0;
@@ -84,8 +84,10 @@ class Player {
       drunk = 1.0;
     }
     //END DEBUG
-
-    int delay = round(drunk*drunkDelay);
+    int delay = 0;
+    if(drunk >= 0.5){
+      delay = round(2*(drunk-0.5)*drunkDelay);
+    }
 
     if (drunk > 0) {
       //drunk -= drunkReductionRate;
@@ -149,13 +151,14 @@ class Player {
     dir += dirVel;
 
     //boundaries
-    if (x < radius || x > width-radius)
+    float bounds = 55.0;
+    if (x < radius+bounds || x > width-(radius+bounds))
       vx = -vx*bounciness;
-    if (y < radius || y > height-radius)
+    if (y < radius+bounds || y > height-(radius+bounds))
       vy = -vy*bounciness;
 
-    x = min(max(radius, x), width-radius);
-    y = min(max(radius, y), height-radius);
+    x = min(max(bounds+radius, x), width-(radius+bounds));
+    y = min(max(bounds+radius, y), height-(radius+bounds));
 
     //Player collision
     for (Player p : players) {

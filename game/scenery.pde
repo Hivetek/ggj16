@@ -122,9 +122,9 @@ void initScenery() {
   }
   
   // Doors
-  doors.add(new Door(50, 10, true));
+  doors.add(new Door(width/2, 55, true));
   
-  doors.add(new Door(10, 50, false));
+  doors.add(new Door(width/2, height-55, false));
 
   // Seats
   for (int i = 0; i < 10; i++) {
