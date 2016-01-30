@@ -44,4 +44,33 @@ void render(){
   ellipse(340, 350, 30, 30);
   rect(0, 10, player.drunk*width, 20);
   line(0, 10, player.drunk*width, 10);
+  
+  
+  // --- HUD ---
+  
+  pushStyle();
+  
+  // Drunk-meter
+  int drunk_meter_width = 100;
+  int drunk_meter_height = 10;
+  stroke(59.2, 2.7, 0.8);
+  noFill();
+  rect(player.x - drunk_meter_width / 2, player.y - player.radius*2 - drunk_meter_height, drunk_meter_width, drunk_meter_height);
+  fill(59.2, 2.7, 0.8);
+  rect(player.x - drunk_meter_width / 2, player.y - player.radius*2 - drunk_meter_height, min(player.drunk*drunk_meter_width, drunk_meter_width), drunk_meter_height);
+  
+  popStyle();
+  
+  pushStyle();
+  
+  // Drunk-meter
+  int bladder_meter_width = 100;
+  int bladder_meter_height = 10;
+  stroke(   90.2, 90.2, 0);
+  noFill();
+  rect(player.x - bladder_meter_width / 2, player.y - player.radius*2 - drunk_meter_height - 5 - bladder_meter_height, bladder_meter_width, bladder_meter_height);
+  fill(   90.2, 90.2, 0);
+  rect(player.x - bladder_meter_width / 2, player.y - player.radius*2 - drunk_meter_height - 5 - bladder_meter_height, min(player.bladder*bladder_meter_width, bladder_meter_width), bladder_meter_height);
+  
+  popStyle();
 }

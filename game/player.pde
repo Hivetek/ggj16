@@ -8,6 +8,8 @@ class Player {
   float dirOffset = 0.0;
 
   float drunk = 0.0;
+  float bladder = 0.5;
+  
   float speed = 0;
   float friction = 0.08;
 
