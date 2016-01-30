@@ -199,6 +199,25 @@ void initScenery() {
   seats.add(new Seat(1050, 510));
   seats.add(new Seat(905, 565));
   seats.add(new Seat(980, 565));
+  
+  // Center table
+  seats.add(new Seat(510, 310));
+  seats.add(new Seat(510, 366));
+  seats.add(new Seat(510, 415));
+  
+  seats.add(new Seat(770, 310));
+  seats.add(new Seat(770, 366));
+  seats.add(new Seat(770, 415));
+  
+  seats.add(new Seat(575, 255));
+  seats.add(new Seat(640, 255));
+  seats.add(new Seat(700, 255));
+  
+  seats.add(new Seat(575, 465));
+  seats.add(new Seat(640, 465));
+  seats.add(new Seat(700, 465));
+
+
 
   // Find doors for seats
   for (Seat seat : seats) {
