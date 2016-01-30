@@ -23,7 +23,7 @@ enum NPCState {
 
   int waitTime = 0;
 
-  float requestChance = 0.4; //40% for beer request
+  float requestChance = 0.2; //40% for beer request
   float spawnChance = 0.2; //20% chance that a new NPC will spawn
 
   Seat seat;
@@ -91,6 +91,7 @@ enum NPCState {
       if (dist < 1.0) {
         state = NPCState.GONE;
         waitTime = 60+round(random(60*10));
+        println("Waiting for "+waitTime+" frames");
       }
       break;
     case GONE:
@@ -98,11 +99,11 @@ enum NPCState {
         waitTime--;
       } else {
         int s = seats.size();
-        int sid = round(random(s));
+        int sid = floor(random(s));
         seat = seats.get(sid);
         while (seatIsOccupied(seat)) {
           sid++;
-          if(sid >= seats.size()) sid = 0;
+          if (sid >= seats.size()) sid = 0;
           seat = seats.get(sid);
         }
         x = seat.door.x;
@@ -126,9 +127,35 @@ enum NPCState {
         fill(255);
         textFont(talkFont);
         drawText("9", x+28+random(3), y-50+random(3), random(0.05*PI), 0.95+random(0.1));
-        fill(255, 64, 255, 180); //PINK
+        //fill(255, 64, 255, 180); //PINK
+        fill(255);
         textFont(comicFont);
         drawText("!", x+28+random(6), y-60+random(6), random(0.15*PI), 0.95+random(0.1));
+      }
+
+      if (DEBUG) {
+        textFont(regularFont);
+        stroke(255);
+        fill(255);
+        text(waitTime, x+10, y+50);
+        float ox = 10;
+        float oy = 30;
+        switch(state) {
+        case ENTERING:
+          text("ENTERING", x+ox, y+oy);
+          break;
+        case REQUESTING:
+          text("REQUESTING", x+ox, y+oy);
+          break;
+        case WAITING:
+          text("WAITING", x+ox, y+oy);
+          break;
+        case LEAVING:
+          text("LEAVING", x+ox, y+oy);
+          break;
+        case GONE:
+          break;
+        }
       }
     }
   }

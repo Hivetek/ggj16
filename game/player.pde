@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>// //<>// //<>// //<>//
+class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   int id = -1;
 
   //Physics parameters
@@ -45,7 +45,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
     ax = ay = vx = vy = dirVel = 0;
     realDirection = dir;
 
-    /*switch(id) {
+    switch(id) {
     case 0: 
       playerColor = color(0, 0, 255);
       break;
@@ -61,7 +61,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
     default:
       playerColor = color(255);
       break;
-    }*/
+    }
   }
 
   void update() {

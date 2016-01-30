@@ -68,10 +68,10 @@ class Seat {
     pushStyle();
     stroke(255);
     fill(255, 255, 255);
-    ellipse(x, y, radius, radius);
+    //ellipse(x, y, radius, radius);
 
     if (door != null) {
-      line(x, y, door.x, door.y);
+      //line(x, y, door.x, door.y);
     }
 
     popStyle();
@@ -132,7 +132,7 @@ void initScenery() {
   doors.add(new Door(56, 2*height/3+18, false));
 
   // Seats
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 50; i++) {
     seats.add(new Seat(random(width), random(height)));
   }
 
@@ -144,19 +144,21 @@ void initScenery() {
 
 
   // Initial NPCS
-  npcs.add(new NPC(seats.get(0), true));
-  npcs.add(new NPC(seats.get(1), true));
-  npcs.add(new NPC(seats.get(2), true));
+  for(int i = 0; i < 49; i++){
+    npcs.add(new NPC(seats.get(i), true));
+  }
+  //npcs.add(new NPC(seats.get(1), true));
+  //npcs.add(new NPC(seats.get(2), true));
   //npcs.add(new NPC(seats.get(3), true));
   //npcs.add(new NPC(seats.get(4), true));
 }
 
 boolean seatIsOccupied(Seat seat) {
   for (NPC npc : npcs) {
-    if (npc.seat == seat) {
-      return false;
+    if (npc.seat == seat && (npc.state == NPCState.WAITING || npc.state == NPCState.ENTERING || npc.state == NPCState.REQUESTING)) {
+      return true;
     }
   }
   
-  return true;
+  return false;
 }

@@ -9,9 +9,11 @@ import ddf.minim.ugens.*;
  import org.gamecontrolplus.*;
  import org.gamecontrolplus.gui.*;*/
 
+boolean DEBUG = false;
 
 PFont comicFont;
 PFont talkFont;
+PFont regularFont; 
 PImage bgImage, smallTableImage, bigTableImage; //150x121, 203x164 
 
 Obstacle[] obstacles = new Obstacle[22];
@@ -28,6 +30,8 @@ void setup() {
 
   comicFont = loadFont("data/fonts/ComicaBDBold-48.vlw");
   talkFont = loadFont("data/fonts/Talkies-60.vlw");
+  regularFont = loadFont("data/fonts/ArialMT-12.vlw");
+
   bgImage = loadImage("data/images/floor.png");
   smallTableImage = loadImage("data/images/table_small.png");
   bigTableImage = loadImage("data/images/table_big.png");
@@ -42,30 +46,30 @@ void setup() {
   initInputBuffer();
   initScenery();
 
-  
-  
+
+
   /*
   //LEVEL DESIGN
-  //table
-  obstacles[0] = new Obstacle(width/2, height/2, 1);
-  obstacles[0].w = 400;
-  obstacles[0].h = 180;
-
-  //Seats
-  for (int i = 1; i < 10; i++) {
-    obstacles[i] = new Obstacle(width/2-180+45*(i-1), height/2-110, 0);
-  }
-  for (int i = 10; i < 19; i++) {
-    obstacles[i] = new Obstacle(width/2-180+45*(i-10), height/2+110, 0);
-  }
-
-  obstacles[19] = new Obstacle(180, height/2, 1);
-  obstacles[19].w = 60;
-  obstacles[19].h = 120;
-
-  obstacles[20] = new Obstacle(130, height/2+30, 0);
-  obstacles[21] = new Obstacle(130, height/2-30, 0);
-  */
+   //table
+   obstacles[0] = new Obstacle(width/2, height/2, 1);
+   obstacles[0].w = 400;
+   obstacles[0].h = 180;
+   
+   //Seats
+   for (int i = 1; i < 10; i++) {
+   obstacles[i] = new Obstacle(width/2-180+45*(i-1), height/2-110, 0);
+   }
+   for (int i = 10; i < 19; i++) {
+   obstacles[i] = new Obstacle(width/2-180+45*(i-10), height/2+110, 0);
+   }
+   
+   obstacles[19] = new Obstacle(180, height/2, 1);
+   obstacles[19].w = 60;
+   obstacles[19].h = 120;
+   
+   obstacles[20] = new Obstacle(130, height/2+30, 0);
+   obstacles[21] = new Obstacle(130, height/2-30, 0);
+   */
 }
 
 void draw() {  
@@ -77,9 +81,9 @@ void update() {
   goToNextInput();
 
   for (NPC npc : npcs) {
-    npc.update(); 
+    npc.update();
   }
-  
+
   npccontroller.update();
 
   for (Player p : players) {
@@ -91,11 +95,19 @@ void update() {
 void render() {
 
   image(bgImage, 0, 0);
-  
+
   for (Seat seat : seats) {
     seat.render();
   }
-  
+
+  for (STable table : tables) {
+    table.render();
+  }
+
+  for (Door door : doors) {
+    door.render();
+  }
+
   for (NPC npc : npcs) {
     npc.render();
   }
@@ -103,18 +115,11 @@ void render() {
   for (Player p : players) {
     p.render();
   }
-  
-  for (STable table : tables) {
-    table.render(); 
-  }
-  
-  for (Door door : doors) {
-    door.render(); 
-  }
-  
 
-   for (Obstacle obstacle : staticObstacles) {
-    obstacle.render();
+  if (DEBUG) {
+    for (Obstacle obstacle : staticObstacles) {
+      obstacle.render();
+    }
   }
 }
 
@@ -122,7 +127,7 @@ int sign(float n) {
   return round(n/abs(n));
 }
 
-void drawText(String text, float x, float y, float a, float s){
+void drawText(String text, float x, float y, float a, float s) {
   translate(x, y);
   scale(s);
   rotate(a);
