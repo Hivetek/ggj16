@@ -44,15 +44,15 @@ class Player {
       ax += cos(realDirection)*(moveAccel*(1.0-drunk*0.7));
       ay += sin(realDirection)*(moveAccel*(1.0-drunk*0.7));
     }
-    if (getPastInput(delay).isPressed(DOWN) || id == 1 && getPastInput(delay).isPressed('s')) {
+    if (id == 0 && getPastInput(delay).isPressed(DOWN) || id == 1 && getPastInput(delay).isPressed('s')) {
       ax -= cos(realDirection)*(moveAccel*(1.0-drunk*0.7));
       ay -= sin(realDirection)*(moveAccel*(1.0-drunk*0.7));
     }
 
-    if (getPastInput(delay).isPressed(LEFT) || id == 1 && getPastInput(delay).isPressed('a')) {
+    if (id == 0 && getPastInput(delay).isPressed(LEFT) || id == 1 && getPastInput(delay).isPressed('a')) {
       dir -= turnSpeed;
     }
-    if (getPastInput(delay).isPressed(RIGHT) || id == 1 && getPastInput(delay).isPressed('d')) {
+    if (id == 0 && getPastInput(delay).isPressed(RIGHT) || id == 1 && getPastInput(delay).isPressed('d')) {
       dir += turnSpeed;
     }
 
