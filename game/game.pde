@@ -82,21 +82,25 @@ void update() {
 
 void render() {
   image(bgImage, 0, 0);
+  
+  for (Seat seat : seats) {
+    seat.render();
+  }
 
   for (Player p : players) {
     p.render();
   }
   
   for (STable table : tables) {
-    table.render(); 
+    //table.render(); 
   }
   
   for (Door door : doors) {
     door.render(); 
   }
   
-  for (Seat seat : seats) {
-    seat.render();
+  for (Obstacle obstacle : staticObstacles) {
+    obstacle.render();
   }
 
   
