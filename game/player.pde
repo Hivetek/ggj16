@@ -17,7 +17,7 @@ class Player { //<>// //<>// //<>//
   float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
   int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
-  float drunkReductionRate = 0.0;//0.00025;  //<>//
+  float drunkReductionRate = 0.0;//0.00025;  //<>// //<>//
 
   float radius = 12;
 
@@ -37,9 +37,11 @@ class Player { //<>// //<>// //<>//
   color playerColor = color(255);
 
   int drinkingTimestamp = millis();
-  int drinkingTimeout = 1000;
+
+  int drinkingTimeout = 600;
   
   boolean carryingBeer = false;
+
 
   Player(int id, float xx, float yy, boolean active) {
     this.id = id;

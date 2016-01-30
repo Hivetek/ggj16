@@ -22,6 +22,8 @@ Player[] players = new Player[4];
 
 int activePlayers = 0;
 
+boolean spawnNPC = false;
+
 void setup() {
   size(1280, 720);
   frameRate(60);
@@ -88,6 +90,16 @@ void draw() {
 
 void update() {
   goToNextInput();
+
+  if (spawnNPC) {
+    spawnNPC = false;
+    int i = 0;
+    while (i < seats.size() && seatIsOccupied(seats.get(i))) {
+      i++;
+    }
+    if (!seatIsOccupied(seats.get(i)))
+      npcs.add(new NPC(seats.get(i), true));
+  }
 
   for (NPC npc : npcs) {
     npc.update();

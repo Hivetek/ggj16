@@ -141,6 +141,13 @@ enum NPCState {
         x = seat.door.x;
         y = seat.door.y;
         state = NPCState.ENTERING;
+
+        if (npcs.size() < seats.size()-1) {
+          float rand = random(1.0);
+          if (rand < 0.3) {
+            spawnNPC = true;
+          }
+        }
       }
       break;
     }
