@@ -40,7 +40,7 @@ void setup() {
     obstacles[i].r = 8+random(24);
   }*/
   
-  
+  /*
   //LEVEL DESIGN
   //table
   obstacles[0] = new Obstacle(width/2, height/2, 1);
@@ -61,6 +61,7 @@ void setup() {
   
   obstacles[20] = new Obstacle(130, height/2+30, 0);
   obstacles[21] = new Obstacle(130, height/2-30, 0);
+  */
 }
 
 void draw() {  
@@ -83,10 +84,9 @@ void render() {
   for (Player p : players) {
     p.render();
   }
-
-  for (int i = 0; i < obstacles.length; i++) {
-    fill(255);
-    obstacles[i].render();
+  
+  for (STable table : tables) {
+    table.render(); 
   }
   
   for (Door door : doors) {

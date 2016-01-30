@@ -12,11 +12,14 @@ class Obstacle {
   }
 
   void render() {
+    pushStyle();
+    fill(255);
     if (type == 0) {
       ellipse(x, y, r, r);
     } else if (type == 1) {
       rect(x-w/2, y-h/2, w, h);
     }
+    popStyle();
   }
 
   boolean intersects(float ix, float iy, float radius) {

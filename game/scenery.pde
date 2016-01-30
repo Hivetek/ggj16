@@ -1,21 +1,38 @@
-ArrayList<Table> tables = new ArrayList<Table>();
+ArrayList<STable> tables = new ArrayList<STable>();
 ArrayList<Seat> seats = new ArrayList<Seat>();
 ArrayList<Door> doors = new ArrayList<Door>();
+ArrayList<Obstacle> staticObstacles = new ArrayList<Obstacle>();
 
 
-class Table {
+class STable {
   int x;
   int y;
 
   int w;
   int h;
 
-  Table(int x, int y, int w, int h) {
+  STable(int x, int y, int w, int h) {
     this.x = x;
     this.y = y;
 
     this.w = w;
     this.h = h;
+  }
+  
+  void render() {
+    pushStyle();
+
+    fill(255, 255, 255);
+    rect(x-w/2, y-h/2, w, h);
+
+    popStyle();
+  }
+  
+  Obstacle createObstacle() {
+    Obstacle o = new Obstacle(x, y, 1);
+    o.w = w;
+    o.h = h;
+    return o;
   }
 }
 
@@ -96,6 +113,14 @@ class Door {
 
 
 void initScenery() {
+  // Tables
+  tables.add(new STable(500, 400, 300, 200));
+  
+  
+  for (STable table : tables) {
+    staticObstacles.add(table.createObstacle());
+  }
+  
   // Doors
   doors.add(new Door(50, 10, true));
   
@@ -103,7 +128,7 @@ void initScenery() {
 
   // Seats
   for (int i = 0; i < 10; i++) {
-    seats.add(new Seat(width/2 - i*40, height/2));
+    seats.add(new Seat(width/2 - i*40, height/2-100));
   }
   
   

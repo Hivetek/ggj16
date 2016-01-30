@@ -17,7 +17,7 @@ class Player {
   float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
   int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
-  float drunkReductionRate = 0.0018;
+  float drunkReductionRate = 0.0018; //<>//
 
   float radius = 16;
 
@@ -157,33 +157,34 @@ class Player {
       }
     }
 
+    
 
     //Obstacles
     //TODO: Bounciness
-    for (int i = 0; i < obstacles.length; i++) {
-      if (obstacles[i].type == 0) {
-        if (obstacles[i].intersects(x, y, radius)) {
-          float dx = x-obstacles[i].x; //TODO:Optimize with rectangle boundary test (broadphase)
-          float dy = y-obstacles[i].y;
+    for (Obstacle obstacle : staticObstacles) {
+      if (obstacle.type == 0) {
+        if (obstacle.intersects(x, y, radius)) {
+          float dx = x-obstacle.x; //TODO:Optimize with rectangle boundary test (broadphase)
+          float dy = y-obstacle.y;
           float dist = sqrt(dx*dx+dy*dy);
-          float rsum = radius + obstacles[i].r;
+          float rsum = radius + obstacle.r;
           x += (dx*(rsum-dist))/dist;
           y += (dy*(rsum-dist))/dist;
         }
-      } else if (obstacles[i].type == 1) {
-        if (obstacles[i].intersects(x, y, radius)) {
+      } else if (obstacle.type == 1) {
+        if (obstacle.intersects(x, y, radius)) {
           for (int n = 0; n < 60; n++) {
             float a = n*2*PI/60;
             float rx = x + cos(a)*radius;
             float ry = y + sin(a)*radius;
-            if (obstacles[i].intersects(rx, ry, 0)) {
+            if (obstacle.intersects(rx, ry, 0)) {
               boolean collision = true;
               while (collision) {
                 x -= cos(a);
                 y -= sin(a);
                 rx = x + cos(a)*radius;
                 ry = y + sin(a)*radius;
-                if (!obstacles[i].intersects(rx, ry, 0)) {
+                if (!obstacle.intersects(rx, ry, 0)) {
                   collision = false;
                 }
               }
