@@ -14,7 +14,7 @@ boolean DEBUG = false;
 PFont comicFont;
 PFont talkFont;
 PFont regularFont; 
-PImage bgImage, smallTableImage, bigTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4;  
+PImage bgImage, smallTableImage, bigTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, beerImage, shoeImage;  
 
 Obstacle[] obstacles = new Obstacle[22];
 
@@ -31,11 +31,13 @@ void setup() {
   stroke(255);
   noFill();
   ellipseMode(RADIUS);
-
+  
+  //FONTS
   comicFont = loadFont("data/fonts/ComicaBDBold-48.vlw");
   talkFont = loadFont("data/fonts/Talkies-60.vlw");
   regularFont = loadFont("data/fonts/ArialMT-12.vlw");
-
+  
+  //IMAGES
   bgImage = loadImage("data/images/floor.png");
   smallTableImage = loadImage("data/images/table_small.png");
   bigTableImage = loadImage("data/images/table_big.png");
@@ -47,6 +49,9 @@ void setup() {
   bunny3 = loadImage("data/images/bunny_3.png");
   bunny4 = loadImage("data/images/bunny_4.png");
   shadow = loadImage("data/images/shadow.png");
+  beerImage = loadImage("data/images/beercup_carry.png");
+  shoeImage = loadImage("data/images/shoe.png");
+  
   textAlign(CENTER, CENTER);
   textFont(comicFont);
 
@@ -57,31 +62,6 @@ void setup() {
 
   initInputBuffer();
   initScenery();
-
-
-
-  /*
-  //LEVEL DESIGN
-   //table
-   obstacles[0] = new Obstacle(width/2, height/2, 1);
-   obstacles[0].w = 400;
-   obstacles[0].h = 180;
-   
-   //Seats
-   for (int i = 1; i < 10; i++) {
-   obstacles[i] = new Obstacle(width/2-180+45*(i-1), height/2-110, 0);
-   }
-   for (int i = 10; i < 19; i++) {
-   obstacles[i] = new Obstacle(width/2-180+45*(i-10), height/2+110, 0);
-   }
-   
-   obstacles[19] = new Obstacle(180, height/2, 1);
-   obstacles[19].w = 60;
-   obstacles[19].h = 120;
-   
-   obstacles[20] = new Obstacle(130, height/2+30, 0);
-   obstacles[21] = new Obstacle(130, height/2-30, 0);
-   */
 }
 
 void draw() {  

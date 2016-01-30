@@ -1,6 +1,9 @@
-class Player { //<>// //<>// //<>// //<>// //<>// //<>//
+class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   int id = -1;
-
+  
+  float animationSpeed = 0.07;
+  float walkAnim = 0.0;
+  
   //Physics parameters
   float moveAccel = 0.5;
   float moveSpeed = 3.4;
@@ -41,7 +44,6 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
   int drinkingTimeout = 600;
   
   boolean carryingBeer = false;
-
 
   Player(int id, float xx, float yy, boolean active) {
     this.id = id;
@@ -141,7 +143,8 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
     dir += dirVel;
 
     collisionHandling();
-
+    
+    walkAnim += speed*animationSpeed;
     //Drunken motion drunkOscillation
     dirOffset += drunkOscillationFreq*speed;
     if (dirOffset > PI*2) dirOffset -= PI*2;
@@ -149,7 +152,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
 
   void collisionHandling() {
     //boundaries
-    float bounds = 55.0;
+    float bounds = 70.0;
     if (x < radius+bounds || x > width-(radius+bounds))
       vx = -vx*bounciness;
     if (y < radius+bounds || y > height-(radius+bounds))
@@ -160,7 +163,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
 
     //Player collision
     for (Player p : players) {
-      if (p.id != id) {
+      if (p.id != id && p.active) {
         float dx = p.x-x;
         float dy = p.y-y;
         float dist = sqrt(dx*dx+dy*dy);
@@ -227,9 +230,6 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
         }
       }
     }
-
-
-    //TODO: NPC collision
   }
 
   void drink() {
@@ -252,6 +252,18 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
     if (!this.active) return;
 
     image(shadow, x-32, y-32);
+    
+    //Draw feet
+    translate(x, y);
+    rotate(realDirection-PI*0.5);
+    image(shoeImage, -3-6, sin(walkAnim)*12-4);
+    resetMatrix();
+    translate(x, y);
+    rotate(realDirection-PI*0.5);
+    image(shoeImage, 6-3, cos(walkAnim)*12-4);
+    resetMatrix();
+    
+    //Draw player
     translate(x, y);
     rotate(realDirection-PI*0.5);
     switch(id) {
@@ -267,6 +279,9 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
     default:
       image(bunny4, -25, -25);
       break;
+    }
+    if(carryingBeer){
+      image(beerImage, -18, -18);
     }
     resetMatrix();
     if (DEBUG) {

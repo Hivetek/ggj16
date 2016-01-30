@@ -276,7 +276,7 @@ void initScenery() {
 
 
   // Initial NPCS
-  for (int i = 0; i < 6; i++) {
+  for (int i = 0; i < 8; i++) {
     npcs.add(new NPC(seats.get(i), true));
   }
 }

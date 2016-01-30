@@ -16,6 +16,9 @@ enum NPCState {
   float dir = random(2*PI);
   int img = round(random(2));
 
+  float animationSpeed = 0.07;
+  float walkAnim = 0.0;
+
   float radius = 12;
 
   float bounciness = 0.8;
@@ -26,7 +29,7 @@ enum NPCState {
 
   float requestChanceBase = 0.10; //15% for beer request
   float requestChanceAddition =  0.06; //6% higher chance per player
-  float spawnChance = 0.2; //20% chance that a new NPC will spawn
+  float spawnChance = 0.4; //40% chance that a new NPC will spawn
 
   Seat seat;
 
@@ -156,6 +159,9 @@ enum NPCState {
     y += vy;
 
     collisionHandling();
+    
+    float moveSpeed = sqrt(vx*vx+vy*vy);
+    walkAnim += moveSpeed*animationSpeed;
   }
 
   void collisionHandling() {
@@ -172,6 +178,8 @@ enum NPCState {
     //Player collision
     if (state != NPCState.GONE) {
       for (Player p : players) {
+        if (!p.active)
+          break;
         float dx = p.x-x;
         float dy = p.y-y;
         float dist = sqrt(dx*dx+dy*dy);
@@ -182,7 +190,7 @@ enum NPCState {
             state = NPCState.WAITING;
             activeRequests--;
             waitTime = 60*3 + round(random(60*20));
-            
+
             p.carryingBeer = false;
             p.drinkingTimestamp = millis();
             for (Player otherPlayer : players) {
@@ -273,6 +281,17 @@ enum NPCState {
   void render() {
     if (state != NPCState.GONE) {
       image(shadow, x-32, y-32);
+
+      //Draw feet
+      translate(x, y);
+      rotate(dir-PI*0.5);
+      image(shoeImage, -3-6, sin(walkAnim)*12-4);
+      resetMatrix();
+      translate(x, y);
+      rotate(dir-PI*0.5);
+      image(shoeImage, 6-3, cos(walkAnim)*12-4);
+      resetMatrix();
+
       translate(x, y);
       rotate(dir-PI*0.5);
       switch(img) {
