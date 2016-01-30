@@ -37,8 +37,9 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
   color playerColor = color(255);
 
   int drinkingTimestamp = millis();
-
   int drinkingTimeout = 600;
+  boolean drinkingImmune = false;
+  int drinkingImmuneTimestamp = millis();
   
   boolean carryingBeer = false;
 

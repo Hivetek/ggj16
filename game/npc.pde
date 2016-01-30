@@ -184,7 +184,7 @@ enum NPCState {
             waitTime = 60*3 + round(random(60*20));
             
             p.carryingBeer = false;
-            p.drinkingTimestamp = millis();
+            p.drinkingImmune = true;
             for (Player otherPlayer : players) {
               if (otherPlayer != p) {
                 otherPlayer.drink();
