@@ -1,24 +1,25 @@
 class Player {
   int id = -1;
-  
+
   //Physics parameters
   float moveAccel = 0.5;
   float moveSpeed = 3.4;
+  float turnAccel = 0.5;
   float turnSpeed = 0.08;
   float friction = 0.08;
   float oscillationFreq = 0.03;
-  float oscillationAmpl = 0.18;
+  float oscillationAmpl = 0.20;
   float bounciness = 0.8;
 
   float radius = 16;
 
-  float px, py, x, y, vx, vy, ax, ay, dir;
+  float px, py, x, y, vx, vy, ax, ay, dirVel, dir;
   float dirOffset = 0.0;
 
   // Stats
-  float drunk = 0.0;
+  float drunk = 0.0; //<>//
   float bladder = 0.5;
-  
+
   float speed = 0;
 
   float realDirection; 
@@ -28,12 +29,17 @@ class Player {
     px = x = xx;
     py = y = yy;
     dir = random(2*PI);
-    ax = ay = vx = vy = 0;
+    ax = ay = vx = vy = dirVel = 0;
     realDirection = dir;
   }
 
   void update() {
-    int delay = round(drunk*15); 
+    int delay = round(drunk*10);
+    //int delay = 0; 
+
+    if (drunk > 0) {
+      drunk -= 0.0018;
+    }
 
     px = x;
     py = y;
@@ -52,11 +58,13 @@ class Player {
       ay -= sin(realDirection)*(moveAccel*(1.0-drunk*0.7));
     }
 
+    dirVel -= dirVel*turnAccel*(1.0-drunk*0.9);
+
     if (id == 0 && getPastInput(delay).isPressed(LEFT) || id == 1 && getPastInput(delay).isPressed('a')) {
-      dir -= turnSpeed;
+      dirVel += (-turnSpeed*(1.0+drunk*0.75)-dirVel)*turnAccel*2*(1.0-drunk*0.9);
     }
     if (id == 0 && getPastInput(delay).isPressed(RIGHT) || id == 1 && getPastInput(delay).isPressed('d')) {
-      dir += turnSpeed;
+      dirVel += (turnSpeed*(1.0+drunk*0.75)-dirVel)*turnAccel*2*(1.0-drunk*0.9);
     }
 
     vx += ax;
@@ -76,6 +84,7 @@ class Player {
 
     x += vx;
     y += vy;
+    dir += dirVel;
 
     //boundaries
     if (x < radius || x > width-radius)
@@ -86,7 +95,34 @@ class Player {
     x = min(max(radius, x), width-radius);
     y = min(max(radius, y), height-radius);
 
+    //Player collision
+    for (Player p : players) {
+      if (p.id != id) {
+        float dx = p.x-x;
+        float dy = p.y-y;
+        float dist = sqrt(dx*dx+dy*dy);
+        //TODO: elastic collisions
+        if (dist < p.radius + radius) {
+          
+          if (p.speed > speed) {
+            vx += (dx/dist)*1000.0+p.vx;
+            vy += (dy/dist)*1000.0+p.vy;
+          } else if (p.speed < speed) {
+            p.vx += (dx/dist)*1000.0+vx;
+            p.vy += (dy/dist)*1000.0+vy;
+          } else {
+            vx += (dx/dist)*1000.0+p.vx;
+            vy += (dy/dist)*1000.0+p.vy;
+            p.vx += (dx/dist)*1000.0+vx;
+            p.vy += (dy/dist)*1000.0+vy;
+          }
+        }
+      }
+    }
+
+
     //Obstacles
+    //TODO: Bounciness
     for (int i = 0; i < obstacles.length; i++) {
       if (obstacles[i].type == 0) {
         if (obstacles[i].intersects(x, y, radius)) {
@@ -96,9 +132,12 @@ class Player {
           float rsum = radius + obstacles[i].r;
           x += (dx*(rsum-dist))/dist;
           y += (dy*(rsum-dist))/dist;
+          drunk = 1.0; //TODO: REMOVE!
         }
       } else if (obstacles[i].type == 1) {
         if (obstacles[i].intersects(x, y, radius)) {
+          drunk = 1.0; //TODO: REMOVE!
+
           for (int n = 0; n < 60; n++) {
             float a = n*2*PI/60;
             float rx = x + cos(a)*radius;
@@ -110,7 +149,7 @@ class Player {
                 y -= sin(a);
                 rx = x + cos(a)*radius;
                 ry = y + sin(a)*radius;
-                if(!obstacles[i].intersects(rx, ry, 0)){
+                if (!obstacles[i].intersects(rx, ry, 0)) {
                   collision = false;
                 }
               }

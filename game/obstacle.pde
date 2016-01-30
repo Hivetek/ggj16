@@ -22,7 +22,7 @@ class Obstacle {
   boolean intersects(float ix, float iy, float radius) {
     if (type == 0) {
       float dx = ix-x;
-      float dy = ix-y;
+      float dy = iy-y;
       float dist = sqrt(dx*dx+dy*dy);
       if (dist < radius+r) {
         return true;
