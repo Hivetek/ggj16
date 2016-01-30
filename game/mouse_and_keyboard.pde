@@ -85,10 +85,30 @@ void mouseReleased() {
 
 /**** KEYBOAD ****/
 void keyPressed() {
+  Input current = currentInput();
+  
   if (key == CODED) {
     currentInput().coded[keyCode] = true;
   } else {
     currentInput().keys[key] = true;
+  }
+  
+  
+  
+  if (current.isPressed(UP) || current.isPressed(LEFT) || current.isPressed(DOWN) || current.isPressed(RIGHT)) {
+     players[0].active = true;
+  }
+  
+  if (current.isPressed('w') || current.isPressed('a') || current.isPressed('s') || current.isPressed('d')) {
+     players[1].active = true;
+  }
+  
+  if (current.isPressed('i') || current.isPressed('j') || current.isPressed('k') || current.isPressed('l')) {
+     players[2].active = true;
+  }
+  
+  if (current.isPressed('8') || current.isPressed('4') || current.isPressed('5') || current.isPressed('6')) {
+     players[3].active = true;
   }
 }
 
