@@ -9,7 +9,7 @@ import ddf.minim.ugens.*;
  import org.gamecontrolplus.*;
  import org.gamecontrolplus.gui.*;*/
 
-Obstacle[] obstacles = new Obstacle[45];
+Obstacle[] obstacles = new Obstacle[0];
 Player[] players = new Player[4];
 
 
@@ -26,6 +26,7 @@ void setup() {
   players[3] = new Player(3, width/2-60, height/2, false); // Numpad
 
   initInputBuffer();
+  initScenery();
 
   for (int i = 0; i < obstacles.length; i++) {
     obstacles[i] = new Obstacle(random(width), random(height), round(random(1)));
@@ -59,6 +60,14 @@ void render() {
   for (int i = 0; i < obstacles.length; i++) {
     fill(255);
     obstacles[i].render();
+  }
+  
+  for (Door door : doors) {
+    door.render(); 
+  }
+  
+  for (Seat seat : seats) {
+    seat.render();
   }
 }
 
