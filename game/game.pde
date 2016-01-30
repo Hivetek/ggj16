@@ -11,7 +11,6 @@ import org.gamecontrolplus.gui.*;*/
 
 Player[] players = new Player[2];
 
-Path path1 = new Path();
 
 void setup(){
   size(1280, 720);
@@ -24,11 +23,6 @@ void setup(){
   players[1] = new Player(1, width/2, height/2);
   
   initInputBuffer();
-  
-  path1.addPoint(width/2,height/2);
-  path1.addPoint(400,200);
-  path1.addPoint(200,300);
-  path1.addPoint(width/2,0);
 }
 
 void draw(){  
@@ -51,8 +45,6 @@ void render(){
   for (Player p : players) {
     p.render();
   }
-  
-  path1.render();
   
   // --- HUD ---
   
