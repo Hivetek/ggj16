@@ -160,7 +160,8 @@ enum NPCState {
           if (state == NPCState.REQUESTING) {
             state = NPCState.WAITING;
             waitTime = 60*3 + round(random(60*20));
-            //TODO: Other players drink
+ 
+            p.drinkingTimestamp = millis();
             for (Player otherPlayer : players) {
               if (otherPlayer != p) {
                 otherPlayer.drink();
