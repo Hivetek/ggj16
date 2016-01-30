@@ -14,12 +14,13 @@ boolean DEBUG = false;
 PFont comicFont;
 PFont talkFont;
 PFont regularFont; 
-PImage bgImage, smallTableImage, bigTableImage, fratBroImage1, fratBroImage2, fratBroImage3;  
+PImage bgImage, smallTableImage, bigTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4;  
 
 Obstacle[] obstacles = new Obstacle[22];
 
 Player[] players = new Player[4];
 
+int activePlayers = 0;
 
 void setup() {
   size(1280, 720);
@@ -38,6 +39,11 @@ void setup() {
   fratBroImage1 = loadImage("data/images/frat_bro_1.png");
   fratBroImage2 = loadImage("data/images/frat_bro_2.png");
   fratBroImage3 = loadImage("data/images/frat_bro_3.png");
+  bunny1 = loadImage("data/images/bunny_1.png");
+  bunny2 = loadImage("data/images/bunny_2.png");
+  bunny3 = loadImage("data/images/bunny_3.png");
+  bunny4 = loadImage("data/images/bunny_4.png");
+  shadow = loadImage("data/images/shadow.png");
   textAlign(CENTER, CENTER);
   textFont(comicFont);
 
