@@ -17,7 +17,7 @@ class Player { //<>// //<>// //<>//
   float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
   int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
-  float drunkReductionRate = 0.0005;
+  float drunkReductionRate = 0.0005; //<>//
 
   float radius = 16;
 
@@ -210,6 +210,13 @@ class Player { //<>// //<>// //<>//
     }
     
     //TODO: NPC collision
+  }
+  
+  void drink() {
+    if (this.drunk < 1.0) {
+      this.drunk += 0.1;
+      this.bladder += 0.05;
+    }
   }
 
   void render() {

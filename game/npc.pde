@@ -159,11 +159,13 @@ enum NPCState {
             state = NPCState.WAITING;
             waitTime = 60*3 + round(random(60*20));
             //TODO: Other players drink
-          } else {
-            if (p.drunk < 1.0) {
-              p.drunk += 0.1;
-              p.bladder += 0.05;
+            for (Player otherPlayer : players) {
+              if (otherPlayer != p) {
+                otherPlayer.drink();
+              }
             }
+          } else {
+            p.drink();
           }
 
           float mx = (dx/dist)*(dist-(p.radius + radius))*0.5;
