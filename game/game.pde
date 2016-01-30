@@ -20,10 +20,11 @@ void setup() {
   noFill();
   ellipseMode(RADIUS);
 
-  players[0] = new Player(0, 60, 60, true);
-  players[1] = new Player(1, width-60, height-60, true);
-  players[2] = new Player(2, width-60, 60, true);
-  players[3] = new Player(3, 60, height-60, true);
+
+  players[0] = new Player(0, 60, 60, false); // Arrows
+  players[1] = new Player(1, width-60, height-60, false); // WASD
+  players[2] = new Player(2, width-60, 60, false); // IJKL
+  players[3] = new Player(3, 60, height - 60, false); // Numpad
 
   initInputBuffer();
 

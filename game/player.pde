@@ -10,12 +10,13 @@ class Player {
   float bounciness = 0.8;
   
   //Drunkenness parameters
-  float drunkOscillationFreq = 0.03; //Swerving oscillation frequency when drunk
+  float drunkOscillationFreq = 0.02; //Swerving oscillation frequency when drunk
   float drunkOscillationAmpl = 0.20; //Swerving oscillation amplitude when drunk
   float drunkMoveDamp = 0.7; //Reduction of acceleration when drunk
   float drunkFriction = 0.5; //Reduction of friction when drunk, 50%
   float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
+  int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
   float drunkReductionRate = 0.0018;
 
   float radius = 16;
@@ -23,7 +24,7 @@ class Player {
   float px, py, x, y, vx, vy, ax, ay, dirVel, dir;
   float dirOffset = 0.0;
 
-  // Stats
+  // Stats //<>//
   float drunk = 0.0; //<>//
   float bladder = 0.5;
 
@@ -46,17 +47,42 @@ class Player {
   void update() {
     if (!this.active) return;
     
-    int delay = round(drunk*10);
-    //int delay = 0; 
+    //DEBUG
+    if(getPastInput(0).isPressed('1')){
+      drunk = 0.0;
+    }
+    if(getPastInput(0).isPressed('2')){
+      drunk = 0.25;
+    }
+    if(getPastInput(0).isPressed('3')){
+      drunk = 0.5;
+    }
+    if(getPastInput(0).isPressed('4')){
+      drunk = 0.75;
+    }
+    if(getPastInput(0).isPressed('5')){
+      drunk = 1.0;
+    }
+    //END DEBUG
+    
+    int delay = round(drunk*drunkDelay);
+    println(delay);
 
     if (drunk > 0) {
-      drunk -= drunkReductionRate;
+      //drunk -= drunkReductionRate;
     }
 
     px = x;
     py = y;
-
-    realDirection = dir + drunk*drunkOscillationAmpl*PI*cos(dirOffset);
+    
+    //Add swerving to direction
+    float swerving = 0.0;
+    if(drunk > 0.5){
+      swerving = 1.0;
+    } else {
+      swerving = drunk*2.0;
+    }
+    realDirection = dir + swerving*drunkOscillationAmpl*PI*cos(dirOffset);
 
     ax = 0;
     ay = 0;
@@ -143,12 +169,9 @@ class Player {
           float rsum = radius + obstacles[i].r;
           x += (dx*(rsum-dist))/dist;
           y += (dy*(rsum-dist))/dist;
-          drunk = 1.0; //TODO: REMOVE!
         }
       } else if (obstacles[i].type == 1) {
         if (obstacles[i].intersects(x, y, radius)) {
-          drunk = 1.0; //TODO: REMOVE!
-
           for (int n = 0; n < 60; n++) {
             float a = n*2*PI/60;
             float rx = x + cos(a)*radius;
@@ -171,7 +194,7 @@ class Player {
     }
 
     //Drunken motion drunkOscillation
-    dirOffset += drunk*drunkOscillationFreq*speed;
+    dirOffset += drunkOscillationFreq*speed;
     if (dirOffset > PI*2) dirOffset -= PI*2;
   }
 
