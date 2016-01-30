@@ -163,8 +163,7 @@ class BeerStation {
   }
   
   void render() {
-    fill(255);
-    rect(x-w/2,y-h/2, w, h);
+    image(beerstationImage, x-w/2-5, y-h/2-7);
   }
   
   
@@ -198,8 +197,8 @@ void initScenery() {
     staticObstacles.add(table.assocObstacle);
   }
   
-  beerstations.add(new BeerStation(115,95));
-  beerstations.add(new BeerStation(115,630));
+  beerstations.add(new BeerStation(125,95));
+  beerstations.add(new BeerStation(125,630));
   beerstations.add(new BeerStation(1160,95));
   beerstations.add(new BeerStation(1160,630));
 

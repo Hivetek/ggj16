@@ -15,7 +15,7 @@ PFont comicFont;
 PFont talkFont;
 PFont regularFont; 
 
-PImage bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, beerImage, shoeImage;  
+PImage bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, beerImage, shoeImage, beerstationImage;  
 
 Obstacle[] obstacles = new Obstacle[22];
 
@@ -53,6 +53,7 @@ void setup() {
   shadow = loadImage("data/images/shadow.png");
   beerImage = loadImage("data/images/beercup_carry.png");
   shoeImage = loadImage("data/images/shoe.png");
+  beerstationImage = loadImage("data/images/station.png");
   
   textAlign(CENTER, CENTER);
   textFont(comicFont);
