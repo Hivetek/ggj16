@@ -17,7 +17,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   float drunkOscillationAmpl = 0.20; //Swerving oscillation amplitude when drunk
   float drunkMoveDamp = 0.7; //Reduction of acceleration when drunk
   float drunkFriction = 0.5; //Reduction of friction when drunk, 50%
-  float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk
+  float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk //<>//
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
   int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
   float drunkReductionRate = 0.0;//0.00025;  //<>// //<>// //<>//
@@ -102,25 +102,25 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
     ay = 0;
 
     //Movement & controls
-    if (id == 0 && getPastInput(delay).isPressed(UP) && !currentlyDrinking()  || id == 1 && getPastInput(delay).isPressed('w') && !currentlyDrinking()
-      || id == 2 && getPastInput(delay).isPressed('i') && !currentlyDrinking() || id == 3 && getPastInput(delay).isPressed('8') && !currentlyDrinking()) {
+    if (id == 0 && getPastInput(delay).isPressed(UP)   || id == 1 && getPastInput(delay).isPressed('w')
+      || id == 2 && getPastInput(delay).isPressed('i') || id == 3 && getPastInput(delay).isPressed('8')) {
       ax += cos(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
       ay += sin(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
     }
-    if (id == 0 && getPastInput(delay).isPressed(DOWN) && !currentlyDrinking() || id == 1 && getPastInput(delay).isPressed('s') && !currentlyDrinking()
-      || id == 2 && getPastInput(delay).isPressed('k') && !currentlyDrinking() || id == 3 && getPastInput(delay).isPressed('5') && !currentlyDrinking()) {
+    if (id == 0 && getPastInput(delay).isPressed(DOWN) || id == 1 && getPastInput(delay).isPressed('s')
+      || id == 2 && getPastInput(delay).isPressed('k') || id == 3 && getPastInput(delay).isPressed('5')) {
       ax -= cos(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
       ay -= sin(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
     }
 
     dirVel -= dirVel*turnAccel*(1.0-drunk*drunkTurnDamp);
 
-    if (id == 0 && getPastInput(delay).isPressed(LEFT) && !currentlyDrinking() || id == 1 && getPastInput(delay).isPressed('a') && !currentlyDrinking()
-      || id == 2 && getPastInput(delay).isPressed('j') && !currentlyDrinking()  || id == 3 && getPastInput(delay).isPressed('4') && !currentlyDrinking()) {
+    if (id == 0 && getPastInput(delay).isPressed(LEFT) || id == 1 && getPastInput(delay).isPressed('a')
+      || id == 2 && getPastInput(delay).isPressed('j') || id == 3 && getPastInput(delay).isPressed('4')) {
       dirVel += (-turnSpeed*(1.0+drunk*drunkTurnSpeed)-dirVel)*turnAccel*2*(1.0-drunk*drunkTurnDamp);
     }
-    if (id == 0 && getPastInput(delay).isPressed(RIGHT) && !currentlyDrinking() || id == 1 && getPastInput(delay).isPressed('d') && !currentlyDrinking()
-      || id == 2 && getPastInput(delay).isPressed('l')  && !currentlyDrinking()  || id == 3 && getPastInput(delay).isPressed('6') && !currentlyDrinking()) {
+    if (id == 0 && getPastInput(delay).isPressed(RIGHT) || id == 1 && getPastInput(delay).isPressed('d')
+      || id == 2 && getPastInput(delay).isPressed('l')  || id == 3 && getPastInput(delay).isPressed('6')) {
       dirVel += (turnSpeed*(1.0+drunk*drunkTurnSpeed)-dirVel)*turnAccel*2*(1.0-drunk*drunkTurnDamp);
     }
 
