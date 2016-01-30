@@ -4,6 +4,7 @@ ArrayList<Door> doors = new ArrayList<Door>();
 ArrayList<Obstacle> staticObstacles = new ArrayList<Obstacle>();
 
 
+
 class STable {
   int x;
   int y;
@@ -18,7 +19,7 @@ class STable {
     this.w = w;
     this.h = h;
   }
-  
+
   void render() {
     pushStyle();
 
@@ -27,7 +28,7 @@ class STable {
 
     popStyle();
   }
-  
+
   Obstacle createObstacle() {
     Obstacle o = new Obstacle(x, y, 1);
     o.w = w;
@@ -64,7 +65,7 @@ class Seat {
     if (bestDoor == null) {
       println("Error: Could not find door for seat");
     }
-    
+
     this.door = bestDoor;
   }
 
@@ -115,31 +116,29 @@ class Door {
 void initScenery() {
   // Tables
   tables.add(new STable(500, 400, 300, 200));
-  
-  
+
+
   for (STable table : tables) {
     staticObstacles.add(table.createObstacle());
   }
-  
+
   // Doors
   doors.add(new Door(50, 10, true));
-  
+
   doors.add(new Door(10, 50, false));
 
   // Seats
   for (int i = 0; i < 10; i++) {
     seats.add(new Seat(width/2 -200 - i*40, height/2-100));
   }
-  
-  
+
+
   // Find doors for seats
   for (Seat seat : seats) {
-    seat.findDoor(); 
+    seat.findDoor();
   }
-}
 
 
-
-class NPC {
-  Seat seat;
+  // Initial NPCS
+  npcs.add(new NPC(seats.get(0), false));
 }

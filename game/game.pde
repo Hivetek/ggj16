@@ -72,6 +72,10 @@ void draw() {
 void update() {
   goToNextInput();
 
+  for (NPC npc : npcs) {
+    npc.update(); 
+  }
+
   for (Player p : players) {
     //p.drunk = 1.0*mouseX/width;
     p.update();
@@ -80,7 +84,15 @@ void update() {
 
 void render() {
   background(0);
-
+  
+  for (Seat seat : seats) {
+    seat.render();
+  }
+  
+  for (NPC npc : npcs) {
+    npc.render(); 
+  }
+  
   for (Player p : players) {
     p.render();
   }
@@ -93,9 +105,7 @@ void render() {
     door.render(); 
   }
   
-  for (Seat seat : seats) {
-    seat.render();
-  }
+
 
   
   fill(255);
