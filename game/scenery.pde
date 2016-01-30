@@ -131,10 +131,20 @@ void initScenery() {
   doors.add(new Door(56, height/3-5, false));
   doors.add(new Door(56, 2*height/3+18, false));
 
-  // Seats
-  for (int i = 0; i < 3; i++) {
-    seats.add(new Seat(random(width), random(height)));
-  }
+  // --- Seats ---
+  
+  // Top left table
+  seats.add(new Seat(235, 215));
+  seats.add(new Seat(235, 270));
+  seats.add(new Seat(295, 150));
+  seats.add(new Seat(370, 150)); 
+  seats.add(new Seat(440, 215));
+  seats.add(new Seat(440, 270));
+  seats.add(new Seat(295, 325));
+  seats.add(new Seat(370, 325));
+  
+  seats.add(new Seat(235, 450));
+  seats.add(new Seat(235, 510));
 
 
   // Find doors for seats
