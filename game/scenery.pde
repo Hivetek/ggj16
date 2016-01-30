@@ -21,12 +21,7 @@ class STable {
   }
 
   void render() {
-    pushStyle();
-
-    fill(255, 255, 255);
-    rect(x-w/2, y-h/2, w, h);
-
-    popStyle();
+    image(smallTableImage, x-w/2, y-h/2);
   }
 
   Obstacle createObstacle() {
@@ -112,7 +107,7 @@ class Door {
 
 void initScenery() {
   // Tables
-  tables.add(new STable(500, 400, 300, 200));
+  tables.add(new STable(500, 400, 160, 132));
 
   for (STable table : tables) {
     staticObstacles.add(table.createObstacle());

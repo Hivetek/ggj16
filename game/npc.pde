@@ -23,7 +23,7 @@ enum NPCState {
 
   int waitTime = 0;
 
-  float requestChance = 0.4; //80% for beer request
+  float requestChance = 0.4; //40% for beer request
 
   Seat seat;
 

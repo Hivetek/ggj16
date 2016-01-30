@@ -12,7 +12,7 @@ import ddf.minim.ugens.*;
 
 PFont comicFont;
 PFont talkFont;
-PImage bgImage;
+PImage bgImage, smallTableImage, bigTableImage; //218x180, 160x132
 
 Obstacle[] obstacles = new Obstacle[22];
 
@@ -29,6 +29,8 @@ void setup() {
   comicFont = loadFont("data/fonts/ComicaBDBold-48.vlw");
   talkFont = loadFont("data/fonts/Talkies-60.vlw");
   bgImage = loadImage("data/images/floor.png");
+  smallTableImage = loadImage("data/images/table_small.png");
+  bigTableImage = loadImage("data/images/table_big.png");
   textAlign(CENTER, CENTER);
   textFont(comicFont);
 
@@ -103,7 +105,7 @@ void render() {
   }
   
   for (STable table : tables) {
-    //table.render(); 
+    table.render(); 
   }
   
   for (Door door : doors) {
@@ -111,7 +113,7 @@ void render() {
   }
   
 
-  for (Obstacle obstacle : staticObstacles) {
+   for (Obstacle obstacle : staticObstacles) {
     obstacle.render();
   }
 }
