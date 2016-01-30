@@ -112,7 +112,18 @@ class Door {
 
 void initScenery() {
   // Tables
-  tables.add(new STable(500, 400, 300, 200));
+  
+  // Center table
+  tables.add(new STable(width/2, height/2, 180, 180));
+  
+  // Commander table
+  tables.add(new STable(60 + 70, height/2, 30, 120));
+  
+  // Four smaller tables
+  tables.add(new STable(60 + 275, 60 + 180, 120, 120));
+  tables.add(new STable(width - 60 - 275, 60 + 180, 120, 120));
+  tables.add(new STable(60 + 275, height - 60 - 180, 120, 120));
+  tables.add(new STable(width - 60 - 275, height - 60 - 180, 120, 120));
 
   for (STable table : tables) {
     staticObstacles.add(table.createObstacle());
