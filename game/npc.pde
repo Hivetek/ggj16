@@ -47,9 +47,9 @@ enum NPCState {
 
   void update() {
     float dx, dy, dist;
-    
-    if(abs(vx) > 0.1 && abs(vy) > 0.1){ 
-    dir += (atan2(vy, vx)-dir)*0.1;
+
+    if (abs(vx) > 0.1 && abs(vy) > 0.1) { 
+      dir += (atan2(vy, vx)-dir)*0.15;
     }
 
     switch(state) {
@@ -176,8 +176,8 @@ enum NPCState {
           float mx = (dx/dist)*(dist-(p.radius + radius))*0.5;
           float my = (dy/dist)*(dist-(p.radius + radius))*0.5;
 
-          p.vx += (dx/dist)*100.0;
-          p.vy += (dy/dist)*100.0;
+          p.vx += vx+(dx/dist)*100.0;
+          p.vy += vy+(dy/dist)*100.0;
 
           x += mx;
           y += my;
@@ -251,6 +251,7 @@ enum NPCState {
 
   void render() {
     if (state != NPCState.GONE) {
+      image(shadow, x-32, y-32);
       translate(x, y);
       rotate(dir-PI*0.5);
       switch(img) {
