@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>//
+class Player {
   int id = -1;
 
   //Physics parameters
@@ -35,6 +35,9 @@ class Player { //<>// //<>// //<>//
   boolean active = false;
 
   color playerColor = color(255);
+  
+  int drinkingTimestamp = millis();
+  int drinkingTimeout = 1000;
 
   Player(int id, float xx, float yy, boolean active) {
     this.id = id;
@@ -213,10 +216,18 @@ class Player { //<>// //<>// //<>//
   }
   
   void drink() {
-    if (this.drunk < 1.0) {
-      this.drunk += 0.1;
-      this.bladder += 0.05;
+    int now = millis();
+    
+    if (now - this.drinkingTimestamp >= this.drinkingTimeout) {
+      this.drinkingTimestamp = millis();
+      if (this.drunk < 1.0) {
+        this.drunk += 0.1;
+      }
+      if (this.bladder < 1.0) {
+        this.bladder += 0.05;
+      }
     }
+
   }
 
   void render() {
