@@ -55,11 +55,14 @@ void render(){
     // Drunk-meter
     int drunk_meter_width = 100;
     int drunk_meter_height = 10;
+    float drunk_meter_x = p.x - drunk_meter_width / 2;
+    float drunk_meter_y = p.y - p.radius*2 - drunk_meter_height;
+    
     stroke(59.2, 2.7, 0.8);
     noFill();
-    rect(p.x - drunk_meter_width / 2, p.y - p.radius*2 - drunk_meter_height, drunk_meter_width, drunk_meter_height);
+    rect(drunk_meter_x, drunk_meter_y, drunk_meter_width, drunk_meter_height);
     fill(59.2, 2.7, 0.8);
-    rect(p.x - drunk_meter_width / 2, p.y - p.radius*2 - drunk_meter_height, min(p.drunk*drunk_meter_width, drunk_meter_width), drunk_meter_height);
+    rect(drunk_meter_x, drunk_meter_y, min(p.drunk*drunk_meter_width, drunk_meter_width), drunk_meter_height);
     
     popStyle();
     
@@ -68,11 +71,13 @@ void render(){
     // Drunk-meter
     int bladder_meter_width = 100;
     int bladder_meter_height = 10;
-    stroke(   90.2, 90.2, 0);
+    float bladder_meter_x = p.x - bladder_meter_width / 2;
+    float bladder_meter_y = p.y - p.radius*2 - drunk_meter_height - 5 - bladder_meter_height;
+    stroke(90.2, 90.2, 0);
     noFill();
-    rect(p.x - bladder_meter_width / 2, p.y - p.radius*2 - drunk_meter_height - 5 - bladder_meter_height, bladder_meter_width, bladder_meter_height);
-    fill(   90.2, 90.2, 0);
-    rect(p.x - bladder_meter_width / 2, p.y - p.radius*2 - drunk_meter_height - 5 - bladder_meter_height, min(p.bladder*bladder_meter_width, bladder_meter_width), bladder_meter_height);
+    rect(bladder_meter_x, bladder_meter_y, bladder_meter_width, bladder_meter_height);
+    fill(90.2, 90.2, 0);
+    rect(bladder_meter_x, bladder_meter_y, min(p.bladder*bladder_meter_width, bladder_meter_width), bladder_meter_height);
     
     popStyle();
   
