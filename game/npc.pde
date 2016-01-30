@@ -24,6 +24,7 @@ enum NPCState {
   int waitTime = 0;
 
   float requestChance = 0.4; //40% for beer request
+  float spawnChance = 0.2; //20% chance that a new NPC will spawn
 
   Seat seat;
 
@@ -89,9 +90,25 @@ enum NPCState {
 
       if (dist < 1.0) {
         state = NPCState.GONE;
+        waitTime = 60+round(random(60*10));
       }
       break;
     case GONE:
+      if (waitTime > 0) {
+        waitTime--;
+      } else {
+        int s = seats.size();
+        int sid = round(random(s));
+        seat = seats.get(sid);
+        while (seatIsOccupied(seat)) {
+          sid++;
+          if(sid >= seats.size()) sid = 0;
+          seat = seats.get(sid);
+        }
+        x = seat.door.x;
+        y = seat.door.y;
+        state = NPCState.ENTERING;
+      }
       break;
     }
   }

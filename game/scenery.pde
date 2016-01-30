@@ -21,7 +21,7 @@ class STable {
   }
 
   void render() {
-    image(smallTableImage, x-w/2, y-h/2);
+    image(smallTableImage, x-w/2-3, y-h/2-4);
   }
 
   Obstacle createObstacle() {
@@ -107,7 +107,18 @@ class Door {
 
 void initScenery() {
   // Tables
-  tables.add(new STable(500, 400, 160, 132));
+
+  // Center table
+  //tables.add(new STable(width/2, height/2, 180, 180));
+
+  // Commander table
+  //tables.add(new STable(60 + 70, height/2, 30, 120));
+
+  // Four smaller tables
+  tables.add(new STable(60 + 275, 60 + 180, 150, 121));
+  tables.add(new STable(width - 60 - 275, 60 + 180, 150, 121));
+  tables.add(new STable(60 + 275, height - 60 - 180, 150, 121));
+  tables.add(new STable(width - 60 - 275, height - 60 - 180, 150, 121));
 
   for (STable table : tables) {
     staticObstacles.add(table.createObstacle());
@@ -121,7 +132,7 @@ void initScenery() {
   doors.add(new Door(56, 2*height/3+18, false));
 
   // Seats
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 3; i++) {
     seats.add(new Seat(random(width), random(height)));
   }
 

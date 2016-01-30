@@ -12,7 +12,7 @@ import ddf.minim.ugens.*;
 
 PFont comicFont;
 PFont talkFont;
-PImage bgImage, smallTableImage, bigTableImage; //218x180, 160x132
+PImage bgImage, smallTableImage, bigTableImage; //150x121, 203x164 
 
 Obstacle[] obstacles = new Obstacle[22];
 
