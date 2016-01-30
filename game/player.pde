@@ -1,4 +1,4 @@
-class Player { //<>//
+class Player { //<>// //<>//
   int id = -1;
   
   float animationSpeed = 0.07;
@@ -20,7 +20,7 @@ class Player { //<>//
   float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk //<>//
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
   int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
-  float drunkReductionRate = 0.0002;//0.00025 //<>//
+  float drunkReductionRate = 0.0002;//0.00025 //<>// //<>//
 
   float radius = 12;
 
@@ -237,12 +237,17 @@ class Player { //<>//
     if (!this.currentlyDrinking()) {
       this.drinkingTimestamp = millis();
       if (this.drunk < 1.0) {
-        this.drunk += 0.15;
+        this.drunk += 0.20;
       }
       if (this.bladder < 1.0) {
         this.bladder += 0.05;
       }
     }
+  }
+  
+  void die(){
+    active = false;
+    //TODO: EXPLOSION HERE!
   }
   
   boolean currentlyDrinking() {

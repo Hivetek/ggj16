@@ -31,6 +31,8 @@ enum NPCState {
   float requestChanceAddition =  0.06; //6% higher chance per player
   float spawnChance = 0.4; //40% chance that a new NPC will spawn
 
+  boolean carryingBeer = false;
+
   Seat seat;
 
   NPCState state;
@@ -103,7 +105,7 @@ enum NPCState {
       } else {
         waitTime = 0;
         float rand = random(1.0);
-        if (activeRequests == 0 || rand <= requestChanceBase + requestChanceAddition*activePlayers) {
+        if ((activeRequests == 0 || rand <= requestChanceBase + requestChanceAddition*activePlayers) && !carryingBeer) {
           state = NPCState.REQUESTING;
           activeRequests++;
           vx = 0;
@@ -124,6 +126,7 @@ enum NPCState {
 
       if (dist <= radius+30) {
         state = NPCState.GONE;
+        carryingBeer = false;
         vx = 0;
         vy = 0;
         waitTime = 60+round(random(60*10));
@@ -147,7 +150,7 @@ enum NPCState {
 
         if (npcs.size() < seats.size()-1) {
           float rand = random(1.0);
-          if (rand < 0.3) {
+          if (rand < 0.35) { //35% chance to spawn another NPC
             spawnNPC = true;
           }
         }
@@ -159,7 +162,7 @@ enum NPCState {
     y += vy;
 
     collisionHandling();
-    
+
     float moveSpeed = sqrt(vx*vx+vy*vy);
     walkAnim += moveSpeed*animationSpeed;
   }
@@ -186,6 +189,7 @@ enum NPCState {
         //TODO: elastic collisions
         if (dist < p.radius + radius && dist > 0) {
           if (state == NPCState.REQUESTING && p.carryingBeer) {
+            carryingBeer = true;
 
             state = NPCState.WAITING;
             activeRequests--;
@@ -304,6 +308,9 @@ enum NPCState {
       default:
         image(fratBroImage3, -18, -18);
         break;
+      }
+      if (carryingBeer) {
+        image(beerImage, -18, -18);
       }
       resetMatrix();
 

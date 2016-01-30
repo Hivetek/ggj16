@@ -51,7 +51,7 @@ void setup() {
   bunny3 = loadImage("data/images/bunny_3.png");
   bunny4 = loadImage("data/images/bunny_4.png");
   shadow = loadImage("data/images/shadow.png");
-  beerImage = loadImage("data/images/beercup_carry.png");
+  beerImage = loadImage("data/images/big_beer_left.png");
   shoeImage = loadImage("data/images/shoe.png");
   beerstationImage = loadImage("data/images/station.png");
   
