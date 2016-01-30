@@ -269,7 +269,7 @@ void initScenery() {
 
 
   // Initial NPCS
-  for (int i = 0; i < 43; i++) {
+  for (int i = 0; i < 4; i++) {
     npcs.add(new NPC(seats.get(i), true));
   }
 }

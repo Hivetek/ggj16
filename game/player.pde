@@ -37,7 +37,7 @@ class Player { //<>// //<>// //<>//
   color playerColor = color(255);
 
   int drinkingTimestamp = millis();
-  int drinkingTimeout = 1000;
+  int drinkingTimeout = 600; //Be immune to further drinking this number of milliseconds after drinking
 
   Player(int id, float xx, float yy, boolean active) {
     this.id = id;
