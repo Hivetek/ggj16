@@ -9,7 +9,7 @@ import ddf.minim.ugens.*;
 import org.gamecontrolplus.*;
 import org.gamecontrolplus.gui.*;*/
 
-Player player;
+Player[] players = new Player[2];
 
 void setup(){
   size(1280, 720);
@@ -18,7 +18,8 @@ void setup(){
   noFill();
   ellipseMode(RADIUS);
   
-  player = new Player(width/2, height/2);
+  players[0] = new Player(0, width/2, height/2);
+  players[1] = new Player(1, width/2, height/2);
   
   initInputBuffer();
 }
@@ -30,47 +31,52 @@ void draw(){
 
 void update(){
   goToNextInput();
-  player.drunk = 1.0*mouseX/width;
-  player.update();
+  
+  for (Player p : players) {
+    p.drunk = 1.0*mouseX/width;
+    p.update();
+  }
 }
 
 void render(){
   background(0);
   
-  player.render();
-  
-  fill(255);
-  ellipse(200, 350, 30, 30);
-  ellipse(340, 350, 30, 30);
-  rect(0, 10, player.drunk*width, 20);
-  line(0, 10, player.drunk*width, 10);
+  for (Player p : players) {
+    p.render();
+  }
   
   
   // --- HUD ---
   
-  pushStyle();
+  for (Player p : players) {
   
-  // Drunk-meter
-  int drunk_meter_width = 100;
-  int drunk_meter_height = 10;
-  stroke(59.2, 2.7, 0.8);
-  noFill();
-  rect(player.x - drunk_meter_width / 2, player.y - player.radius*2 - drunk_meter_height, drunk_meter_width, drunk_meter_height);
-  fill(59.2, 2.7, 0.8);
-  rect(player.x - drunk_meter_width / 2, player.y - player.radius*2 - drunk_meter_height, min(player.drunk*drunk_meter_width, drunk_meter_width), drunk_meter_height);
+    pushStyle();
+    
+    // Drunk-meter
+    int drunk_meter_width = 100;
+    int drunk_meter_height = 10;
+    stroke(59.2, 2.7, 0.8);
+    noFill();
+    rect(p.x - drunk_meter_width / 2, p.y - p.radius*2 - drunk_meter_height, drunk_meter_width, drunk_meter_height);
+    fill(59.2, 2.7, 0.8);
+    rect(p.x - drunk_meter_width / 2, p.y - p.radius*2 - drunk_meter_height, min(p.drunk*drunk_meter_width, drunk_meter_width), drunk_meter_height);
+    
+    popStyle();
+    
+    pushStyle();
+    
+    // Drunk-meter
+    int bladder_meter_width = 100;
+    int bladder_meter_height = 10;
+    stroke(   90.2, 90.2, 0);
+    noFill();
+    rect(p.x - bladder_meter_width / 2, p.y - p.radius*2 - drunk_meter_height - 5 - bladder_meter_height, bladder_meter_width, bladder_meter_height);
+    fill(   90.2, 90.2, 0);
+    rect(p.x - bladder_meter_width / 2, p.y - p.radius*2 - drunk_meter_height - 5 - bladder_meter_height, min(p.bladder*bladder_meter_width, bladder_meter_width), bladder_meter_height);
+    
+    popStyle();
   
-  popStyle();
+  }
   
-  pushStyle();
-  
-  // Drunk-meter
-  int bladder_meter_width = 100;
-  int bladder_meter_height = 10;
-  stroke(   90.2, 90.2, 0);
-  noFill();
-  rect(player.x - bladder_meter_width / 2, player.y - player.radius*2 - drunk_meter_height - 5 - bladder_meter_height, bladder_meter_width, bladder_meter_height);
-  fill(   90.2, 90.2, 0);
-  rect(player.x - bladder_meter_width / 2, player.y - player.radius*2 - drunk_meter_height - 5 - bladder_meter_height, min(player.bladder*bladder_meter_width, bladder_meter_width), bladder_meter_height);
-  
-  popStyle();
+
 }
