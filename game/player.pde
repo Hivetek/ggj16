@@ -1,4 +1,6 @@
 class Player {
+  int id = -1;
+  
   //Physics parameters
   float moveAccel = 0.5;
   float moveSpeed = 3.4;
@@ -13,12 +15,16 @@ class Player {
   float px, py, x, y, vx, vy, ax, ay, dir;
   float dirOffset = 0.0;
 
+  // Stats
   float drunk = 0.0;
+  float bladder = 0.5;
+  
   float speed = 0;
 
   float realDirection; 
- //<>//
-  Player(float xx, float yy) {
+
+  Player(int id, float xx, float yy) {
+    this.id = id;
     px = x = xx;
     py = y = yy;
     dir = random(2*PI);
@@ -37,19 +43,19 @@ class Player {
     ax = 0;
     ay = 0;
 
-    if (getPastInput(delay).isPressed(UP)) {
+    if (id == 0 && getPastInput(delay).isPressed(UP) || id == 1 && getPastInput(delay).isPressed('w')) {
       ax += cos(realDirection)*(moveAccel*(1.0-drunk*0.7));
       ay += sin(realDirection)*(moveAccel*(1.0-drunk*0.7));
     }
-    if (getPastInput(delay).isPressed(DOWN)) {
+    if (id == 0 && getPastInput(delay).isPressed(DOWN) || id == 1 && getPastInput(delay).isPressed('s')) {
       ax -= cos(realDirection)*(moveAccel*(1.0-drunk*0.7));
       ay -= sin(realDirection)*(moveAccel*(1.0-drunk*0.7));
     }
 
-    if (getPastInput(delay).isPressed(LEFT)) {
+    if (id == 0 && getPastInput(delay).isPressed(LEFT) || id == 1 && getPastInput(delay).isPressed('a')) {
       dir -= turnSpeed;
     }
-    if (getPastInput(delay).isPressed(RIGHT)) {
+    if (id == 0 && getPastInput(delay).isPressed(RIGHT) || id == 1 && getPastInput(delay).isPressed('d')) {
       dir += turnSpeed;
     }
 
