@@ -36,6 +36,9 @@ enum TableType {
       this.w = 203;
       this.h = 164;
       break;
+    case COMMANDER:
+      this.w = 44;
+      this.h = 121;
     }
     
     this.assocObstacle = createObstacle();
@@ -48,6 +51,9 @@ enum TableType {
       break;
     case BIG:
       image(bigTableImage, x-w/2-6, y-h/2-8);
+      break;
+    case COMMANDER:
+      image(commanderTableImage, x-w/2-5, y-h/2-7);
       break;
     }
   }
@@ -180,7 +186,7 @@ void initScenery() {
   tables.add(new STable(width/2, height/2, TableType.BIG));
 
   // Commander table
-  //tables.add(new STable(60 + 70, height/2, TableType.COMMANDER));
+  tables.add(new STable(60 + 70, height/2 + 15, TableType.COMMANDER));
 
   // Four smaller tables
   tables.add(new STable(60 + 275, 60 + 180, TableType.SMALL));
