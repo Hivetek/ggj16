@@ -1,4 +1,4 @@
-class Player {
+class Player { //<>// //<>// //<>//
   int id = -1;
 
   //Physics parameters
@@ -17,15 +17,15 @@ class Player {
   float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
   int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
-  float drunkReductionRate = 0.0018; //<>//
+  float drunkReductionRate = 0.0018;
 
   float radius = 16;
 
   float px, py, x, y, vx, vy, ax, ay, dirVel, dir;
   float dirOffset = 0.0;
 
-  // Stats //<>// //<>//
-  float drunk = 0.0; //<>// //<>//
+  // Stats //<>//
+  float drunk = 0.0; //<>//
   float bladder = 0.5;
 
   float speed = 0.0;
@@ -85,7 +85,7 @@ class Player {
     }
     //END DEBUG
     int delay = 0;
-    if(drunk >= 0.5){
+    if (drunk >= 0.5) {
       delay = round(2*(drunk-0.5)*drunkDelay);
     }
 
@@ -167,7 +167,7 @@ class Player {
         float dy = p.y-y;
         float dist = sqrt(dx*dx+dy*dy);
         //TODO: elastic collisions
-        if (dist < p.radius + radius) {
+        if (dist < p.radius + radius && dist > 0) {
           float mx = (dx/dist)*(dist-(p.radius + radius))*0.5;
           float my = (dy/dist)*(dist-(p.radius + radius))*0.5;
 
@@ -179,7 +179,7 @@ class Player {
       }
     }
 
-    
+
 
     //Obstacles
     //TODO: Bounciness
@@ -190,8 +190,10 @@ class Player {
           float dy = y-obstacle.y;
           float dist = sqrt(dx*dx+dy*dy);
           float rsum = radius + obstacle.r;
-          x += (dx*(rsum-dist))/dist;
-          y += (dy*(rsum-dist))/dist;
+          if (dist > 0) {
+            x += (dx*(rsum-dist))/dist;
+            y += (dy*(rsum-dist))/dist;
+          }
         }
       } else if (obstacle.type == 1) {
         if (obstacle.intersects(x, y, radius)) {

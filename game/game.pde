@@ -114,18 +114,6 @@ void render() {
   for (Obstacle obstacle : staticObstacles) {
     obstacle.render();
   }
-
-
-  
-  fill(255);
-  textFont(talkFont);
-  drawText("9", players[0].x+28+random(3*mouseX/width), players[0].y-50+random(3*mouseX/width), random(0.05*PI*mouseX/width), 0.95+random(0.1));
-  //fill(64, 64, 255, 180); //BLUE
-  //fill(64, 255, 64, 180); //GREEN
-  fill(255, 64, 255, 180); //PINK
-  //fill(255, 255, 64, 180); //YELLOW
-  textFont(comicFont);
-  drawText("!", players[0].x+28+random(6*mouseX/width), players[0].y-60+random(6*mouseX/width), random(0.15*PI*mouseX/width), 0.95+random(0.1));
 }
 
 int sign(float n) {

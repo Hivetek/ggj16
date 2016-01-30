@@ -71,7 +71,7 @@ class Seat {
 
   void render() {
     pushStyle();
-
+    stroke(255);
     fill(255, 255, 255);
     ellipse(x, y, radius, radius);
 
@@ -138,5 +138,9 @@ void initScenery() {
 
 
   // Initial NPCS
-  npcs.add(new NPC(seats.get(0), false));
+  npcs.add(new NPC(seats.get(0), true));
+  npcs.add(new NPC(seats.get(1), true));
+  npcs.add(new NPC(seats.get(2), true));
+  npcs.add(new NPC(seats.get(3), true));
+  npcs.add(new NPC(seats.get(4), true));
 }
