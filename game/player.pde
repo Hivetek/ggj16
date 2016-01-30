@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>//
+class Player { //<>// //<>// //<>// //<>// //<>// //<>//
   int id = -1;
 
   //Physics parameters
@@ -168,6 +168,11 @@ class Player { //<>// //<>// //<>//
         if (dist < p.radius + radius && dist > 0) {
           float mx = (dx/dist)*(dist-(p.radius + radius))*0.5;
           float my = (dy/dist)*(dist-(p.radius + radius))*0.5;
+          
+          p.vx += vx+(dx/dist)*100.0;
+          p.vy += vy+(dy/dist)*100.0;
+          vx -= p.vx+(dx/dist)*100.0;
+          vy -= p.vy+(dy/dist)*100.0;
 
           x += mx;
           y += my;

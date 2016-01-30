@@ -21,6 +21,7 @@ Obstacle[] obstacles = new Obstacle[22];
 Player[] players = new Player[4];
 
 int activePlayers = 0;
+int activeRequests = 0;
 
 boolean spawnNPC = false;
 
@@ -104,8 +105,6 @@ void update() {
   for (NPC npc : npcs) {
     npc.update();
   }
-
-  npccontroller.update();
 
   for (Player p : players) {
     //p.drunk = 1.0*mouseX/width;

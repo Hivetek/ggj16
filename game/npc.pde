@@ -1,7 +1,5 @@
 ArrayList<NPC> npcs = new ArrayList<NPC>();
 
-NPCController npccontroller = new NPCController();
-
 enum NPCState {
   ENTERING, 
     LEAVING, 
@@ -79,6 +77,7 @@ enum NPCState {
       if (waitTime > maxRequestTime) {
         waitTime = 0;
         state = NPCState.LEAVING;
+        activeRequests--;
         for (Player p : players) {
           p.drink();
         }
@@ -101,8 +100,9 @@ enum NPCState {
       } else {
         waitTime = 0;
         float rand = random(1.0);
-        if (rand <= requestChanceBase + requestChanceAddition*activePlayers) {
+        if (activeRequests == 0 || rand <= requestChanceBase + requestChanceAddition*activePlayers) {
           state = NPCState.REQUESTING;
+          activeRequests++;
           vx = 0;
           vy = 0;
         } else {
@@ -180,6 +180,7 @@ enum NPCState {
           if (state == NPCState.REQUESTING && p.carryingBeer) {
 
             state = NPCState.WAITING;
+            activeRequests--;
             waitTime = 60*3 + round(random(60*20));
             
             p.carryingBeer = false;
@@ -328,21 +329,5 @@ enum NPCState {
         }
       }
     }
-  }
-}
-
-
-class NPCController {
-  void update() {
-
-    /*for (NPC npc : npcs) {
-     // Do meaningful things in these states
-     if (npc.state == NPCState.WAITING) {
-     npc.state = NPCState.REQUESTING;
-     }
-     if (npc.state == NPCState.REQUESTING) {
-     npc.state = NPCState.LEAVING;
-     }
-     }*/
   }
 }
