@@ -19,6 +19,7 @@ enum NPCState {
 
   float radius = 20;
 
+  float bounciness = 0.8;
   float speed = 2;
 
   int waitTime = 0;
@@ -52,14 +53,15 @@ enum NPCState {
       dy = seat.y - y;
       dist = sqrt(dx*dx + dy*dy);
       if (dist > 0) {
-        x += (dx/dist)*speed;
-        y += (dy/dist)*speed;
+        vx = (dx/dist)*speed;
+        vy = (dy/dist)*speed;
       }
 
       if (dist < 1) {
         state = NPCState.WAITING;
+        vx = 0;
+        vy = 0;
         waitTime = 60*3 + round(random(60*20));
-        println("Waiting for "+waitTime+" frames");
       }
       break;
     case REQUESTING:
@@ -72,10 +74,10 @@ enum NPCState {
         float rand = random(1.0);
         if (rand <= requestChance) {
           state = NPCState.REQUESTING;
-          println("REQUESTING!");
+          vx = 0;
+          vy = 0;
         } else {
           state = NPCState.LEAVING;
-          println("LEAVING!");
         }
       }
       break;
@@ -84,14 +86,15 @@ enum NPCState {
       dy = seat.door.y - y;
       dist = sqrt(dx*dx + dy*dy);
       if (dist > 0) {
-        x += (dx/dist)*speed;
-        y += (dy/dist)*speed;
+        vx = (dx/dist)*speed;
+        vy = (dy/dist)*speed;
       }
 
-      if (dist < 1.0) {
+      if (dist <= radius) {
         state = NPCState.GONE;
+        vx = 0;
+        vy = 0;
         waitTime = 60+round(random(60*10));
-        println("Waiting for "+waitTime+" frames");
       }
       break;
     case GONE:
@@ -111,6 +114,88 @@ enum NPCState {
         state = NPCState.ENTERING;
       }
       break;
+    }
+
+    x += vx;
+    y += vy;
+
+    collisionHandling();
+  }
+
+  void collisionHandling() {
+    //boundaries
+    float bounds = 55.0;
+    if (x < radius+bounds || x > width-(radius+bounds))
+      vx = -vx*bounciness;
+    if (y < radius+bounds || y > height-(radius+bounds))
+      vy = -vy*bounciness;
+
+    x = min(max(bounds+radius, x), width-(radius+bounds));
+    y = min(max(bounds+radius, y), height-(radius+bounds));
+
+    //Player collision
+    if (state != NPCState.GONE) {
+      for (Player p : players) {
+        float dx = p.x-x;
+        float dy = p.y-y;
+        float dist = sqrt(dx*dx+dy*dy);
+        //TODO: elastic collisions
+        if (dist < p.radius + radius && dist > 0) {
+          if (p.drunk < 1.0) {
+            p.drunk += 0.1;
+          }
+
+          float mx = (dx/dist)*(dist-(p.radius + radius))*0.5;
+          float my = (dy/dist)*(dist-(p.radius + radius))*0.5;
+          
+          p.vx += (dx/dist)*100.0;
+          p.vy += (dy/dist)*100.0;
+
+          x += mx;
+          y += my;
+          p.x -= mx;
+          p.y -= my;
+        }
+      }
+    }
+
+
+
+    //Obstacles
+    //TODO: Bounciness
+    for (Obstacle obstacle : staticObstacles) {
+      if (obstacle.type == 0) {
+        if (obstacle.intersects(x, y, radius)) {
+          float dx = x-obstacle.x; //TODO:Optimize with rectangle boundary test (broadphase)
+          float dy = y-obstacle.y;
+          float dist = sqrt(dx*dx+dy*dy);
+          float rsum = radius + obstacle.r;
+          if (dist > 0) {
+            x += (dx*(rsum-dist))/dist;
+            y += (dy*(rsum-dist))/dist;
+          }
+        }
+      } else if (obstacle.type == 1) {
+        if (obstacle.intersects(x, y, radius)) {
+          for (int n = 0; n < 60; n++) {
+            float a = n*2*PI/60;
+            float rx = x + cos(a)*radius;
+            float ry = y + sin(a)*radius;
+            if (obstacle.intersects(rx, ry, 0)) {
+              boolean collision = true;
+              while (collision) {
+                x -= cos(a);
+                y -= sin(a);
+                rx = x + cos(a)*radius;
+                ry = y + sin(a)*radius;
+                if (!obstacle.intersects(rx, ry, 0)) {
+                  collision = false;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 

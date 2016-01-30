@@ -65,16 +65,18 @@ class Seat {
   }
 
   void render() {
-    pushStyle();
-    stroke(255);
-    fill(255, 255, 255);
-    //ellipse(x, y, radius, radius);
+    if (DEBUG) {
+      pushStyle();
+      stroke(255);
+      fill(255, 255, 255);
+      ellipse(x, y, radius, radius);
 
-    if (door != null) {
-      //line(x, y, door.x, door.y);
+      if (door != null) {
+        line(x, y, door.x, door.y);
+      }
+
+      popStyle();
     }
-
-    popStyle();
   }
 }
 
@@ -131,10 +133,20 @@ void initScenery() {
   doors.add(new Door(56, height/3-5, false));
   doors.add(new Door(56, 2*height/3+18, false));
 
-  // Seats
-  for (int i = 0; i < 50; i++) {
-    seats.add(new Seat(random(width), random(height)));
-  }
+  // --- Seats ---
+
+  // Top left table
+  seats.add(new Seat(235, 215));
+  seats.add(new Seat(235, 270));
+  seats.add(new Seat(295, 150));
+  seats.add(new Seat(370, 150)); 
+  seats.add(new Seat(440, 215));
+  seats.add(new Seat(440, 270));
+  seats.add(new Seat(295, 325));
+  seats.add(new Seat(370, 325));
+
+  seats.add(new Seat(235, 450));
+  seats.add(new Seat(235, 510));
 
 
   // Find doors for seats
@@ -144,7 +156,7 @@ void initScenery() {
 
 
   // Initial NPCS
-  for(int i = 0; i < 49; i++){
+  for (int i = 0; i < 10; i++) {
     npcs.add(new NPC(seats.get(i), true));
   }
   //npcs.add(new NPC(seats.get(1), true));
@@ -159,6 +171,6 @@ boolean seatIsOccupied(Seat seat) {
       return true;
     }
   }
-  
+
   return false;
 }
