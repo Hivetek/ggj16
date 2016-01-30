@@ -10,6 +10,8 @@ import ddf.minim.ugens.*;
  import org.gamecontrolplus.gui.*;*/
 
 
+PFont comicFont;
+PFont talkFont;
 
 Obstacle[] obstacles = new Obstacle[22];
 
@@ -23,6 +25,10 @@ void setup() {
   noFill();
   ellipseMode(RADIUS);
 
+  comicFont = loadFont("data/fonts/ComicaBDBold-48.vlw");
+  talkFont = loadFont("data/fonts/Talkies-60.vlw");
+  textAlign(CENTER, CENTER);
+  textFont(comicFont);
 
   players[0] = new Player(0, 60, 60, false); // Arrows
   players[1] = new Player(1, width-60, height-60, false); // WASD
@@ -32,13 +38,7 @@ void setup() {
   initInputBuffer();
   initScenery();
 
-  //DEBUG: Random scattered obstacles
-  /*for (int i = 0; i < obstacles.length; i++) {
-    obstacles[i] = new Obstacle(random(width-180)+90, random(height-180)+90, round(random(1)));
-    obstacles[i].w = 16+random(32);
-    obstacles[i].h = 16+random(32);
-    obstacles[i].r = 8+random(24);
-  }*/
+  
   
   /*
   //LEVEL DESIGN
@@ -46,19 +46,19 @@ void setup() {
   obstacles[0] = new Obstacle(width/2, height/2, 1);
   obstacles[0].w = 400;
   obstacles[0].h = 180;
-  
+
   //Seats
-  for(int i = 1; i < 10; i++){
-    obstacles[i] = new Obstacle(width/2-180+45*(i-1), height/2-110, 0); 
+  for (int i = 1; i < 10; i++) {
+    obstacles[i] = new Obstacle(width/2-180+45*(i-1), height/2-110, 0);
   }
-  for(int i = 10; i < 19; i++){
-    obstacles[i] = new Obstacle(width/2-180+45*(i-10), height/2+110, 0); 
+  for (int i = 10; i < 19; i++) {
+    obstacles[i] = new Obstacle(width/2-180+45*(i-10), height/2+110, 0);
   }
-  
+
   obstacles[19] = new Obstacle(180, height/2, 1);
   obstacles[19].w = 60;
   obstacles[19].h = 120;
-  
+
   obstacles[20] = new Obstacle(130, height/2+30, 0);
   obstacles[21] = new Obstacle(130, height/2-30, 0);
   */
@@ -96,8 +96,22 @@ void render() {
   for (Seat seat : seats) {
     seat.render();
   }
+
+  
+  fill(255);
+  textFont(talkFont);
+  drawRotatedText("9", players[0].x+28+random(3*mouseX/width), players[0].y-50+random(3*mouseX/width), random(0.05*PI*mouseX/width));
+  textFont(comicFont);
+  drawRotatedText("!", players[0].x+28+random(6*mouseX/width), players[0].y-60+random(6*mouseX/width), random(0.15*PI*mouseX/width));
 }
 
 int sign(float n) {
   return round(n/abs(n));
+}
+
+void drawRotatedText(String text, float x, float y, float a){
+  translate(x, y);
+  rotate(a);
+  text(text, 0, 0);
+  resetMatrix();
 }

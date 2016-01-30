@@ -8,7 +8,7 @@ class Player {
   float turnSpeed = 0.10;
   float friction = 0.08;
   float bounciness = 0.8;
-  
+
   //Drunkenness parameters
   float drunkOscillationFreq = 0.02; //Swerving oscillation frequency when drunk
   float drunkOscillationAmpl = 0.20; //Swerving oscillation amplitude when drunk
@@ -31,8 +31,10 @@ class Player {
   float speed = 0.0;
 
   float realDirection; 
-  
+
   boolean active = false;
+
+  color playerColor = color(255);
 
   Player(int id, float xx, float yy, boolean active) {
     this.id = id;
@@ -42,31 +44,48 @@ class Player {
     dir = random(2*PI);
     ax = ay = vx = vy = dirVel = 0;
     realDirection = dir;
+
+    switch(id) {
+    case 0: 
+      playerColor = color(0, 0, 255);
+      break;
+    case 1: 
+      playerColor = color(0, 255, 0);
+      break;
+    case 2: 
+      playerColor = color(255, 255, 0);
+      break;
+    case 3: 
+      playerColor = color(255, 0, 0);
+      break;
+    default:
+      playerColor = color(255);
+      break;
+    }
   }
 
   void update() {
     if (!this.active) return;
-    
-    //DEBUG
-    if(getPastInput(0).isPressed('1')){
+
+    //DRUNK DEBUGGING
+    if (getPastInput(0).isPressed('1')) {
       drunk = 0.0;
     }
-    if(getPastInput(0).isPressed('2')){
+    if (getPastInput(0).isPressed('2')) {
       drunk = 0.25;
     }
-    if(getPastInput(0).isPressed('3')){
+    if (getPastInput(0).isPressed('3')) {
       drunk = 0.5;
     }
-    if(getPastInput(0).isPressed('4')){
+    if (getPastInput(0).isPressed('4')) {
       drunk = 0.75;
     }
-    if(getPastInput(0).isPressed('5')){
+    if (getPastInput(0).isPressed('5')) {
       drunk = 1.0;
     }
     //END DEBUG
-    
+
     int delay = round(drunk*drunkDelay);
-    println(delay);
 
     if (drunk > 0) {
       //drunk -= drunkReductionRate;
@@ -74,10 +93,10 @@ class Player {
 
     px = x;
     py = y;
-    
+
     //Add swerving to direction
     float swerving = 0.0;
-    if(drunk > 0.5){
+    if (drunk > 0.5) {
       swerving = 1.0;
     } else {
       swerving = drunk*2.0;
@@ -86,15 +105,15 @@ class Player {
 
     ax = 0;
     ay = 0;
-    
+
     //Movement & controls
     if (id == 0 && getPastInput(delay).isPressed(UP)  || id == 1 && getPastInput(delay).isPressed('w')
-     || id == 2 && getPastInput(delay).isPressed('i') || id == 3 && getPastInput(delay).isPressed('8')) {
+      || id == 2 && getPastInput(delay).isPressed('i') || id == 3 && getPastInput(delay).isPressed('8')) {
       ax += cos(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
       ay += sin(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
     }
     if (id == 0 && getPastInput(delay).isPressed(DOWN) || id == 1 && getPastInput(delay).isPressed('s')
-     || id == 2 && getPastInput(delay).isPressed('k') || id == 3 && getPastInput(delay).isPressed('5')) {
+      || id == 2 && getPastInput(delay).isPressed('k') || id == 3 && getPastInput(delay).isPressed('5')) {
       ax -= cos(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
       ay -= sin(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
     }
@@ -102,11 +121,11 @@ class Player {
     dirVel -= dirVel*turnAccel*(1.0-drunk*drunkTurnDamp);
 
     if (id == 0 && getPastInput(delay).isPressed(LEFT) || id == 1 && getPastInput(delay).isPressed('a')
-     || id == 2 && getPastInput(delay).isPressed('j')  || id == 3 && getPastInput(delay).isPressed('4')) {
+      || id == 2 && getPastInput(delay).isPressed('j')  || id == 3 && getPastInput(delay).isPressed('4')) {
       dirVel += (-turnSpeed*(1.0+drunk*drunkTurnSpeed)-dirVel)*turnAccel*2*(1.0-drunk*drunkTurnDamp);
     }
     if (id == 0 && getPastInput(delay).isPressed(RIGHT) || id == 1 && getPastInput(delay).isPressed('d')
-     || id == 2 && getPastInput(delay).isPressed('l')   || id == 3 && getPastInput(delay).isPressed('6')) {
+      || id == 2 && getPastInput(delay).isPressed('l')   || id == 3 && getPastInput(delay).isPressed('6')) {
       dirVel += (turnSpeed*(1.0+drunk*drunkTurnSpeed)-dirVel)*turnAccel*2*(1.0-drunk*drunkTurnDamp);
     }
 
@@ -148,7 +167,7 @@ class Player {
         if (dist < p.radius + radius) {
           float mx = (dx/dist)*(dist-(p.radius + radius))*0.5;
           float my = (dy/dist)*(dist-(p.radius + radius))*0.5;
-          
+
           x += mx;
           y += my;
           p.x -= mx;
@@ -201,14 +220,15 @@ class Player {
 
   void render() {
     if (!this.active) return;
-    
+
     noFill();
+    stroke(playerColor);
     ellipse(x, y, radius, radius);
 
     line(x, y, x+cos(realDirection)*radius, y+sin(realDirection)*radius);
-    
+
     // --- HUD ---
-     
+
     pushStyle();
 
     // Drunk-meter
