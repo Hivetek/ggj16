@@ -27,7 +27,10 @@ class Player {
   }
 
   void update() {
-    int delay = round(drunk*15); //<>//
+    int delay = round(drunk*15); 
+
+    px = x;
+    py = y;
 
     realDirection = dir + drunk*oscillationAmpl*PI*cos(dirOffset);
 
@@ -76,6 +79,40 @@ class Player {
 
     x = min(max(radius, x), width-radius);
     y = min(max(radius, y), height-radius);
+
+    //Obstacles
+    for (int i = 0; i < obstacles.length; i++) {
+      if (obstacles[i].type == 0) {
+        if (obstacles[i].intersects(x, y, radius)) {
+          float dx = x-obstacles[i].x; //TODO:Optimize with rectangle boundary test (broadphase)
+          float dy = y-obstacles[i].y;
+          float dist = sqrt(dx*dx+dy*dy);
+          float rsum = radius + obstacles[i].r;
+          x += (dx*(rsum-dist))/dist;
+          y += (dy*(rsum-dist))/dist;
+        }
+      } else if (obstacles[i].type == 1) {
+        if (obstacles[i].intersects(x, y, radius)) {
+          for (int n = 0; n < 60; n++) {
+            float a = n*2*PI/60;
+            float rx = x + cos(a)*radius;
+            float ry = y + sin(a)*radius;
+            if (obstacles[i].intersects(rx, ry, 0)) {
+              boolean collision = true;
+              while (collision) {
+                x -= cos(a);
+                y -= sin(a);
+                rx = x + cos(a)*radius;
+                ry = y + sin(a)*radius;
+                if(!obstacles[i].intersects(rx, ry, 0)){
+                  collision = false;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
 
     //Drunken motion oscillation
     dirOffset += drunk*oscillationFreq*speed;
