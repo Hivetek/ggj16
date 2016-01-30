@@ -19,7 +19,7 @@ class Player {
   int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
   float drunkReductionRate = 0.0005; //<>//
 
-  float radius = 18;
+  float radius = 12;
 
   float px, py, x, y, vx, vy, ax, ay, dirVel, dir;
   float dirOffset = 0.0;
