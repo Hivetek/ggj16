@@ -5,11 +5,18 @@ class Player {
   float moveAccel = 0.5;
   float moveSpeed = 3.4;
   float turnAccel = 0.5;
-  float turnSpeed = 0.08;
+  float turnSpeed = 0.10;
   float friction = 0.08;
-  float oscillationFreq = 0.03;
-  float oscillationAmpl = 0.20;
   float bounciness = 0.8;
+  
+  //Drunkenness parameters
+  float drunkOscillationFreq = 0.03; //Swerving oscillation frequency when drunk
+  float drunkOscillationAmpl = 0.20; //Swerving oscillation amplitude when drunk
+  float drunkMoveDamp = 0.7; //Reduction of acceleration when drunk
+  float drunkFriction = 0.5; //Reduction of friction when drunk, 50%
+  float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk
+  float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
+  float drunkReductionRate = 0.0018;
 
   float radius = 16;
 
@@ -20,7 +27,7 @@ class Player {
   float drunk = 0.0; //<>//
   float bladder = 0.5;
 
-  float speed = 0;
+  float speed = 0.0;
 
   float realDirection; 
 
@@ -38,41 +45,42 @@ class Player {
     //int delay = 0; 
 
     if (drunk > 0) {
-      drunk -= 0.0018;
+      drunk -= drunkReductionRate;
     }
 
     px = x;
     py = y;
 
-    realDirection = dir + drunk*oscillationAmpl*PI*cos(dirOffset);
+    realDirection = dir + drunk*drunkOscillationAmpl*PI*cos(dirOffset);
 
     ax = 0;
     ay = 0;
-
+    
+    //Movement & controls
     if (id == 0 && getPastInput(delay).isPressed(UP) || id == 1 && getPastInput(delay).isPressed('w')) {
-      ax += cos(realDirection)*(moveAccel*(1.0-drunk*0.7));
-      ay += sin(realDirection)*(moveAccel*(1.0-drunk*0.7));
+      ax += cos(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
+      ay += sin(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
     }
     if (id == 0 && getPastInput(delay).isPressed(DOWN) || id == 1 && getPastInput(delay).isPressed('s')) {
-      ax -= cos(realDirection)*(moveAccel*(1.0-drunk*0.7));
-      ay -= sin(realDirection)*(moveAccel*(1.0-drunk*0.7));
+      ax -= cos(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
+      ay -= sin(realDirection)*(moveAccel*(1.0-drunk*drunkMoveDamp));
     }
 
-    dirVel -= dirVel*turnAccel*(1.0-drunk*0.9);
+    dirVel -= dirVel*turnAccel*(1.0-drunk*drunkTurnDamp);
 
     if (id == 0 && getPastInput(delay).isPressed(LEFT) || id == 1 && getPastInput(delay).isPressed('a')) {
-      dirVel += (-turnSpeed*(1.0+drunk*0.75)-dirVel)*turnAccel*2*(1.0-drunk*0.9);
+      dirVel += (-turnSpeed*(1.0+drunk*drunkTurnSpeed)-dirVel)*turnAccel*2*(1.0-drunk*drunkTurnDamp);
     }
     if (id == 0 && getPastInput(delay).isPressed(RIGHT) || id == 1 && getPastInput(delay).isPressed('d')) {
-      dirVel += (turnSpeed*(1.0+drunk*0.75)-dirVel)*turnAccel*2*(1.0-drunk*0.9);
+      dirVel += (turnSpeed*(1.0+drunk*drunkTurnSpeed)-dirVel)*turnAccel*2*(1.0-drunk*drunkTurnDamp);
     }
 
     vx += ax;
     vy += ay;
 
     //friction
-    vx *= 1.0-friction*(1.0-drunk*0.5);
-    vy *= 1.0-friction*(1.0-drunk*0.5);
+    vx *= 1.0-friction*(1.0-drunk*drunkFriction);
+    vy *= 1.0-friction*(1.0-drunk*drunkFriction);
 
     //speed limit
     float speed = sqrt(vx*vx + vy*vy);
@@ -103,19 +111,13 @@ class Player {
         float dist = sqrt(dx*dx+dy*dy);
         //TODO: elastic collisions
         if (dist < p.radius + radius) {
+          float mx = (dx/dist)*(dist-(p.radius + radius))*0.5;
+          float my = (dy/dist)*(dist-(p.radius + radius))*0.5;
           
-          if (p.speed > speed) {
-            vx += (dx/dist)*1000.0+p.vx;
-            vy += (dy/dist)*1000.0+p.vy;
-          } else if (p.speed < speed) {
-            p.vx += (dx/dist)*1000.0+vx;
-            p.vy += (dy/dist)*1000.0+vy;
-          } else {
-            vx += (dx/dist)*1000.0+p.vx;
-            vy += (dy/dist)*1000.0+p.vy;
-            p.vx += (dx/dist)*1000.0+vx;
-            p.vy += (dy/dist)*1000.0+vy;
-          }
+          x += mx;
+          y += my;
+          p.x -= mx;
+          p.y -= my;
         }
       }
     }
@@ -159,8 +161,8 @@ class Player {
       }
     }
 
-    //Drunken motion oscillation
-    dirOffset += drunk*oscillationFreq*speed;
+    //Drunken motion drunkOscillation
+    dirOffset += drunk*drunkOscillationFreq*speed;
     if (dirOffset > PI*2) dirOffset -= PI*2;
   }
 
