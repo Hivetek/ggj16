@@ -41,10 +41,10 @@ void setup() {
   textAlign(CENTER, CENTER);
   textFont(comicFont);
 
-  players[0] = new Player(0, 60, 60, false); // Arrows
-  players[1] = new Player(1, width-60, height-60, false); // WASD
-  players[2] = new Player(2, width-60, 60, false); // IJKL
-  players[3] = new Player(3, 60, height - 60, false); // Numpad
+  players[0] = new Player(0, 90, 150, false); // Arrows
+  players[1] = new Player(1, width-90, height-150, false); // WASD
+  players[2] = new Player(2, width-90, 150, false); // IJKL
+  players[3] = new Player(3, 90, height - 150, false); // Numpad
 
   initInputBuffer();
   initScenery();
@@ -105,6 +105,10 @@ void render() {
 
   for (STable table : tables) {
     table.render();
+  }
+  
+  for (BeerStation beerstation : beerstations) {
+    beerstation.render();
   }
 
   for (Door door : doors) {

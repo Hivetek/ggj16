@@ -1,6 +1,7 @@
 ArrayList<STable> tables = new ArrayList<STable>();
 ArrayList<Seat> seats = new ArrayList<Seat>();
 ArrayList<Door> doors = new ArrayList<Door>();
+ArrayList<BeerStation> beerstations = new ArrayList<BeerStation>();
 ArrayList<Obstacle> staticObstacles = new ArrayList<Obstacle>();
 
 
@@ -135,6 +136,36 @@ class Door {
   }
 }
 
+
+class BeerStation {
+  float x;
+  float y;
+  
+  float w = 100;
+  float h =  50;
+  
+  BeerStation(float x, float y) {
+    this.x = x;
+    this.y = y;
+  }
+  
+  void render() {
+    fill(255);
+    rect(x-w/2,y-h/2, w, h);
+  }
+  
+  
+  Obstacle createObstacle() {
+    Obstacle o = new Obstacle(x, y, 1);
+    o.w = w;
+    o.h = h;
+    return o;
+  }
+}
+
+
+// -----------------------------------------------------------
+
 void initScenery() {
   // Tables
 
@@ -152,6 +183,15 @@ void initScenery() {
 
   for (STable table : tables) {
     staticObstacles.add(table.createObstacle());
+  }
+  
+  beerstations.add(new BeerStation(115,95));
+  beerstations.add(new BeerStation(115,630));
+  beerstations.add(new BeerStation(1160,95));
+  beerstations.add(new BeerStation(1160,630));
+
+  for (BeerStation beerstation : beerstations) {
+    staticObstacles.add(beerstation.createObstacle());
   }
 
   // Doors
