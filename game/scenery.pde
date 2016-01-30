@@ -5,48 +5,47 @@ ArrayList<Obstacle> staticObstacles = new ArrayList<Obstacle>();
 
 
 enum TableType {
-  COMMANDER,
-  SMALL,
-  BIG
+  COMMANDER, 
+    SMALL, 
+    BIG
 };
 
-class STable {
+  class STable {
   float x;
   float y;
 
   float w;
   float h;
-  
+
   TableType type;
 
   STable(float x, float y, TableType type) {
     this.x = x;
     this.y = y;
-    
+
     this.type = type;
 
     switch (type) {
-      case SMALL:
-        this.w = 150;
-        this.h = 121;
-        break;
-      case BIG:
-        this.w = 203;
-        this.h = 164;
-        break;
+    case SMALL:
+      this.w = 150;
+      this.h = 121;
+      break;
+    case BIG:
+      this.w = 203;
+      this.h = 164;
+      break;
     }
   }
 
   void render() {
     switch (this.type) {
-      case SMALL:
-        image(smallTableImage, x-w/2-3, y-h/2-4);
-        break;
-      case BIG:
-        image(bigTableImage, x-w/2-6, y-h/2-8);
-        break;
+    case SMALL:
+      image(smallTableImage, x-w/2-3, y-h/2-4);
+      break;
+    case BIG:
+      image(bigTableImage, x-w/2-6, y-h/2-8);
+      break;
     }
-
   }
 
   Obstacle createObstacle() {
@@ -119,16 +118,20 @@ class Door {
   }
 
   void render() {
-    pushStyle();
-    noFill();
-    stroke(255);
-    if (horizontal) {
-      rect(x - w/2, y - h/2, w, h);
-    } else {
-      rect(x - h/2, y - w/2, h, w);
-    }
+    if (DEBUG) {
+      pushStyle();
+      noFill();
+      stroke(255);
+      if (horizontal) {
+        rect(x - w/2, y - h/2, w, h);
+      } else {
+        rect(x - h/2, y - w/2, h, w);
+      }
+      
+      ellipse(x, y, 30, 30);
 
-    popStyle();
+      popStyle();
+    }
   }
 }
 
@@ -169,7 +172,7 @@ void initScenery() {
   seats.add(new Seat(440, 270));
   seats.add(new Seat(295, 325));
   seats.add(new Seat(370, 325));
-  
+
   // Bottom left table
   seats.add(new Seat(235, 450));
   seats.add(new Seat(235, 510));
@@ -179,7 +182,7 @@ void initScenery() {
   seats.add(new Seat(440, 510));
   seats.add(new Seat(295, 560));
   seats.add(new Seat(370, 560));
-  
+
   // Top right table
   seats.add(new Seat(840, 215));
   seats.add(new Seat(840, 270));
@@ -189,7 +192,7 @@ void initScenery() {
   seats.add(new Seat(1050, 270));
   seats.add(new Seat(905, 325));
   seats.add(new Seat(980, 325));
-  
+
   // Bottom right table
   seats.add(new Seat(845, 450));
   seats.add(new Seat(845, 510));
@@ -199,20 +202,20 @@ void initScenery() {
   seats.add(new Seat(1050, 510));
   seats.add(new Seat(905, 565));
   seats.add(new Seat(980, 565));
-  
+
   // Center table
   seats.add(new Seat(510, 310));
   seats.add(new Seat(510, 366));
   seats.add(new Seat(510, 415));
-  
+
   seats.add(new Seat(770, 310));
   seats.add(new Seat(770, 366));
   seats.add(new Seat(770, 415));
-  
+
   seats.add(new Seat(575, 255));
   seats.add(new Seat(640, 255));
   seats.add(new Seat(700, 255));
-  
+
   seats.add(new Seat(575, 465));
   seats.add(new Seat(640, 465));
   seats.add(new Seat(700, 465));
@@ -226,13 +229,9 @@ void initScenery() {
 
 
   // Initial NPCS
-  for (int i = 0; i < 31; i++) {
+  for (int i = 0; i < 43; i++) {
     npcs.add(new NPC(seats.get(i), true));
   }
-  //npcs.add(new NPC(seats.get(1), true));
-  //npcs.add(new NPC(seats.get(2), true));
-  //npcs.add(new NPC(seats.get(3), true));
-  //npcs.add(new NPC(seats.get(4), true));
 }
 
 boolean seatIsOccupied(Seat seat) {

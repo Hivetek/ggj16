@@ -24,7 +24,7 @@ enum NPCState {
 
   int waitTime = 0;
 
-  float requestChance = 0.0; //40% for beer request
+  float requestChance = 0.1; //40% for beer request
   float spawnChance = 0.2; //20% chance that a new NPC will spawn
 
   Seat seat;
@@ -104,7 +104,7 @@ enum NPCState {
         vy = (dy/dist)*speed;
       }
 
-      if (dist <= radius) {
+      if (dist <= radius+30) {
         state = NPCState.GONE;
         vx = 0;
         vy = 0;
@@ -155,8 +155,15 @@ enum NPCState {
         float dist = sqrt(dx*dx+dy*dy);
         //TODO: elastic collisions
         if (dist < p.radius + radius && dist > 0) {
-          if (p.drunk < 1.0) {
-            p.drunk += 0.1;
+          if (state == NPCState.REQUESTING) {
+            state = NPCState.WAITING;
+            waitTime = 60*3 + round(random(60*20));
+            //TODO: Other players drink
+          } else {
+            if (p.drunk < 1.0) {
+              p.drunk += 0.1;
+              p.bladder += 0.05;
+            }
           }
 
           float mx = (dx/dist)*(dist-(p.radius + radius))*0.5;

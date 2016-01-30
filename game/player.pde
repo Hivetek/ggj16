@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+class Player { //<>// //<>// //<>//
   int id = -1;
 
   //Physics parameters
@@ -24,9 +24,9 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //
   float px, py, x, y, vx, vy, ax, ay, dirVel, dir;
   float dirOffset = 0.0;
 
-  // Stats //<>//
-  float drunk = 0.0; //<>//
-  float bladder = 0.5;
+  // Stats 
+  float drunk = 0.0; 
+  float bladder = 0.0;
 
   float speed = 0.0;
 
@@ -67,23 +67,6 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //
   void update() {
     if (!this.active) return;
 
-    //DRUNK DEBUGGING
-    if (getPastInput(0).isPressed('1')) {
-      drunk = 0.0;
-    }
-    if (getPastInput(0).isPressed('2')) {
-      drunk = 0.25;
-    }
-    if (getPastInput(0).isPressed('3')) {
-      drunk = 0.5;
-    }
-    if (getPastInput(0).isPressed('4')) {
-      drunk = 0.75;
-    }
-    if (getPastInput(0).isPressed('5')) {
-      drunk = 1.0;
-    }
-    //END DEBUG
     int delay = 0;
     if (drunk >= 0.5) {
       delay = round(2*(drunk-0.5)*drunkDelay);
