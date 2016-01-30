@@ -15,9 +15,9 @@ enum NPCState {
   float y;
   float vx;
   float vy;
-  float dir = 0;
+  float dir = random(2*PI);
 
-  float radius = 20;
+  float radius = 18;
 
   float bounciness = 0.8;
   float speed = 2;
@@ -46,6 +46,8 @@ enum NPCState {
 
   void update() {
     float dx, dy, dist;
+    
+    dir = atan2(vy, vx);
 
     switch(state) {
     case ENTERING:
@@ -246,12 +248,15 @@ enum NPCState {
 
   void render() {
     if (state != NPCState.GONE) {
+      translate(x, y);
+      rotate(dir-PI*0.5);
+      image(fratBroImage, -18, -18);
+      resetMatrix();
+
       noFill();
       stroke(255);
 
-      ellipse(x, y, radius, radius);
-
-      line(x, y, x+cos(dir)*radius, y+sin(dir)*radius);
+      //ellipse(x, y, radius, radius);
 
       if (state == NPCState.REQUESTING) {
         fill(255);
