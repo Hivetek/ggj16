@@ -147,6 +147,10 @@ void displayHandleKeyPressed() {
       break;
     case INSTRUCTIONS:
       changeDisplay(Display.GAME);
+      player.close();
+      
+      player = minim.loadFile("data/sound/Frat-Trap-Level-Backgound-Music.mp3", 2048);
+      player.loop();
       break;
   }
 }

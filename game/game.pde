@@ -27,6 +27,9 @@ int activeRequests = 0;
 
 boolean spawnNPC = false;
 
+AudioPlayer player;
+Minim minim; // Audio context
+
 void setup() {
   size(1280, 720);
   frameRate(60);
@@ -72,6 +75,12 @@ void setup() {
 
   initInputBuffer();
   initScenery();
+  
+  minim = new Minim(this);
+  
+  // Start intro beat
+  player = minim.loadFile("data/sound/Frat-Trap-Intro-Beat.mp3", 2048);
+  player.play();
 }
 
 void draw() {
