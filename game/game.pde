@@ -17,7 +17,8 @@ PFont comicFont;
 PFont talkFont;
 PFont regularFont; 
 PFont emojiFont;
-PFont introFont; 
+PFont introFont;
+PFont winFont; 
 
 PImage titleScreenImage, bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, bunny1dead, bunny2dead, bunny3dead, bunny4dead, beerImage, shoeImage, beerstationImage, beerIconImage, guardImage;  
 PImage[] smallTableImages = new PImage[3];
@@ -58,6 +59,7 @@ void setup() {
   regularFont = loadFont("data/fonts/ArialMT-12.vlw");
   emojiFont = loadFont("data/fonts/Emoticons-28.vlw");
   introFont = loadFont("data/fonts/FreeMono-48.vlw");
+  winFont = loadFont("data/fonts/FreeMono-100.vlw");
 
   //IMAGES
   titleScreenImage = loadImage("data/images/logo_introscreen.png");

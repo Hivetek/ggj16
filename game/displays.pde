@@ -144,8 +144,7 @@ void showEnd() {
   
   textAlign(CENTER);
     
-  textFont(introFont);
-  textSize(100);
+  textFont(winFont);
   
   fill(255);
   if (winningPlayer != null) {
