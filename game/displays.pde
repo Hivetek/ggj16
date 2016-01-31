@@ -177,8 +177,8 @@ void displayHandleKeyPressed() {
       background_music.loop();
       break;
     case END:
-      changeDisplay(Display.GAME);
-      resetGame();
+      //changeDisplay(Display.GAME);
+      //resetGame();
       break;
   }
 }
