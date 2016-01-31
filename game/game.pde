@@ -33,7 +33,7 @@ int spawnNPC = 0;
 
 Minim minim; // Audio context
 
-float countdown = 1.0;
+float countdown = 5.0;
 
 void setup() {
   size(1280, 720);

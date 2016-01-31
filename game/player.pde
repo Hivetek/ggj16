@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>//
+class Player { //<>// //<>// //<>// //<>// //<>// //<>//
   int id = -1;
 
   float animationSpeed = 0.07;
@@ -68,7 +68,7 @@ class Player { //<>// //<>// //<>//
       name = "Yellow";
       break;
     case 1: 
-      playerColor = color(64, 64, 255);
+      playerColor = color(96, 96, 255);
       name = "Blue";
       break;
     case 2: 

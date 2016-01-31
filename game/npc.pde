@@ -19,6 +19,8 @@ enum NPCState {
   float dir = random(2*PI);
   int img = round(random(2));
 
+  Player target;
+
   float animationSpeed = 0.07;
   float walkAnim = 0.0;
 
@@ -131,6 +133,7 @@ enum NPCState {
             ty = p.y - y;
             float newDist = sqrt(tx*tx+ty*ty);
             if (newDist < targetDist) {
+              target = p;
               targetDist = newDist;
               dx = tx;
               dy = ty;
@@ -211,8 +214,7 @@ enum NPCState {
         waitTime--;
       } else {
         waitTime = 0;
-        float rand = random(1.0);
-        if ((activeRequests == 0 || rand <= requestChanceBase + requestChanceAddition*activePlayers) && !carryingBeer) {
+        if (activeRequests == 0 && !carryingBeer) {
           state = NPCState.REQUESTING;
           activeRequests++;
           vx = 0;
@@ -420,16 +422,11 @@ enum NPCState {
       rotate(random(0.15*PI*waitTime/maxRequestTime));
       image(beerIconImage, -10, -14);
       resetMatrix();
-      //fill(255, 64, 255, 180); //PINK
-      //fill(255);
-      //textFont(comicFont);
-      //drawText("!", x+28+random(6.0*waitTime/maxRequestTime), y-60+random(6.0*waitTime/maxRequestTime), random(0.15*PI*waitTime/maxRequestTime), 0.90+random(0.2*waitTime/maxRequestTime));
-    } else if (state == NPCState.AGGRESSIVE) {
+    } else if (state == NPCState.AGGRESSIVE && target != null) {
       fill(255);
       textFont(talkFont);
       drawText("9", x+28+random(4.0), y-50+random(4.0), random(0.08*PI), 0.90+random(0.2));
-      fill(255, 255, 255, 180);
-      fill(255);
+      fill(red(target.playerColor), green(target.playerColor), blue(target.playerColor), 180);
       textFont(comicFont);
       drawText("!", x+28+random(6.0), y-60+random(6.0), random(0.15*PI), 0.90+random(0.2));
     }
