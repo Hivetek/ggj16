@@ -119,12 +119,11 @@ void showInstructions() {
   
   text("Be the last man standing of up to 4 players.", width/2, 380);
   
-  text("Controls are: Arrow keys, WASD, IJKL and Numpad 8456.", width/2, 440);
-  
-  text("Players spawn as soon as their controls are taken in use.", width/2, 500);
+  //text("Controls are: Arrow keys, WASD, IJKL and Numpad 8456.", width/2, 440);
+  //text("Players spawn as soon as their controls are taken in use.", width/2, 500);
    
  
-  text("Press any key to start...", width/2, 600);
+  text("Press any key to start...", width/2, 500);
   
   popStyle();
 }

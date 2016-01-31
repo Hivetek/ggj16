@@ -8,5 +8,5 @@ void initSound() {
     
   // Start intro beat
   background_music = minim.loadFile("data/sound/Frat-Trap-Intro-Beat.mp3", 2048);
-  background_music.play();
+  background_music.loop();
 }
