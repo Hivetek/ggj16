@@ -1,8 +1,10 @@
-class Player { //<>// //<>// //<>// //<>// //<>//
+class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   int id = -1;
 
   float animationSpeed = 0.07;
   float walkAnim = 0.0;
+  float visualBladder = 0.0;
+  float visualDrunk = 0.0;
 
   //Physics parameters
   float moveAccel = 0.5;
@@ -260,38 +262,68 @@ class Player { //<>// //<>// //<>// //<>// //<>//
   }
 
   void renderHUD() {
-    // --- HUD ---
+    if (!active || dead)
+      return;
 
-    pushStyle();
+    visualBladder += (bladder-visualBladder)*0.1;
+    visualDrunk += (drunk-visualDrunk)*0.1;
 
-    // Drunk-meter
-    int drunk_meter_width = 100;
-    int drunk_meter_height = 10;
-    float drunk_meter_x = this.x - drunk_meter_width / 2;
-    float drunk_meter_y = this.y - this.radius*2 - drunk_meter_height;
+    //Draw bladder lvl
+    int w = 6;
+    int d = 40;
+    float startAngle = PI;
+    float angle = PI*0.45;
+    fill(180, 180, 0, 176);
+    noStroke();
+    beginShape();
 
-    stroke(59.2, 2.7, 0.8);
+    int i;
+    for (i = 0; i <= round(bladder*100); i++) {
+      vertex(x+cos(angle*(i/100.0)+startAngle)*d, py+sin(angle*(i/100.0)+startAngle)*d);
+    }
+    for (; i >= 0; i--) {
+      vertex(x+cos(angle*(i/100.0)+startAngle)*(d-w), py+sin(angle*(i/100.0)+startAngle)*(d-w));
+    }
+    endShape(CLOSE);
+
     noFill();
-    rect(drunk_meter_x, drunk_meter_y, drunk_meter_width, drunk_meter_height);
-    fill(59.2, 2.7, 0.8);
-    rect(drunk_meter_x, drunk_meter_y, min(this.drunk*drunk_meter_width, drunk_meter_width), drunk_meter_height);
+    stroke(180, 180, 0, 64);
+    beginShape();
 
-    popStyle();
+    for (i = 0; i <= 100; i++) {
+      vertex(x+cos(angle*(i/100.0)+startAngle)*d, py+sin(angle*(i/100.0)+startAngle)*d);
+    }
+    for (; i >= 0; i--) {
+      vertex(x+cos(angle*(i/100.0)+startAngle)*(d-w), py+sin(angle*(i/100.0)+startAngle)*(d-w));
+    }
+    endShape(CLOSE);
 
-    pushStyle();
+    //Draw drunk lvl
+    startAngle = 0;
+    angle =- PI*0.45;
+    fill(48, 48, 180, 176);
+    noStroke();
+    beginShape();
 
-    // Drunk-meter
-    int bladder_meter_width = 100;
-    int bladder_meter_height = 10;
-    float bladder_meter_x = this.x - bladder_meter_width / 2;
-    float bladder_meter_y = this.y - this.radius*2 - drunk_meter_height - 5 - bladder_meter_height;
-    stroke(90.2, 90.2, 0);
+    for (i = 0; i <= round(drunk*100); i++) {
+      vertex(x+cos(angle*(i/100.0)+startAngle)*d, py+sin(angle*(i/100.0)+startAngle)*d);
+    }
+    for (; i >= 0; i--) {
+      vertex(x+cos(angle*(i/100.0)+startAngle)*(d-w), py+sin(angle*(i/100.0)+startAngle)*(d-w));
+    }
+    endShape(CLOSE);
+
     noFill();
-    rect(bladder_meter_x, bladder_meter_y, bladder_meter_width, bladder_meter_height);
-    fill(90.2, 90.2, 0);
-    rect(bladder_meter_x, bladder_meter_y, min(this.bladder*bladder_meter_width, bladder_meter_width), bladder_meter_height);
+    stroke(48, 48, 180, 64);
+    beginShape();
 
-    popStyle();
+    for (i = 0; i <= 100; i++) {
+      vertex(x+cos(angle*(i/100.0)+startAngle)*d, py+sin(angle*(i/100.0)+startAngle)*d);
+    }
+    for (; i >= 0; i--) {
+      vertex(x+cos(angle*(i/100.0)+startAngle)*(d-w), py+sin(angle*(i/100.0)+startAngle)*(d-w));
+    }
+    endShape(CLOSE);
 
     if (immune()) {
       if (millis()-this.givingTimestamp < this.drinkingTimeout) {
