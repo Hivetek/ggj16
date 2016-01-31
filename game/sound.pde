@@ -16,7 +16,7 @@ void initSound() {
   bro_drinking_sound = minim.loadFile("data/sound/NPC_Bro-Drinking Sound.mp3", 2048);
   
   for (int i = 0; i < players.length; i++) {
-    player_drinking[i] = minim.loadFile("data/sound/NPC_Bro-Drinking Sound.mp3", 2048); 
+    player_drinking[i] = minim.loadFile("data/sound/Player Drinking.mp3", 2048); 
   }
     
   // Start intro beat
