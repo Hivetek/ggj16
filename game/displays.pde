@@ -39,7 +39,7 @@ void showIntro() {
   
   String[] text = {
     "Undercover journalists have infiltrated the fraternity Theta Epsilon Mu",
-    "Aiming to investigate its hazing ritual...",
+    "Aiming to investigate its hazing rituals...",
     "And expose them to the world",
     "After suffering...",
     "Humiliating bunny costumes",
@@ -113,7 +113,7 @@ void showInstructions() {
   textFont(introFont);
   textSize(32);
 
-  text("Serve the frat bros with beer or drink 'till you burst.", width/2, 200);
+  text("Serve the frat bros with beer and stay sober.", width/2, 200);
   text("If you are too slow, you drink.", width/2, 260);
   text("If you are too fast and bump into people, you drink.", width/2, 320);
   

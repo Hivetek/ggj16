@@ -181,6 +181,14 @@ class BeerStation {
 
 void initScenery() {
   // Tables
+  int table1dx = -15;
+  int table1dy = -15;
+  int table2dx = -15;
+  int table2dy = 15;
+  int table3dx = 15;
+  int table3dy = -15;
+  int table4dx = 15;
+  int table4dy = 15;
 
   // Center table
   tables.add(new STable(width/2, height/2, TableType.BIG));
@@ -189,10 +197,10 @@ void initScenery() {
   //tables.add(new STable(60 + 70, height/2 + 15, TableType.COMMANDER));
 
   // Four smaller tables
-  tables.add(new STable(60 + 275, 60 + 180, TableType.SMALL));
-  tables.add(new STable(width - 60 - 275, 60 + 180, TableType.SMALL));
-  tables.add(new STable(60 + 275, height - 60 - 180, TableType.SMALL));
-  tables.add(new STable(width - 60 - 275, height - 60 - 180, TableType.SMALL));
+  tables.add(new STable(60 + 275 + table1dx, 60 + 180 + table1dy, TableType.SMALL));
+  tables.add(new STable(60 + 275 + table2dx, height - 60 - 180 + table2dy, TableType.SMALL));
+  tables.add(new STable(width - 60 - 275 + table3dx, 60 + 180 + table3dy, TableType.SMALL));
+  tables.add(new STable(width - 60 - 275 + table4dx, height - 60 - 180 + table4dy, TableType.SMALL));
 
   for (STable table : tables) {
     staticObstacles.add(table.assocObstacle);
@@ -234,45 +242,45 @@ void initScenery() {
   seats.add(new Seat(640, 465));
   seats.add(new Seat(700, 465));
 
-  // Top left table
-  seats.add(new Seat(235, 215));
-  seats.add(new Seat(235, 270));
-  seats.add(new Seat(295, 150));
-  seats.add(new Seat(370, 150)); 
-  seats.add(new Seat(440, 215));
-  seats.add(new Seat(440, 270));
-  seats.add(new Seat(295, 325));
-  seats.add(new Seat(370, 325));
+  // Top left table, 1
+  seats.add(new Seat(235 + table1dx, 215 + table1dy));
+  seats.add(new Seat(235 + table1dx, 270 + table1dy));
+  seats.add(new Seat(295 + table1dx, 150 + table1dy));
+  seats.add(new Seat(370 + table1dx, 150 + table1dy)); 
+  seats.add(new Seat(440 + table1dx, 215 + table1dy));
+  seats.add(new Seat(440 + table1dx, 270 + table1dy));
+  seats.add(new Seat(295 + table1dx, 325 + table1dy));
+  seats.add(new Seat(370 + table1dx, 325 + table1dy));
 
-  // Bottom left table
-  seats.add(new Seat(235, 450));
-  seats.add(new Seat(235, 510));
-  seats.add(new Seat(295, 390));
-  seats.add(new Seat(370, 390));
-  seats.add(new Seat(440, 450));
-  seats.add(new Seat(440, 510));
-  seats.add(new Seat(295, 560));
-  seats.add(new Seat(370, 560));
+  // Bottom left table, 2
+  seats.add(new Seat(235 + table2dx, 450 + table2dy));
+  seats.add(new Seat(235 + table2dx, 510 + table2dy));
+  seats.add(new Seat(295 + table2dx, 390 + table2dy));
+  seats.add(new Seat(370 + table2dx, 390 + table2dy));
+  seats.add(new Seat(440 + table2dx, 450 + table2dy));
+  seats.add(new Seat(440 + table2dx, 510 + table2dy));
+  seats.add(new Seat(295 + table2dx, 560 + table2dy));
+  seats.add(new Seat(370 + table2dx, 560 + table2dy));
 
-  // Top right table
-  seats.add(new Seat(840, 215));
-  seats.add(new Seat(840, 270));
-  seats.add(new Seat(905, 150));
-  seats.add(new Seat(980, 150));
-  seats.add(new Seat(1050, 215));
-  seats.add(new Seat(1050, 270));
-  seats.add(new Seat(905, 325));
-  seats.add(new Seat(980, 325));
+  // Top right table, 3
+  seats.add(new Seat(840 + table3dx, 215 + table3dy));
+  seats.add(new Seat(840 + table3dx, 270 + table3dy));
+  seats.add(new Seat(905 + table3dx, 150 + table3dy));
+  seats.add(new Seat(980 + table3dx, 150 + table3dy));
+  seats.add(new Seat(1050 + table3dx, 215 + table3dy));
+  seats.add(new Seat(1050 + table3dx, 270 + table3dy));
+  seats.add(new Seat(905 + table3dx, 325 + table3dy));
+  seats.add(new Seat(980 + table3dx, 325 + table3dy));
 
-  // Bottom right table
-  seats.add(new Seat(845, 450));
-  seats.add(new Seat(845, 510));
-  seats.add(new Seat(905, 395));
-  seats.add(new Seat(980, 395));
-  seats.add(new Seat(1050, 450));
-  seats.add(new Seat(1050, 510));
-  seats.add(new Seat(905, 565));
-  seats.add(new Seat(980, 565));
+  // Bottom right table, 4
+  seats.add(new Seat(845 + table4dx, 450 + table4dy));
+  seats.add(new Seat(845 + table4dx, 510 + table4dy));
+  seats.add(new Seat(905 + table4dx, 395 + table4dy));
+  seats.add(new Seat(980 + table4dx, 395 + table4dy));
+  seats.add(new Seat(1050 + table4dx, 450 + table4dy));
+  seats.add(new Seat(1050 + table4dx, 510 + table4dy));
+  seats.add(new Seat(905 + table4dx, 565 + table4dy));
+  seats.add(new Seat(980 + table4dx, 565 + table4dy));
 
 
   // Guard seats
