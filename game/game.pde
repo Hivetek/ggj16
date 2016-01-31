@@ -14,6 +14,7 @@ boolean DEBUG = false;
 PFont comicFont;
 PFont talkFont;
 PFont regularFont; 
+PFont introFont; 
 
 PImage bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, bunny1dead, bunny2dead, bunny3dead, bunny4dead, beerImage, shoeImage, beerstationImage, beerIconImage;  
 
@@ -37,6 +38,7 @@ void setup() {
   comicFont = loadFont("data/fonts/ComicaBDBold-48.vlw");
   talkFont = loadFont("data/fonts/Talkies-60.vlw");
   regularFont = loadFont("data/fonts/ArialMT-12.vlw");
+  introFont = loadFont("data/fonts/FreeMono-48.vlw");
 
   //IMAGES
   bgImage = loadImage("data/images/floor.png");

@@ -49,7 +49,8 @@ void showIntro() {
     "Humiliating bunny costumes",
     "More alcohol poisonings ",
     "Burning iron branding ",
-    "All in the name of an ideal cause of ... exposing these crimes to the world.",
+    "All in the name of an ideal cause of...",
+    "exposing these crimes to the world.",
     "One final test remains before becoming a full member",
     "and getting access to the frat bros secret video archive...",
     "Having to serve drinks to the bros and drink for the whole night...",
@@ -62,12 +63,14 @@ void showIntro() {
   int actual_interval = intro_interval * text[intro_text_index].length();
   
   if (intro_text_index+1 == text.length/2) {
-    actual_interval += 1400;
+    actual_interval += 1000;
   }
   
   if (now - intro_text_timestamp >= actual_interval) {
     intro_text_timestamp = now;
-    intro_text_index++;
+    if (intro_text_index < text.length - 1) {
+      intro_text_index++;
+    }
   }
   
   pushStyle();
@@ -76,9 +79,9 @@ void showIntro() {
   
   textAlign(CENTER);
     
-  textFont(regularFont);
+  textFont(introFont);
   
-  textSize(32);
+  textSize(28);
 
   int i;
   int j = 0;
