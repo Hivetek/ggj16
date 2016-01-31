@@ -214,6 +214,24 @@ void initScenery() {
   doors.add(new Door(56, 2*height/3+18, false));
 
   // --- Seats ---
+  
+  
+  // Center table
+  seats.add(new Seat(510, 310));
+  seats.add(new Seat(510, 366));
+  seats.add(new Seat(510, 415));
+
+  seats.add(new Seat(770, 310));
+  seats.add(new Seat(770, 366));
+  seats.add(new Seat(770, 415));
+
+  seats.add(new Seat(575, 255));
+  seats.add(new Seat(640, 255));
+  seats.add(new Seat(700, 255));
+
+  seats.add(new Seat(575, 465));
+  seats.add(new Seat(640, 465));
+  seats.add(new Seat(700, 465));
 
   // Top left table
   seats.add(new Seat(235, 215));
@@ -255,22 +273,6 @@ void initScenery() {
   seats.add(new Seat(905, 565));
   seats.add(new Seat(980, 565));
 
-  // Center table
-  seats.add(new Seat(510, 310));
-  seats.add(new Seat(510, 366));
-  seats.add(new Seat(510, 415));
-
-  seats.add(new Seat(770, 310));
-  seats.add(new Seat(770, 366));
-  seats.add(new Seat(770, 415));
-
-  seats.add(new Seat(575, 255));
-  seats.add(new Seat(640, 255));
-  seats.add(new Seat(700, 255));
-
-  seats.add(new Seat(575, 465));
-  seats.add(new Seat(640, 465));
-  seats.add(new Seat(700, 465));
 
 
 
@@ -282,7 +284,7 @@ void initScenery() {
 
   // Initial NPCS
   for (int i = 0; i < 8; i++) {
-    npcs.add(new NPC(seats.get(i), true));
+    npcs.add(new NPC(seats.get(i), false));
   }
 }
 

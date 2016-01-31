@@ -46,7 +46,7 @@ enum NPCState {
     } else {
       this.x = seat.x;
       this.y = seat.y;
-      state = NPCState.WAITING;
+      state = NPCState.ENTERING;
     }
   }
 
