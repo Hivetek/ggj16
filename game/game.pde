@@ -35,6 +35,13 @@ Minim minim; // Audio context
 
 float countdown = 5.0;
 
+void initPlayers() {
+  players[0] = new Player(0, width-90, height-150, false); // Arrows
+  players[1] = new Player(1, 90, 150, false); // WASD
+  players[2] = new Player(2, width-90, 150, false); // IJKL
+  players[3] = new Player(3, 90, height - 150, false); // Numpad
+}
+
 void setup() {
   size(1280, 720);
   frameRate(60);
@@ -75,10 +82,7 @@ void setup() {
   textAlign(CENTER, CENTER);
   textFont(comicFont);
 
-  players[0] = new Player(0, width-90, height-150, false); // Arrows
-  players[1] = new Player(1, 90, 150, false); // WASD
-  players[2] = new Player(2, width-90, 150, false); // IJKL
-  players[3] = new Player(3, 90, height - 150, false); // Numpad
+  initPlayers();
 
   initInputBuffer();
   initScenery();
