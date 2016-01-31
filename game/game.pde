@@ -20,6 +20,7 @@ PFont emojiFont;
 PFont introFont; 
 
 PImage bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, bunny1dead, bunny2dead, bunny3dead, bunny4dead, beerImage, shoeImage, beerstationImage, beerIconImage, guardImage;  
+PImage[] smallTableImages = new PImage[3];
 
 Obstacle[] obstacles = new Obstacle[22];
 
@@ -59,7 +60,10 @@ void setup() {
   //IMAGES
   bgImage = loadImage("data/images/floor.png");
   smallTableImage = loadImage("data/images/table_small.png");
-  bigTableImage = loadImage("data/images/table_big.png");
+  smallTableImages[0] = loadImage("data/images/table_small_details_1.png");
+  smallTableImages[1] = loadImage("data/images/table_small_details_2.png");
+  smallTableImages[2] = loadImage("data/images/table_small_details_3.png");
+  bigTableImage = loadImage("data/images/table_big_w_details.png");
   commanderTableImage = loadImage("data/images/commander_table_54x132.png");
   fratBroImage1 = loadImage("data/images/frat_bro_1.png");
   fratBroImage2 = loadImage("data/images/frat_bro_2.png");

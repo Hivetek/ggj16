@@ -21,12 +21,14 @@ enum TableType {
 
   TableType type;
   Obstacle assocObstacle;
+  int img = 0;
 
   STable(float x, float y, TableType type) {
     this.x = x;
     this.y = y;
 
     this.type = type;
+    this.img = round(random(3.0));
 
     switch (type) {
     case SMALL:
@@ -48,7 +50,7 @@ enum TableType {
   void render() {
     switch (this.type) {
     case SMALL:
-      image(smallTableImage, x-w/2-3, y-h/2-4);
+      image(smallTableImages[img], x-w/2-3, y-h/2-4);
       break;
     case BIG:
       image(bigTableImage, x-w/2-6, y-h/2-8);

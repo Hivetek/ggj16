@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   int id = -1;
 
   float animationSpeed = 0.07;
@@ -93,12 +93,12 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 
     if (bladder > 1.0) {
       if (!death_sound.isPlaying()) {
-        death_sound.play();
+        death_sound.play(0);
       }
       exploding++;
     }
 
-    if (exploding > 84) {
+    if (exploding > 86) {
       die();
     }
 
@@ -409,10 +409,10 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>//
     resetMatrix();
 
     //Draw player
-    float ox = random(4*(exploding/84.0));
-    float oy = random(4*(exploding/84.0));
+    float ox = random(4*(exploding/86.0));
+    float oy = random(4*(exploding/86.0));
     translate(x, y);
-    scale(1.0+0.3*(exploding/84.0));
+    scale(1.0+0.3*(exploding/86.0));
     rotate(realDirection-PI*0.5);
     switch(id) {
     case 0:
