@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>//
+class Player { //<>// //<>// //<>// //<>// //<>// //<>//
   int id = -1;
 
   float animationSpeed = 0.07;
@@ -250,7 +250,7 @@ class Player { //<>// //<>// //<>//
         this.drunk += 0.20;
       }
       if (this.bladder < 1.0) {
-        this.bladder += 0.5;
+        this.bladder += 0.05;
         if (this.bladder >= 1.0) {
           this.die();
         }
