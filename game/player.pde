@@ -1,9 +1,9 @@
-class Player { //<>// //<>//
+class Player { //<>// //<>// //<>//
   int id = -1;
-  
+
   float animationSpeed = 0.07;
   float walkAnim = 0.0;
-  
+
   //Physics parameters
   float moveAccel = 0.5;
   float moveSpeed = 3.4;
@@ -20,7 +20,7 @@ class Player { //<>// //<>//
   float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk //<>//
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
   int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
-  float drunkReductionRate = 0.0002;//0.00025 //<>// //<>//
+  float drunkReductionRate = 0.0002;//0.00025 //<>// //<>// //<>//
 
   float radius = 12;
 
@@ -43,8 +43,10 @@ class Player { //<>// //<>//
   int drinkingTimeout = 600;
   boolean drinkingImmune = false;
   int drinkingImmuneTimestamp = millis();
-  
+
   boolean carryingBeer = false;
+
+  boolean dead = false;
 
   Player(int id, float xx, float yy, boolean active) {
     this.id = id;
@@ -144,7 +146,7 @@ class Player { //<>// //<>//
     dir += dirVel;
 
     collisionHandling();
-    
+
     walkAnim += speed*animationSpeed;
     //Drunken motion drunkOscillation
     dirOffset += drunkOscillationFreq*speed;
@@ -172,7 +174,7 @@ class Player { //<>// //<>//
         if (dist < p.radius + radius && dist > 0) {
           float mx = (dx/dist)*(dist-(p.radius + radius))*0.5;
           float my = (dy/dist)*(dist-(p.radius + radius))*0.5;
-          
+
           p.vx += vx+(dx/dist)*100.0;
           p.vy += vy+(dy/dist)*100.0;
           vx -= p.vx+(dx/dist)*100.0;
@@ -187,14 +189,14 @@ class Player { //<>// //<>//
     }
 
 
-    
+
     for (BeerStation beerstation : beerstations) {
       if (beerstation.assocObstacle.intersects(x, y, radius)) {
         carryingBeer = true;
       }
     }
-    
-    
+
+
     //Obstacles
     //TODO: Bounciness
     for (Obstacle obstacle : staticObstacles) {
@@ -234,31 +236,55 @@ class Player { //<>// //<>//
   }
 
   void drink() {
-    if (!this.currentlyDrinking()) {
+    if (!this.currentlyDrinking() && this.active && !this.dead) {
       this.drinkingTimestamp = millis();
       if (this.drunk < 1.0) {
         this.drunk += 0.20;
       }
       if (this.bladder < 1.0) {
         this.bladder += 0.05;
+        if(this.bladder >= 1.0){
+          this.die();
+        }
       }
     }
   }
-  
-  void die(){
+
+  void die() {
     active = false;
+    dead = true;
     //TODO: EXPLOSION HERE!
   }
-  
+
   boolean currentlyDrinking() {
     return ((millis() - this.drinkingTimestamp) < this.drinkingTimeout);
   }
 
   void render() {
+    if (this.dead) {
+      translate(x, y);
+      rotate(realDirection-PI*0.5);
+      switch(id) {
+      case 0:
+        image(bunny1dead, -25, -25);
+        break;
+      case 1:
+        image(bunny2dead, -25, -25);
+        break;
+      case 2:
+        image(bunny3dead, -25, -25);
+        break;
+      default:
+        image(bunny4dead, -25, -25);
+        break;
+      }
+      resetMatrix();
+    }
+
     if (!this.active) return;
 
     image(shadow, x-32, y-32);
-    
+
     //Draw feet
     translate(x, y);
     rotate(realDirection-PI*0.5);
@@ -268,7 +294,7 @@ class Player { //<>// //<>//
     rotate(realDirection-PI*0.5);
     image(shoeImage, 6-3, cos(walkAnim)*12-4);
     resetMatrix();
-    
+
     //Draw player
     translate(x, y);
     rotate(realDirection-PI*0.5);
@@ -286,7 +312,7 @@ class Player { //<>// //<>//
       image(bunny4, -25, -25);
       break;
     }
-    if(carryingBeer){
+    if (carryingBeer) {
       image(beerImage, -18, -18);
     }
     resetMatrix();

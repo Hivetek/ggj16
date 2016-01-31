@@ -182,7 +182,7 @@ enum NPCState {
     if (state != NPCState.GONE) {
       for (Player p : players) {
         if (!p.active)
-          break;
+          continue;
         float dx = p.x-x;
         float dy = p.y-y;
         float dist = sqrt(dx*dx+dy*dy);
@@ -324,10 +324,15 @@ enum NPCState {
         fill(255);
         textFont(talkFont);
         drawText("9", x+28+random(4.0*waitTime/maxRequestTime), y-50+random(4.0*waitTime/maxRequestTime), random(0.08*PI*waitTime/maxRequestTime), 0.90+random(0.2*waitTime/maxRequestTime));
+        translate(x+28+random(6.0*waitTime/maxRequestTime), y-60+random(6.0*waitTime/maxRequestTime));
+        scale(0.90+random(0.2*waitTime/maxRequestTime));
+        rotate(random(0.15*PI*waitTime/maxRequestTime));
+        image(beerIconImage, -10, -14);
+        resetMatrix();
         //fill(255, 64, 255, 180); //PINK
-        fill(255);
-        textFont(comicFont);
-        drawText("!", x+28+random(6.0*waitTime/maxRequestTime), y-60+random(6.0*waitTime/maxRequestTime), random(0.15*PI*waitTime/maxRequestTime), 0.90+random(0.2*waitTime/maxRequestTime));
+        //fill(255);
+        //textFont(comicFont);
+        //drawText("!", x+28+random(6.0*waitTime/maxRequestTime), y-60+random(6.0*waitTime/maxRequestTime), random(0.15*PI*waitTime/maxRequestTime), 0.90+random(0.2*waitTime/maxRequestTime));
       }
 
       if (DEBUG) {

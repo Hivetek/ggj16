@@ -15,7 +15,7 @@ PFont comicFont;
 PFont talkFont;
 PFont regularFont; 
 
-PImage bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, beerImage, shoeImage, beerstationImage;  
+PImage bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, bunny1dead, bunny2dead, bunny3dead, bunny4dead, beerImage, shoeImage, beerstationImage, beerIconImage;  
 
 Obstacle[] obstacles = new Obstacle[22];
 
@@ -32,12 +32,12 @@ void setup() {
   stroke(255);
   noFill();
   ellipseMode(RADIUS);
-  
+
   //FONTS
   comicFont = loadFont("data/fonts/ComicaBDBold-48.vlw");
   talkFont = loadFont("data/fonts/Talkies-60.vlw");
   regularFont = loadFont("data/fonts/ArialMT-12.vlw");
-  
+
   //IMAGES
   bgImage = loadImage("data/images/floor.png");
   smallTableImage = loadImage("data/images/table_small.png");
@@ -50,11 +50,16 @@ void setup() {
   bunny2 = loadImage("data/images/bunny_2.png");
   bunny3 = loadImage("data/images/bunny_3.png");
   bunny4 = loadImage("data/images/bunny_4.png");
+  bunny1dead = loadImage("data/images/bunny_1_dead.png");
+  bunny2dead = loadImage("data/images/bunny_2_dead.png");
+  bunny3dead = loadImage("data/images/bunny_3_dead.png");
+  bunny4dead = loadImage("data/images/bunny_4_dead.png");
   shadow = loadImage("data/images/shadow.png");
   beerImage = loadImage("data/images/big_beer_left.png");
   shoeImage = loadImage("data/images/shoe.png");
   beerstationImage = loadImage("data/images/station.png");
-  
+  beerIconImage = loadImage("data/images/beer_icon.png");
+
   textAlign(CENTER, CENTER);
   textFont(comicFont);
 
@@ -90,7 +95,6 @@ void update() {
   }
 
   for (Player p : players) {
-    //p.drunk = 1.0*mouseX/width;
     p.update();
   }
 }
@@ -103,10 +107,15 @@ void render() {
     seat.render();
   }
 
+  for (Player p : players) {
+    if (p.dead)
+      p.render();
+  }
+
   for (STable table : tables) {
     table.render();
   }
-  
+
   for (BeerStation beerstation : beerstations) {
     beerstation.render();
   }
@@ -120,7 +129,8 @@ void render() {
   }
 
   for (Player p : players) {
-    p.render();
+    if (!p.dead)
+      p.render();
   }
 
   if (DEBUG) {

@@ -95,23 +95,35 @@ void keyPressed() {
   
   
   
-  if ((current.isPressed(UP) || current.isPressed(LEFT) || current.isPressed(DOWN) || current.isPressed(RIGHT)) && !players[0].active) {
+  if ((current.isPressed(UP) || current.isPressed(LEFT) || current.isPressed(DOWN) || current.isPressed(RIGHT)) && !players[0].active && !players[0].dead) {
      players[0].active = true;
+     players[0].drunk = 0.0;
+     players[0].bladder = 0.0;
+     players[0].dead = false;
      println("Player0 active!");
   }
   
-  if ((current.isPressed('w') || current.isPressed('a') || current.isPressed('s') || current.isPressed('d')) && !players[1].active) {
+  if ((current.isPressed('w') || current.isPressed('a') || current.isPressed('s') || current.isPressed('d')) && !players[1].active && !players[1].dead) {
      players[1].active = true;
+     players[1].drunk = 0.0;
+     players[1].bladder = 0.0;
+     players[1].dead = false;
      println("Player1 active!");
   }
   
-  if ((current.isPressed('i') || current.isPressed('j') || current.isPressed('k') || current.isPressed('l')) && !players[2].active) {
+  if ((current.isPressed('i') || current.isPressed('j') || current.isPressed('k') || current.isPressed('l')) && !players[2].active && !players[2].dead) {
      players[2].active = true;
+     players[2].drunk = 0.0;
+     players[2].bladder = 0.0;
+     players[2].dead = false;
      println("Player2 active!");
   }
   
-  if ((current.isPressed('8') || current.isPressed('4') || current.isPressed('5') || current.isPressed('6')) && !players[3].active) {
+  if ((current.isPressed('8') || current.isPressed('4') || current.isPressed('5') || current.isPressed('6')) && !players[3].active && !players[3].dead) {
      players[3].active = true;
+     players[3].drunk = 0.0;
+     players[3].bladder = 0.0;
+     players[3].dead = false;
      println("Player3 active!");
   }
 }
