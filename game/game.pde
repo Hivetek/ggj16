@@ -88,6 +88,9 @@ void draw() {
    case INTRO:
       showIntro();
       break;
+   case INSTRUCTIONS:
+      showInstructions();
+      break;
   }
 }
 

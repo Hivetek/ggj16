@@ -3,6 +3,7 @@ enum Display {
   TITLESCREEN, 
   MENU,
   INTRO,
+  INSTRUCTIONS,
   GAME
 }
 
@@ -16,7 +17,7 @@ void showTitlescreen() {
   
   textAlign(CENTER);
     
-  textFont(regularFont);
+  textFont(introFont);
   textSize(100);
 
   text("Frat Trap", width/2, height/2);
@@ -101,6 +102,32 @@ void showIntro() {
 }
 
 
+void showInstructions() {
+  pushStyle();
+  
+  background(0);
+  
+  textAlign(CENTER);
+    
+  textFont(introFont);
+  textSize(32);
+
+  text("Serve the frat bros with beer or drink 'till you burst.", width/2, 200);
+  text("If you are too slow, you drink.", width/2, 260);
+  text("If you are too fast and bump into people, you drink.", width/2, 320);
+  
+  text("Be the last man standing of up to 4 players.", width/2, 380);
+  
+  text("Controls are: Arrow keys, WASD, IJKL and Numpad 8456.", width/2, 440);
+  
+  text("Players spawn as soon as their controls are taken in use.", width/2, 500);
+   
+ 
+  text("Press any key to start...", width/2, 600);
+  
+  popStyle();
+}
+
 
 void changeDisplay(Display disp) {
   display = disp;
@@ -116,6 +143,9 @@ void displayHandleKeyPressed() {
       changeDisplay(Display.INTRO);
       break;
     case INTRO:
+      changeDisplay(Display.INSTRUCTIONS);
+      break;
+    case INSTRUCTIONS:
       changeDisplay(Display.GAME);
       break;
   }
