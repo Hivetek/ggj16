@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   int id = -1;
 
   float animationSpeed = 0.07;
@@ -258,6 +258,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   void die() {
     active = false;
     dead = true;
+    spawnNPC += 10;
     //TODO: EXPLOSION HERE!
   }
 
@@ -341,7 +342,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
         textFont(talkFont);
         //drawText("C", x-28, y-45, 0.0, 1.0);
         textFont(emojiFont);
-        drawText("S", x, y-20-oy, 0.0, 1.0);
+        drawText("S", x, y-55+oy, 0.0, 1.0);
       }
     }
   }

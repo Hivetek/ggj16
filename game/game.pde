@@ -26,7 +26,7 @@ Player[] players = new Player[4];
 int activePlayers = 0;
 int activeRequests = 0;
 
-boolean spawnNPC = false;
+int spawnNPC = 0;
 
 AudioPlayer player;
 Minim minim; // Audio context
@@ -106,10 +106,10 @@ void draw() {
 void update() {
   goToNextInput();
 
-  if (spawnNPC) {
-    spawnNPC = false;
+  while (spawnNPC > 0) {
+    spawnNPC--;
     int i = 0;
-    while (i < seats.size() && seatIsOccupied(seats.get(i))) {
+    while (i < seats.size()-1 && seatIsOccupied(seats.get(i))) {
       i++;
     }
     if (!seatIsOccupied(seats.get(i)))
