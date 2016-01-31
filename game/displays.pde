@@ -176,5 +176,9 @@ void displayHandleKeyPressed() {
       background_music = minim.loadFile("data/sound/Frat-Trap-Level-Backgound-Music.mp3", 2048);
       background_music.loop();
       break;
+    case END:
+      changeDisplay(Display.GAME);
+      resetGame();
+      break;
   }
 }

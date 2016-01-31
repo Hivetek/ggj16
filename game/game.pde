@@ -273,6 +273,10 @@ void decideWinning() {
   }
 }
 
+void resetGame() {
+  // TODO: Reset game to initial condition
+}
+
 int sign(float n) {
   return round(n/abs(n));
 }
