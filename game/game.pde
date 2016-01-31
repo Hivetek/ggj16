@@ -75,8 +75,8 @@ void setup() {
   textAlign(CENTER, CENTER);
   textFont(comicFont);
 
-  players[0] = new Player(0, 90, 150, false); // Arrows
-  players[1] = new Player(1, width-90, height-150, false); // WASD
+  players[0] = new Player(0, width-90, height-150, false); // Arrows
+  players[1] = new Player(1, 90, 150, false); // WASD
   players[2] = new Player(2, width-90, 150, false); // IJKL
   players[3] = new Player(3, 90, height - 150, false); // Numpad
 
@@ -232,16 +232,16 @@ void drawKeys(int id, float x, float y) {
   textFont(regularFont);
   switch(id) {
   case 0:
-    text("<", x-35+15, y+15);
-    text("v", x+15, y+15);
-    text(">", x+35+15, y+15);
-    text("^", x+15, y-35+15);
-    break;
-  case 1:
     text("A", x-35+15, y+15);
     text("S", x+15, y+15);
     text("D", x+35+15, y+15);
     text("W", x+15, y-35+15);
+    break;
+  case 1:
+    text("<", x-35+15, y+15);
+    text("v", x+15, y+15);
+    text(">", x+35+15, y+15);
+    text("^", x+15, y-35+15);
     break;
   case 2:
     text("J", x-35+15, y+15);
