@@ -243,7 +243,7 @@ class Player { //<>// //<>// //<>//
         this.drunk += 0.20;
       }
       if (this.bladder < 1.0) {
-        this.bladder += 0.05;
+        this.bladder += 0.5;
         if (this.bladder >= 1.0) {
           this.die();
         }
@@ -259,7 +259,7 @@ class Player { //<>// //<>// //<>//
     active = false;
     dead = true;
     spawnNPC += 10;
-    death_sound.play();
+    //death_sound.play();
     //TODO: EXPLOSION HERE!
   }
 
