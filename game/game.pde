@@ -140,6 +140,10 @@ void render() {
   for (Seat seat : seats) {
     seat.render();
   }
+  
+  for (Seat seat : guardSeats) {
+    seat.render();
+  }
 
   for (Player p : players) {
     if (p.dead)
@@ -166,7 +170,7 @@ void render() {
     if (!p.dead)
       p.render();
   }
-
+  
   //---- HUD ----
   for (NPC npc : npcs) {
     npc.renderHUD();

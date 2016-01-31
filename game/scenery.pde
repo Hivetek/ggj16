@@ -1,5 +1,6 @@
 ArrayList<STable> tables = new ArrayList<STable>();
 ArrayList<Seat> seats = new ArrayList<Seat>();
+ArrayList<Seat> guardSeats = new ArrayList<Seat>();
 ArrayList<Door> doors = new ArrayList<Door>();
 ArrayList<BeerStation> beerstations = new ArrayList<BeerStation>();
 ArrayList<Obstacle> staticObstacles = new ArrayList<Obstacle>();
@@ -274,10 +275,18 @@ void initScenery() {
   seats.add(new Seat(980, 565));
 
 
+  // Guard seats
+  guardSeats.add(new Seat(800, 100));
+  guardSeats.add(new Seat(800, 620));
+  guardSeats.add(new Seat(480, 620));
+  guardSeats.add(new Seat(460, 100));
 
 
   // Find doors for seats
   for (Seat seat : seats) {
+    seat.findDoor();
+  }
+  for (Seat seat : guardSeats) {
     seat.findDoor();
   }
 
