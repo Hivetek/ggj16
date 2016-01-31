@@ -4,7 +4,8 @@ enum Display {
   MENU,
   INTRO,
   INSTRUCTIONS,
-  GAME
+  GAME,
+  END
 }
 
 Display display = Display.TITLESCREEN;
@@ -126,6 +127,30 @@ void showInstructions() {
   text("Press any key to start...", width/2, 600);
   
   popStyle();
+}
+
+boolean end_drawn = false;
+void showEnd() {
+  if (end_drawn) {
+    return;
+  }
+  pushStyle();
+  
+  fill(0,0,0,128);
+  rect(0,0,width,height);
+  
+  textAlign(CENTER);
+    
+  textFont(introFont);
+  textSize(100);
+  
+  fill(255);
+  if (winningPlayer != null) {
+    text(winningPlayer.name + " player won!", width/2, height/2);
+  }
+    
+  popStyle();
+  end_drawn = true;
 }
 
 

@@ -48,6 +48,8 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   boolean carryingBeer = false;
 
   boolean dead = false;
+  
+  String name;
 
   Player(int id, float xx, float yy, boolean active) {
     this.id = id;
@@ -61,18 +63,23 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
     switch(id) {
     case 0: 
       playerColor = color(255, 255, 0);
+      name = "Yellow";
       break;
     case 1: 
       playerColor = color(64, 64, 255);
+      name = "Blue";
       break;
     case 2: 
       playerColor = color(255, 0, 255);
+      name = "Pink";
       break;
     case 3: 
       playerColor = color(64, 255, 64);
+      name = "Green";
       break;
     default:
       playerColor = color(255);
+      name = "Default";
       break;
     }
   }
@@ -260,6 +267,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
     dead = true;
     //death_sound.play();
     //TODO: EXPLOSION HERE!
+    decideWinning();
   }
 
   void renderHUD() {

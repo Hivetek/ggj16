@@ -22,6 +22,7 @@ PImage bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImag
 Obstacle[] obstacles = new Obstacle[22];
 
 Player[] players = new Player[4];
+Player winningPlayer;
 
 int activePlayers = 0;
 int activeRequests = 0;
@@ -98,6 +99,9 @@ void draw() {
    case INSTRUCTIONS:
       showInstructions();
       break;
+   case END:
+      showEnd();
+      break;
   }
 }
 
@@ -171,6 +175,24 @@ void render() {
     for (Obstacle obstacle : staticObstacles) {
       obstacle.render();
     }
+  }
+}
+
+void decideWinning() {
+  ArrayList<Player> alivePlayers = new ArrayList<Player>();
+  int deadCount = 0;
+  for (Player p : players) {
+    if (p.active) {
+      if(!p.dead) {
+        alivePlayers.add(p); 
+      } else {
+         deadCount++; 
+      }
+    }
+  }
+  if (deadCount >= 0 && alivePlayers.size() == 1) {
+    winningPlayer = alivePlayers.get(0);
+    changeDisplay(Display.END);
   }
 }
 
