@@ -133,6 +133,9 @@ void showEnd() {
   if (end_drawn) {
     return;
   }
+  
+  paused = true;
+  
   pushStyle();
   
   fill(0,0,0,128);
