@@ -8,9 +8,9 @@ class Input {
   boolean lmb, rmb, mmb;
   boolean keys[] = new boolean[KEY_ARRAY_SIZE];
   boolean coded[] = new boolean[KEY_ARRAY_SIZE];
-  
+
   //Input() {}
-  
+
   Input clone() {
     Input newInput = new Input();
     newInput.lmb = lmb;
@@ -20,7 +20,7 @@ class Input {
     arrayCopy(coded, newInput.coded);
     return newInput;
   }
-  
+
   boolean isPressed(int key) {
     return coded[key] || keys[key];
   }
@@ -59,7 +59,7 @@ Input getPastInput(int num) {
 void initInputBuffer() {
   for (int i = 0; i < inputBuffer.length; i++) {
     inputBuffer[i] = new Input();
-  } 
+  }
 }
 
 
@@ -87,43 +87,43 @@ void mouseReleased() {
 void keyPressed() {
   if (display == Display.GAME) {
     Input current = currentInput();
-    
+
     if (key == CODED) {
       currentInput().coded[keyCode] = true;
     } else {
       currentInput().keys[key] = true;
     }
-  
-    if ((current.isPressed(UP) || current.isPressed(LEFT) || current.isPressed(DOWN) || current.isPressed(RIGHT)) && !players[0].active && !players[0].dead) {
-       players[0].active = true;
-       players[0].drunk = 0.0;
-       players[0].bladder = 0.0;
-       players[0].dead = false;
-       println("Player0 active!");
+
+    if ((current.isPressed(UP) || current.isPressed(LEFT) || current.isPressed(DOWN) || current.isPressed(RIGHT)) && !players[0].active && !players[0].dead && paused) {
+      players[0].active = true;
+      players[0].drunk = 0.0;
+      players[0].bladder = 0.0;
+      players[0].dead = false;
+      println("Player0 active!");
     }
-    
-    if ((current.isPressed('w') || current.isPressed('a') || current.isPressed('s') || current.isPressed('d')) && !players[1].active && !players[1].dead) {
-       players[1].active = true;
-       players[1].drunk = 0.0;
-       players[1].bladder = 0.0;
-       players[1].dead = false;
-       println("Player1 active!");
+
+    if ((current.isPressed('w') || current.isPressed('a') || current.isPressed('s') || current.isPressed('d')) && !players[1].active && !players[1].dead && paused) {
+      players[1].active = true;
+      players[1].drunk = 0.0;
+      players[1].bladder = 0.0;
+      players[1].dead = false;
+      println("Player1 active!");
     }
-    
-    if ((current.isPressed('i') || current.isPressed('j') || current.isPressed('k') || current.isPressed('l')) && !players[2].active && !players[2].dead) {
-       players[2].active = true;
-       players[2].drunk = 0.0;
-       players[2].bladder = 0.0;
-       players[2].dead = false;
-       println("Player2 active!");
+
+    if ((current.isPressed('i') || current.isPressed('j') || current.isPressed('k') || current.isPressed('l')) && !players[2].active && !players[2].dead && paused) {
+      players[2].active = true;
+      players[2].drunk = 0.0;
+      players[2].bladder = 0.0;
+      players[2].dead = false;
+      println("Player2 active!");
     }
-    
-    if ((current.isPressed('8') || current.isPressed('4') || current.isPressed('5') || current.isPressed('6')) && !players[3].active && !players[3].dead) {
-       players[3].active = true;
-       players[3].drunk = 0.0;
-       players[3].bladder = 0.0;
-       players[3].dead = false;
-       println("Player3 active!");
+
+    if ((current.isPressed('8') || current.isPressed('4') || current.isPressed('5') || current.isPressed('6')) && !players[3].active && !players[3].dead && paused) {
+      players[3].active = true;
+      players[3].drunk = 0.0;
+      players[3].bladder = 0.0;
+      players[3].dead = false;
+      println("Player3 active!");
     }
   } else {
     displayHandleKeyPressed();
