@@ -14,6 +14,7 @@ boolean DEBUG = false;
 PFont comicFont;
 PFont talkFont;
 PFont regularFont; 
+PFont emojiFont;
 
 PImage bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, bunny1dead, bunny2dead, bunny3dead, bunny4dead, beerImage, shoeImage, beerstationImage, beerIconImage;  
 
@@ -37,6 +38,7 @@ void setup() {
   comicFont = loadFont("data/fonts/ComicaBDBold-48.vlw");
   talkFont = loadFont("data/fonts/Talkies-60.vlw");
   regularFont = loadFont("data/fonts/ArialMT-12.vlw");
+  emojiFont = loadFont("data/fonts/Emoticons-28.vlw");
 
   //IMAGES
   bgImage = loadImage("data/images/floor.png");
@@ -141,6 +143,16 @@ void render() {
   for (Player p : players) {
     if (!p.dead)
       p.render();
+  }
+  
+  //---- HUD ----
+  for (NPC npc : npcs) {
+    npc.renderHUD();
+  }
+  
+  for (Player p : players) {
+    if (!p.dead)
+      p.renderHUD();
   }
 
   if (DEBUG) {

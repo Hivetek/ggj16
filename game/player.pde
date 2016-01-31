@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>//
+class Player { //<>// //<>// //<>// //<>// //<>//
   int id = -1;
 
   float animationSpeed = 0.07;
@@ -17,10 +17,10 @@ class Player { //<>// //<>// //<>//
   float drunkOscillationAmpl = 0.20; //Swerving oscillation amplitude when drunk
   float drunkMoveDamp = 0.7; //Reduction of acceleration when drunk
   float drunkFriction = 0.5; //Reduction of friction when drunk, 50%
-  float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk //<>//
+  float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
   int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
-  float drunkReductionRate = 0.0002;//0.00025 //<>// //<>// //<>//
+  float drunkReductionRate = 0.0002;//0.00025 //<>// //<>//
 
   float radius = 12;
 
@@ -39,10 +39,9 @@ class Player { //<>// //<>// //<>//
 
   color playerColor = color(255);
 
-  int drinkingTimestamp = millis();
-  int drinkingTimeout = 600;
-  boolean drinkingImmune = false;
-  int drinkingImmuneTimestamp = millis();
+  int drinkingTimestamp = -1000;
+  int drinkingTimeout = 1000;
+  int givingTimestamp = -1000;
 
   boolean carryingBeer = false;
 
@@ -62,7 +61,7 @@ class Player { //<>// //<>// //<>//
       playerColor = color(255, 255, 0);
       break;
     case 1: 
-      playerColor = color(128, 128, 255);
+      playerColor = color(64, 64, 255);
       break;
     case 2: 
       playerColor = color(255, 0, 255);
@@ -236,18 +235,22 @@ class Player { //<>// //<>// //<>//
   }
 
   void drink() {
-    if (!this.currentlyDrinking() && this.active && !this.dead) {
+    if (!this.immune() && this.active && !this.dead) {
       this.drinkingTimestamp = millis();
       if (this.drunk < 1.0) {
         this.drunk += 0.20;
       }
       if (this.bladder < 1.0) {
         this.bladder += 0.05;
-        if(this.bladder >= 1.0){
+        if (this.bladder >= 1.0) {
           this.die();
         }
       }
     }
+  }
+
+  boolean immune() {
+    return ((millis() - this.drinkingTimestamp) < this.drinkingTimeout || (millis() - this.givingTimestamp) < this.drinkingTimeout);
   }
 
   void die() {
@@ -256,8 +259,59 @@ class Player { //<>// //<>// //<>//
     //TODO: EXPLOSION HERE!
   }
 
-  boolean currentlyDrinking() {
-    return ((millis() - this.drinkingTimestamp) < this.drinkingTimeout);
+  void renderHUD() {
+    // --- HUD ---
+
+    pushStyle();
+
+    // Drunk-meter
+    int drunk_meter_width = 100;
+    int drunk_meter_height = 10;
+    float drunk_meter_x = this.x - drunk_meter_width / 2;
+    float drunk_meter_y = this.y - this.radius*2 - drunk_meter_height;
+
+    stroke(59.2, 2.7, 0.8);
+    noFill();
+    rect(drunk_meter_x, drunk_meter_y, drunk_meter_width, drunk_meter_height);
+    fill(59.2, 2.7, 0.8);
+    rect(drunk_meter_x, drunk_meter_y, min(this.drunk*drunk_meter_width, drunk_meter_width), drunk_meter_height);
+
+    popStyle();
+
+    pushStyle();
+
+    // Drunk-meter
+    int bladder_meter_width = 100;
+    int bladder_meter_height = 10;
+    float bladder_meter_x = this.x - bladder_meter_width / 2;
+    float bladder_meter_y = this.y - this.radius*2 - drunk_meter_height - 5 - bladder_meter_height;
+    stroke(90.2, 90.2, 0);
+    noFill();
+    rect(bladder_meter_x, bladder_meter_y, bladder_meter_width, bladder_meter_height);
+    fill(90.2, 90.2, 0);
+    rect(bladder_meter_x, bladder_meter_y, min(this.bladder*bladder_meter_width, bladder_meter_width), bladder_meter_height);
+
+    popStyle();
+
+    if (immune()) {
+      if (millis()-this.givingTimestamp < this.drinkingTimeout) {
+        float oy = 35.0*(millis()-this.givingTimestamp)/this.drinkingTimeout;
+        int alpha = round(255.0*sin(PI*(millis()-this.givingTimestamp)/this.drinkingTimeout));
+        fill(red(playerColor), green(playerColor), blue(playerColor), alpha);
+        textFont(talkFont);
+        //drawText("C", x-28, y-45, 0.0, 1.0);
+        textFont(emojiFont);
+        drawText("D", x, y-20-oy, 0.0, 1.0);
+      } else if (millis()-this.drinkingTimestamp < this.drinkingTimeout) {
+        float oy = 35.0*(millis()-this.drinkingTimestamp)/this.drinkingTimeout;
+        int alpha = round(255.0*sin(PI*(millis()-this.drinkingTimestamp)/this.drinkingTimeout));
+        fill(red(playerColor), green(playerColor), blue(playerColor), alpha);
+        textFont(talkFont);
+        //drawText("C", x-28, y-45, 0.0, 1.0);
+        textFont(emojiFont);
+        drawText("S", x, y-20-oy, 0.0, 1.0);
+      }
+    }
   }
 
   void render() {
@@ -322,38 +376,5 @@ class Player { //<>// //<>// //<>//
       ellipse(x, y, radius, radius);
       line(x, y, x+cos(realDirection)*radius, y+sin(realDirection)*radius);
     }
-
-    // --- HUD ---
-
-    pushStyle();
-
-    // Drunk-meter
-    int drunk_meter_width = 100;
-    int drunk_meter_height = 10;
-    float drunk_meter_x = this.x - drunk_meter_width / 2;
-    float drunk_meter_y = this.y - this.radius*2 - drunk_meter_height;
-
-    stroke(59.2, 2.7, 0.8);
-    noFill();
-    rect(drunk_meter_x, drunk_meter_y, drunk_meter_width, drunk_meter_height);
-    fill(59.2, 2.7, 0.8);
-    rect(drunk_meter_x, drunk_meter_y, min(this.drunk*drunk_meter_width, drunk_meter_width), drunk_meter_height);
-
-    popStyle();
-
-    pushStyle();
-
-    // Drunk-meter
-    int bladder_meter_width = 100;
-    int bladder_meter_height = 10;
-    float bladder_meter_x = this.x - bladder_meter_width / 2;
-    float bladder_meter_y = this.y - this.radius*2 - drunk_meter_height - 5 - bladder_meter_height;
-    stroke(90.2, 90.2, 0);
-    noFill();
-    rect(bladder_meter_x, bladder_meter_y, bladder_meter_width, bladder_meter_height);
-    fill(90.2, 90.2, 0);
-    rect(bladder_meter_x, bladder_meter_y, min(this.bladder*bladder_meter_width, bladder_meter_width), bladder_meter_height);
-
-    popStyle();
   }
 }
