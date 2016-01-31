@@ -345,6 +345,7 @@ enum NPCState {
             activeRequests--;
             waitTime = 60*3 + round(random(60*20));
 
+            bro_drinking_sound.play(0);
             p.carryingBeer = false;
             p.givingTimestamp = millis();
             for (Player otherPlayer : players) {
