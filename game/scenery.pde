@@ -41,7 +41,7 @@ enum TableType {
       this.w = 44;
       this.h = 121;
     }
-    
+
     this.assocObstacle = createObstacle();
   }
 
@@ -138,7 +138,7 @@ class Door {
       } else {
         rect(x - h/2, y - w/2, h, w);
       }
-      
+
       ellipse(x, y, 30, 30);
 
       popStyle();
@@ -150,24 +150,24 @@ class Door {
 class BeerStation {
   float x;
   float y;
-  
+
   float w = 95;
   float h = 40;
-  
+
   Obstacle assocObstacle;
-  
+
   BeerStation(float x, float y) {
     this.x = x;
     this.y = y;
-    
+
     this.assocObstacle = createObstacle();
   }
-  
+
   void render() {
     image(beerstationImage, x-w/2, y-h/2-7);
   }
-  
-  
+
+
   Obstacle createObstacle() {
     Obstacle o = new Obstacle(x, y, 1);
     o.w = w;
@@ -197,11 +197,11 @@ void initScenery() {
   for (STable table : tables) {
     staticObstacles.add(table.assocObstacle);
   }
-  
-  beerstations.add(new BeerStation(120,95));
-  beerstations.add(new BeerStation(120,630));
-  beerstations.add(new BeerStation(1160,95));
-  beerstations.add(new BeerStation(1160,630));
+
+  beerstations.add(new BeerStation(120, 95));
+  beerstations.add(new BeerStation(120, 630));
+  beerstations.add(new BeerStation(1160, 95));
+  beerstations.add(new BeerStation(1160, 630));
 
   for (BeerStation beerstation : beerstations) {
     staticObstacles.add(beerstation.assocObstacle);
@@ -215,8 +215,8 @@ void initScenery() {
   doors.add(new Door(56, 2*height/3+18, false));
 
   // --- Seats ---
-  
-  
+
+
   // Center table
   seats.add(new Seat(510, 310));
   seats.add(new Seat(510, 366));
@@ -296,9 +296,14 @@ void initScenery() {
   }
 
 
-  // Initial NPCS
+  // Initial NPC fratBros
   for (int i = 0; i < 8; i++) {
-    npcs.add(new NPC(seats.get(i), false, round(random(1.0))));
+    npcs.add(new NPC(seats.get(i), false, 0));
+  }
+
+  //Initial NPC guards
+  for (int i = 0; i < guardSeats.size(); i++) {
+    npcs.add(new NPC(guardSeats.get(i), false, 1));
   }
 }
 

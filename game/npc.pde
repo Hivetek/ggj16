@@ -82,7 +82,7 @@ enum NPCState {
         vy = dy;
       }
 
-      if (dist < 1) {
+      if (dist < speed) {
         state = NPCState.WAITING;
         vx = 0;
         vy = 0;
@@ -92,7 +92,7 @@ enum NPCState {
       dir += cos(2*PI*millis()*lookFreq*0.3)*lookSpeed*4;
 
       for (Player p : players) {
-        if (p.targeted) {
+        if (p.targeted && p.active && !p.dead) {
           state = NPCState.AGGRESSIVE;
           break;
         }
@@ -109,10 +109,8 @@ enum NPCState {
         vy = dy;
       }
       break;
-    case LEAVING:
-      state = NPCState.ENTERING;
-      break;
     case AGGRESSIVE:
+      dir += cos(2*PI*millis()*lookFreq*6.5)*lookSpeed*10;
       int ntargets = 0;
       for (Player p : players) {
         if (p.targeted && p.active && !p.dead) {
@@ -168,15 +166,15 @@ enum NPCState {
       dx = seat.x - x;
       dy = seat.y - y;
       dist = sqrt(dx*dx + dy*dy);
-      if (dist > speed) {
-        vx = (dx/dist)*speed;
-        vy = (dy/dist)*speed;
+      if (dist > speed*0.5) {
+        vx = (dx/dist)*speed*0.5;
+        vy = (dy/dist)*speed*0.5;
       } else {
         vx = dx;
         vy = dy;
       }
 
-      if (dist < 1) {
+      if (dist < speed) {
         state = NPCState.WAITING;
         vx = 0;
         vy = 0;
@@ -191,7 +189,7 @@ enum NPCState {
         state = NPCState.LEAVING;
         activeRequests--;
         for (Player p : players) {
-          p.drink();
+          p.targeted = true;
         }
       }
       break;
@@ -322,7 +320,7 @@ enum NPCState {
             p.givingTimestamp = millis();
             for (Player otherPlayer : players) {
               if (otherPlayer != p) {
-                otherPlayer.drink();
+                otherPlayer.targeted = true;
               }
             }
           } else {
@@ -497,10 +495,10 @@ enum NPCState {
           text("GONE", x+ox, y+oy);
           break;
         case AGGRESSIVE:
-          text("GONE", x+ox, y+oy);
+          text("AGGRESIVE", x+ox, y+oy);
           break;
         case ANGRYLEAVING:
-          text("GONE", x+ox, y+oy);
+          text("ANGRYLEAVING", x+ox, y+oy);
           break;
         }
       }

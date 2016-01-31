@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+class Player { //<>// //<>// //<>//
   int id = -1;
 
   float animationSpeed = 0.07;
@@ -50,8 +50,8 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //
   boolean dead = false;
 
   String name;
-  
-  boolean targeted = true;
+
+  boolean targeted = false;
 
   Player(int id, float xx, float yy, boolean active) {
     this.id = id;
@@ -353,12 +353,12 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //
         drawText("D", x, y-20-oy, 0.0, 1.0);
       } else if (millis()-this.drinkingTimestamp < this.drinkingTimeout) {
         /*float oy = 35.0*(millis()-this.drinkingTimestamp)/this.drinkingTimeout;
-        int alpha = round(255.0*sin(PI*(millis()-this.drinkingTimestamp)/this.drinkingTimeout));
-        fill(red(playerColor), green(playerColor), blue(playerColor), alpha);
-        textFont(talkFont);
-        //drawText("C", x-28, y-45, 0.0, 1.0);
-        textFont(emojiFont);
-        drawText("S", x, y-55+oy, 0.0, 1.0);*/
+         int alpha = round(255.0*sin(PI*(millis()-this.drinkingTimestamp)/this.drinkingTimeout));
+         fill(red(playerColor), green(playerColor), blue(playerColor), alpha);
+         textFont(talkFont);
+         //drawText("C", x-28, y-45, 0.0, 1.0);
+         textFont(emojiFont);
+         drawText("S", x, y-55+oy, 0.0, 1.0);*/
       }
     }
   }

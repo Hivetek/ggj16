@@ -90,22 +90,22 @@ void setup() {
 
 void draw() {
   switch(display) {
-    case GAME:
-      update();
-      render();
-      break;
-    case TITLESCREEN:
-      showTitlescreen();
-      break;
-   case INTRO:
-      showIntro();
-      break;
-   case INSTRUCTIONS:
-      showInstructions();
-      break;
-   case END:
-      showEnd();
-      break;
+  case GAME:
+    update();
+    render();
+    break;
+  case TITLESCREEN:
+    showTitlescreen();
+    break;
+  case INTRO:
+    showIntro();
+    break;
+  case INSTRUCTIONS:
+    showInstructions();
+    break;
+  case END:
+    showEnd();
+    break;
   }
 }
 
@@ -122,7 +122,7 @@ void update() {
       i++;
     }
     if (!seatIsOccupied(seats.get(i)))
-      npcs.add(new NPC(seats.get(i), true, 1));
+      npcs.add(new NPC(seats.get(i), true, 0));
   }
 
   for (NPC npc : npcs) {
@@ -141,7 +141,7 @@ void render() {
   for (Seat seat : seats) {
     seat.render();
   }
-  
+
   for (Seat seat : guardSeats) {
     seat.render();
   }
@@ -171,7 +171,7 @@ void render() {
     if (!p.dead)
       p.render();
   }
-  
+
   //---- HUD ----
   for (NPC npc : npcs) {
     npc.renderHUD();
@@ -265,10 +265,10 @@ void decideWinning() {
   int deadCount = 0;
   for (Player p : players) {
     if (p.active) {
-      if(!p.dead) {
-        alivePlayers.add(p); 
+      if (!p.dead) {
+        alivePlayers.add(p);
       } else {
-         deadCount++; 
+        deadCount++;
       }
     }
   }
