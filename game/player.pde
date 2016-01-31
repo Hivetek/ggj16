@@ -258,7 +258,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   void die() {
     active = false;
     dead = true;
-    death_sound.play();
+    //death_sound.play();
     //TODO: EXPLOSION HERE!
   }
 
