@@ -186,7 +186,7 @@ void initScenery() {
   tables.add(new STable(width/2, height/2, TableType.BIG));
 
   // Commander table
-  tables.add(new STable(60 + 70, height/2 + 15, TableType.COMMANDER));
+  //tables.add(new STable(60 + 70, height/2 + 15, TableType.COMMANDER));
 
   // Four smaller tables
   tables.add(new STable(60 + 275, 60 + 180, TableType.SMALL));
