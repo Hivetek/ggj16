@@ -150,8 +150,8 @@ enum NPCState {
 
         if (npcs.size() < seats.size()-1) {
           float rand = random(1.0);
-          if (rand < 0.35) { //35% chance to spawn another NPC
-            spawnNPC = true;
+          if (rand < 1.0) { //35% chance to spawn another NPC
+            spawnNPC++;
           }
         }
       }

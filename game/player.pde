@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+class Player { //<>// //<>// //<>//
   int id = -1;
 
   float animationSpeed = 0.07;
@@ -17,12 +17,12 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   //Drunkenness parameters
   float drunkOscillationFreq = 0.02; //Swerving oscillation frequency when drunk
   float drunkOscillationAmpl = 0.20; //Swerving oscillation amplitude when drunk
-  float drunkMoveDamp = 0.7; //Reduction of acceleration when drunk //<>//
+  float drunkMoveDamp = 0.7; //Reduction of acceleration when drunk  //<>//
   float drunkFriction = 0.5; //Reduction of friction when drunk, 50%
   float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
   int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
-  float drunkReductionRate = 0.0002;//0.00025 //<>// //<>//
+  float drunkReductionRate = 0.0002;//0.00025 
 
   float radius = 12;
 
@@ -250,7 +250,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
         this.drunk += 0.20;
       }
       if (this.bladder < 1.0) {
-        this.bladder += 0.05;
+        this.bladder += 0.5;
         if (this.bladder >= 1.0) {
           this.die();
         }
@@ -265,8 +265,12 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   void die() {
     active = false;
     dead = true;
+
+    spawnNPC += 10;
     //death_sound.play();
+
     //TODO: EXPLOSION HERE!
+    
     decideWinning();
   }
 
@@ -350,7 +354,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
         textFont(talkFont);
         //drawText("C", x-28, y-45, 0.0, 1.0);
         textFont(emojiFont);
-        drawText("S", x, y-20-oy, 0.0, 1.0);
+        drawText("S", x, y-55+oy, 0.0, 1.0);
       }
     }
   }

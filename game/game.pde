@@ -11,6 +11,8 @@ import ddf.minim.ugens.*;
 
 boolean DEBUG = false;
 
+boolean paused = true;
+
 PFont comicFont;
 PFont talkFont;
 PFont regularFont; 
@@ -27,10 +29,11 @@ Player winningPlayer;
 int activePlayers = 0;
 int activeRequests = 0;
 
-boolean spawnNPC = false;
-
+int spawnNPC = 0;
 
 Minim minim; // Audio context
+
+float countdown = 5.0;
 
 void setup() {
   size(1280, 720);
@@ -78,9 +81,9 @@ void setup() {
 
   initInputBuffer();
   initScenery();
-  
+
   minim = new Minim(this);
-  
+
   initSound();
 }
 
@@ -108,10 +111,13 @@ void draw() {
 void update() {
   goToNextInput();
 
-  if (spawnNPC) {
-    spawnNPC = false;
+  if (paused)
+    return;
+
+  while (spawnNPC > 0) {
+    spawnNPC--;
     int i = 0;
-    while (i < seats.size() && seatIsOccupied(seats.get(i))) {
+    while (i < seats.size()-1 && seatIsOccupied(seats.get(i))) {
       i++;
     }
     if (!seatIsOccupied(seats.get(i)))
@@ -160,12 +166,12 @@ void render() {
     if (!p.dead)
       p.render();
   }
-  
+
   //---- HUD ----
   for (NPC npc : npcs) {
     npc.renderHUD();
   }
-  
+
   for (Player p : players) {
     if (!p.dead)
       p.renderHUD();
@@ -175,6 +181,77 @@ void render() {
     for (Obstacle obstacle : staticObstacles) {
       obstacle.render();
     }
+  }
+
+  if (paused) {
+    int n = 0;
+    for (Player p : players) {
+      if (p.active)
+        n++;
+    }
+
+    if (n > 1)
+      countdown -= 1.0/60.0;
+
+    noStroke();
+    fill(0, 0, 0, 128);
+    rect(0, 0, width, height);
+
+    drawKeys(0, 100, 100);
+    drawKeys(1, width-100, height-100);
+    drawKeys(2, width-100, 100);
+    drawKeys(3, 100, height-100);
+
+    fill(255);
+    textFont(introFont);
+    text("WAITING FOR PLAYERS...", width/2, height/2-80);
+
+    if (countdown < 5.0)
+      text(ceil(countdown), width/2, height/2+80);
+
+    if (countdown <= 0.0)
+      paused = false;
+  }
+}
+
+void drawKeys(int id, float x, float y) {
+  if (players[id].active)
+    fill(255, 255, 255, 220);
+  else fill(255, 255, 255, 128);
+  rect(x-35, y, 30, 30);
+  rect(x, y, 30, 30);
+  rect(x+35, y, 30, 30);
+  rect(x, y-35, 30, 30);
+
+  fill(0);
+  textFont(regularFont);
+  switch(id) {
+  case 0:
+    text("<", x-35+15, y+15);
+    text("v", x+15, y+15);
+    text(">", x+35+15, y+15);
+    text("^", x+15, y-35+15);
+    break;
+  case 1:
+    text("A", x-35+15, y+15);
+    text("S", x+15, y+15);
+    text("D", x+35+15, y+15);
+    text("W", x+15, y-35+15);
+    break;
+  case 2:
+    text("J", x-35+15, y+15);
+    text("K", x+15, y+15);
+    text("L", x+35+15, y+15);
+    text("I", x+15, y-35+15);
+    break;
+  case 3:
+    text("4", x-35+15, y+15);
+    text("5", x+15, y+15);
+    text("6", x+35+15, y+15);
+    text("8", x+15, y-35+15);
+    break;
+  default:
+    break;
   }
 }
 
