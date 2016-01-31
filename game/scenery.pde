@@ -28,7 +28,7 @@ enum TableType {
     this.y = y;
 
     this.type = type;
-    this.img = round(random(3.0));
+    this.img = round(random(2.0));
 
     switch (type) {
     case SMALL:

@@ -44,6 +44,8 @@ enum NPCState {
 
   float maxTargetDist = height/2;
 
+  int bumpedTimestamp = -1000;
+
   Seat seat;
 
   NPCState state;
@@ -352,6 +354,7 @@ enum NPCState {
               }
             }
           } else {
+            bumpedTimestamp = millis();
             if (type == 1) {
               if (p.targeted || state == NPCState.WAITING) {
                 p.drink();
@@ -442,6 +445,13 @@ enum NPCState {
   }
 
   void renderHUD() {
+    if (millis()-bumpedTimestamp < 1000) {
+      float alpha = 255*sin(PI*(millis()-bumpedTimestamp)/1000);
+      fill(255, 255, 255, alpha);
+      textFont(emojiFont);
+      drawText("W", x+random(6.0), y-30+random(3.0), random(0.05*PI), 0.95+random(0.1));
+    }
+
     if (state == NPCState.REQUESTING) {
       fill(255);
       textFont(talkFont);
