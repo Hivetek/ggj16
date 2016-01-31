@@ -17,7 +17,7 @@ void showTitlescreen() {
   
   textAlign(CENTER);
     
-  textFont(regularFont);
+  textFont(introFont);
   textSize(100);
 
   text("Frat Trap", width/2, height/2);
@@ -109,7 +109,7 @@ void showInstructions() {
   
   textAlign(CENTER);
     
-  textFont(regularFont);
+  textFont(introFont);
   textSize(32);
 
   text("Serve the frat bros with beer or drink 'till you burst.", width/2, 200);
