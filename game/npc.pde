@@ -74,9 +74,9 @@ enum NPCState {
       dx = seat.x - x;
       dy = seat.y - y;
       dist = sqrt(dx*dx + dy*dy);
-      if (dist > speed) {
-        vx = (dx/dist)*speed;
-        vy = (dy/dist)*speed;
+      if (dist > speed*0.5) {
+        vx = (dx/dist)*speed*0.5;
+        vy = (dy/dist)*speed*0.5;
       } else {
         vx = dx;
         vy = dy;
@@ -166,9 +166,9 @@ enum NPCState {
       dx = seat.x - x;
       dy = seat.y - y;
       dist = sqrt(dx*dx + dy*dy);
-      if (dist > speed*0.5) {
-        vx = (dx/dist)*speed*0.5;
-        vy = (dy/dist)*speed*0.5;
+      if (dist > speed) {
+        vx = (dx/dist)*speed;
+        vy = (dy/dist)*speed;
       } else {
         vx = dx;
         vy = dy;
@@ -325,9 +325,13 @@ enum NPCState {
             }
           } else {
             if (type == 1) {
-              p.targeted = false;
+              if (p.targeted || state == NPCState.WAITING) {
+                p.drink();
+                p.targeted = false;
+              }
+            } else {
+              p.drink();
             }
-            p.drink();
           }
 
           float mx = (dx/dist)*(dist-(p.radius + radius))*0.5;
@@ -420,6 +424,14 @@ enum NPCState {
       //fill(255);
       //textFont(comicFont);
       //drawText("!", x+28+random(6.0*waitTime/maxRequestTime), y-60+random(6.0*waitTime/maxRequestTime), random(0.15*PI*waitTime/maxRequestTime), 0.90+random(0.2*waitTime/maxRequestTime));
+    } else if (state == NPCState.AGGRESSIVE) {
+      fill(255);
+      textFont(talkFont);
+      drawText("9", x+28+random(4.0), y-50+random(4.0), random(0.08*PI), 0.90+random(0.2));
+      fill(255, 255, 255, 180);
+      fill(255);
+      textFont(comicFont);
+      drawText("!", x+28+random(6.0), y-60+random(6.0), random(0.15*PI), 0.90+random(0.2));
     }
   }
 
