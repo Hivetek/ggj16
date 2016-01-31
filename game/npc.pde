@@ -5,10 +5,13 @@ enum NPCState {
     LEAVING, 
     GONE, 
     WAITING, 
-    REQUESTING
+    REQUESTING, 
+    AGGRESSIVE, 
+    ANGRYLEAVING
 };
 
   class NPC {
+  int type = 0; //0 = fratbro, 1 = guard
   float x;
   float y;
   float vx;
@@ -22,7 +25,7 @@ enum NPCState {
   float radius = 12;
 
   float bounciness = 0.8;
-  float speed = 2;
+  float speed = 2.0;
 
   int waitTime = 0;
   int maxRequestTime = 600;
@@ -40,7 +43,8 @@ enum NPCState {
 
   NPCState state;
 
-  NPC(Seat seat, boolean startAtDoor) {
+  NPC(Seat seat, boolean startAtDoor, int type) {
+    this.type = type;
     this.seat = seat;
     if (startAtDoor) {
       this.x = seat.door.x;
@@ -51,17 +55,116 @@ enum NPCState {
       this.y = seat.y;
       state = NPCState.ENTERING;
     }
+    if (type == 0) {
+      speed = 2.0;
+    } else {
+      speed = 4.0;
+    }
   }
 
-  void update() {
+  void guardAI() {
     float dx, dy, dist;
+    switch(state) {
+    case ENTERING:
+      if (abs(vx) > 0.1 && abs(vy) > 0.1) { 
+        dir += (atan2(vy, vx)-dir)*0.15;
+      }
 
-    if (abs(vx) > 0.1 && abs(vy) > 0.1) { 
-      dir += (atan2(vy, vx)-dir)*0.15;
+      //TODO: Go to either nearest door OR assigned seat, whichever is closer
+      dx = seat.x - x;
+      dy = seat.y - y;
+      dist = sqrt(dx*dx + dy*dy);
+      if (dist > speed) {
+        vx = (dx/dist)*speed;
+        vy = (dy/dist)*speed;
+      } else {
+        vx = dx;
+        vy = dy;
+      }
+
+      if (dist < 1) {
+        state = NPCState.WAITING;
+        vx = 0;
+        vy = 0;
+      }
+      break;
+    case WAITING:
+      dir += cos(2*PI*millis()*lookFreq*0.3)*lookSpeed*4;
+
+      for (Player p : players) {
+        if (p.targeted) {
+          state = NPCState.AGGRESSIVE;
+          break;
+        }
+      }
+
+      dx = seat.x - x;
+      dy = seat.y - y;
+      dist = sqrt(dx*dx + dy*dy);
+      if (dist > speed) {
+        vx = (dx/dist)*speed;
+        vy = (dy/dist)*speed;
+      } else {
+        vx = dx;
+        vy = dy;
+      }
+      break;
+    case LEAVING:
+      state = NPCState.ENTERING;
+      break;
+    case AGGRESSIVE:
+      int ntargets = 0;
+      for (Player p : players) {
+        if (p.targeted && p.active && !p.dead) {
+          ntargets++;
+        }
+      }
+      if (ntargets == 0) {
+        state = NPCState.ENTERING;
+        break;
+      } else {
+        float targetDist = 99999.9;
+        dx = 0;
+        dy = 0;
+        for (Player p : players) {
+          if (p.targeted && p.active && !p.dead) {
+            float tx, ty;
+            tx = p.x - x;
+            ty = p.y - y;
+            float newDist = sqrt(tx*tx+ty*ty);
+            if (newDist < targetDist) {
+              targetDist = newDist;
+              dx = tx;
+              dy = ty;
+            }
+          }
+        }
+        if (targetDist > speed) {
+          vx = (dx/targetDist)*speed;
+          vy = (dy/targetDist)*speed;
+        } else {
+          vx = dx;
+          vy = dy;
+        }
+      }
+
+      if (abs(vx) > 0.1 && abs(vy) > 0.1) { 
+        dir += (atan2(vy, vx)-dir)*0.15;
+      }
+      break;
+    default:
+      break;
     }
+  }
+
+  void fratBroAI() {
+    float dx, dy, dist;
 
     switch(state) {
     case ENTERING:
+      if (abs(vx) > 0.1 && abs(vy) > 0.1) { 
+        dir += (atan2(vy, vx)-dir)*0.15;
+      }
       dx = seat.x - x;
       dy = seat.y - y;
       dist = sqrt(dx*dx + dy*dy);
@@ -122,6 +225,10 @@ enum NPCState {
       }
       break;
     case LEAVING:
+      if (abs(vx) > 0.1 && abs(vy) > 0.1) { 
+        dir += (atan2(vy, vx)-dir)*0.15;
+      }
+
       dx = seat.door.x - x;
       dy = seat.door.y - y;
       dist = sqrt(dx*dx + dy*dy);
@@ -162,6 +269,16 @@ enum NPCState {
         }
       }
       break;
+    default:
+      break;
+    }
+  }
+
+  void update() {
+    if (type == 0) {
+      fratBroAI();
+    } else {
+      guardAI();
     }
 
     x += vx;
@@ -209,6 +326,9 @@ enum NPCState {
               }
             }
           } else {
+            if (type == 1) {
+              p.targeted = false;
+            }
             p.drink();
           }
 
@@ -328,16 +448,20 @@ enum NPCState {
 
       translate(x, y);
       rotate(dir-PI*0.5);
-      switch(img) {
-      case 0:
-        image(fratBroImage1, -18+ox, -18+oy);
-        break;
-      case 1:
-        image(fratBroImage2, -18+ox, -18+oy);
-        break;
-      default:
-        image(fratBroImage3, -18+oy, -18+oy);
-        break;
+      if (type == 0) {
+        switch(img) {
+        case 0:
+          image(fratBroImage1, -18+ox, -18+oy);
+          break;
+        case 1:
+          image(fratBroImage2, -18+ox, -18+oy);
+          break;
+        default:
+          image(fratBroImage3, -18+oy, -18+oy);
+          break;
+        }
+      } else {
+        image(guardImage, -18+ox, -18+oy);
       }
       if (carryingBeer) {
         image(beerImage, -18, -18);
@@ -370,6 +494,13 @@ enum NPCState {
           text("LEAVING", x+ox, y+oy);
           break;
         case GONE:
+          text("GONE", x+ox, y+oy);
+          break;
+        case AGGRESSIVE:
+          text("GONE", x+ox, y+oy);
+          break;
+        case ANGRYLEAVING:
+          text("GONE", x+ox, y+oy);
           break;
         }
       }

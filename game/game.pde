@@ -19,7 +19,7 @@ PFont regularFont;
 PFont emojiFont;
 PFont introFont; 
 
-PImage bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, bunny1dead, bunny2dead, bunny3dead, bunny4dead, beerImage, shoeImage, beerstationImage, beerIconImage;  
+PImage bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, bunny1dead, bunny2dead, bunny3dead, bunny4dead, beerImage, shoeImage, beerstationImage, beerIconImage, guardImage;  
 
 Obstacle[] obstacles = new Obstacle[22];
 
@@ -70,6 +70,7 @@ void setup() {
   shoeImage = loadImage("data/images/shoe.png");
   beerstationImage = loadImage("data/images/station.png");
   beerIconImage = loadImage("data/images/beer_icon.png");
+  guardImage = loadImage("data/images/commander.png");
 
   textAlign(CENTER, CENTER);
   textFont(comicFont);
@@ -121,7 +122,7 @@ void update() {
       i++;
     }
     if (!seatIsOccupied(seats.get(i)))
-      npcs.add(new NPC(seats.get(i), true));
+      npcs.add(new NPC(seats.get(i), true, 1));
   }
 
   for (NPC npc : npcs) {
