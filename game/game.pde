@@ -210,8 +210,8 @@ void render() {
     fill(0, 0, 0, 128);
     rect(0, 0, width, height);
 
-    drawKeys(0, 100, 100);
-    drawKeys(1, width-100, height-100);
+    drawKeys(1, 100, 100);
+    drawKeys(0, width-100, height-100);
     drawKeys(2, width-100, 100);
     drawKeys(3, 100, height-100);
 
@@ -240,16 +240,16 @@ void drawKeys(int id, float x, float y) {
   textFont(regularFont);
   switch(id) {
   case 0:
-    text("A", x-35+15, y+15);
-    text("S", x+15, y+15);
-    text("D", x+35+15, y+15);
-    text("W", x+15, y-35+15);
-    break;
-  case 1:
     text("<", x-35+15, y+15);
     text("v", x+15, y+15);
     text(">", x+35+15, y+15);
     text("^", x+15, y-35+15);
+    break;
+  case 1:
+    text("A", x-35+15, y+15);
+    text("S", x+15, y+15);
+    text("D", x+35+15, y+15);
+    text("W", x+15, y-35+15);
     break;
   case 2:
     text("J", x-35+15, y+15);
