@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>// //<>// //<>// //<>//
+class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   int id = -1;
 
   float animationSpeed = 0.07;
@@ -48,7 +48,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
   boolean carryingBeer = false;
 
   boolean dead = false;
-  
+
   String name;
 
   Player(int id, float xx, float yy, boolean active) {
@@ -270,7 +270,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
     //death_sound.play();
 
     //TODO: EXPLOSION HERE!
-    
+
     decideWinning();
   }
 
@@ -278,15 +278,16 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
     if (!active || dead)
       return;
 
-    visualBladder += (bladder-visualBladder)*0.1;
-    visualDrunk += (drunk-visualDrunk)*0.1;
+    visualBladder += (bladder-visualBladder)*0.05;
+    visualDrunk += (drunk-visualDrunk)*0.05;
 
     //Draw bladder lvl
+    color bladderCol = color(180+min(75, abs(visualBladder-bladder)*8000.0), 180+min(75, abs(visualBladder-bladder)*8000.0), 0, 100+min(100, abs(visualBladder-bladder)*8000.0));
     int w = 6;
     int d = 40;
     float startAngle = PI;
     float angle = PI*0.45;
-    fill(180, 180, 0, 176);
+    fill(bladderCol);
     noStroke();
     beginShape();
 
@@ -300,7 +301,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
     endShape(CLOSE);
 
     noFill();
-    stroke(180, 180, 0, 64);
+    stroke(bladderCol);
     beginShape();
 
     for (i = 0; i <= 100; i++) {
@@ -312,9 +313,10 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
     endShape(CLOSE);
 
     //Draw drunk lvl
+    color drunkCol = color(48+min(60, abs(visualBladder-bladder)*8000.0), 48+min(60, abs(visualBladder-bladder)*8000.0), 180+min(255-180, abs(visualBladder-bladder)*8000.0), 100+min(100, abs(visualBladder-bladder)*8000.0));
     startAngle = 0;
     angle =- PI*0.45;
-    fill(48, 48, 180, 176);
+    fill(drunkCol);
     noStroke();
     beginShape();
 
@@ -327,7 +329,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
     endShape(CLOSE);
 
     noFill();
-    stroke(48, 48, 180, 64);
+    stroke(drunkCol);
     beginShape();
 
     for (i = 0; i <= 100; i++) {
@@ -348,13 +350,13 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>//
         textFont(emojiFont);
         drawText("D", x, y-20-oy, 0.0, 1.0);
       } else if (millis()-this.drinkingTimestamp < this.drinkingTimeout) {
-        float oy = 35.0*(millis()-this.drinkingTimestamp)/this.drinkingTimeout;
+        /*float oy = 35.0*(millis()-this.drinkingTimestamp)/this.drinkingTimeout;
         int alpha = round(255.0*sin(PI*(millis()-this.drinkingTimestamp)/this.drinkingTimeout));
         fill(red(playerColor), green(playerColor), blue(playerColor), alpha);
         textFont(talkFont);
         //drawText("C", x-28, y-45, 0.0, 1.0);
         textFont(emojiFont);
-        drawText("S", x, y-55+oy, 0.0, 1.0);
+        drawText("S", x, y-55+oy, 0.0, 1.0);*/
       }
     }
   }

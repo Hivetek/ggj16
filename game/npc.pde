@@ -33,6 +33,9 @@ enum NPCState {
 
   boolean carryingBeer = false;
 
+  float lookFreq = 0.0002+random(0.001);
+  float lookSpeed = 0.006+random(0.008);
+
   Seat seat;
 
   NPCState state;
@@ -78,6 +81,7 @@ enum NPCState {
       }
       break;
     case REQUESTING:
+      dir += cos(2*PI*millis()*lookFreq*1.5)*lookSpeed*(4+random(6.0*waitTime/maxRequestTime));
       waitTime++;
       if (waitTime > maxRequestTime) {
         waitTime = 0;
@@ -89,6 +93,8 @@ enum NPCState {
       }
       break;
     case WAITING:
+      dir += cos(2*PI*millis()*lookFreq)*lookSpeed;
+
       if (waitTime > 0) {
         dx = seat.x - x;
         dy = seat.y - y;
@@ -150,7 +156,7 @@ enum NPCState {
 
         if (npcs.size() < seats.size()-1) {
           float rand = random(1.0);
-          if (rand < 1.0) { //35% chance to spawn another NPC
+          if (rand < 0.35) { //35% chance to spawn another NPC
             spawnNPC++;
           }
         }
@@ -313,17 +319,24 @@ enum NPCState {
       image(shoeImage, 6-3, cos(walkAnim)*12-4);
       resetMatrix();
 
+      float ox = 0.0;
+      float oy = 0.0;
+      if (state == NPCState.REQUESTING) {
+        ox = random(4.0*waitTime/maxRequestTime);
+        oy = random(4.0*waitTime/maxRequestTime);
+      }
+
       translate(x, y);
       rotate(dir-PI*0.5);
       switch(img) {
       case 0:
-        image(fratBroImage1, -18, -18);
+        image(fratBroImage1, -18+ox, -18+oy);
         break;
       case 1:
-        image(fratBroImage2, -18, -18);
+        image(fratBroImage2, -18+ox, -18+oy);
         break;
       default:
-        image(fratBroImage3, -18, -18);
+        image(fratBroImage3, -18+oy, -18+oy);
         break;
       }
       if (carryingBeer) {
@@ -341,8 +354,8 @@ enum NPCState {
         stroke(255);
         fill(255);
         text(waitTime, x+10, y+50);
-        float ox = 10;
-        float oy = 30;
+        ox = 10;
+        oy = 30;
         switch(state) {
         case ENTERING:
           text("ENTERING", x+ox, y+oy);
