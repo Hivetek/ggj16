@@ -177,6 +177,7 @@ void displayHandleKeyPressed() {
       background_music.close();
       
       background_music = minim.loadFile("data/sound/Frat-Trap-Level-Backgound-Music.mp3", 2048);
+      background_music.setGain(-5);
       background_music.loop();
       break;
     case END:

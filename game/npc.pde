@@ -358,6 +358,9 @@ enum NPCState {
                 p.targeted = false;
               }
             } else {
+              int r = round(random(2.0));
+              angry_bro_sound[r].play(0);
+
               p.drink();
             }
           }
