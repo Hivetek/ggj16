@@ -196,7 +196,7 @@ enum NPCState {
             waitTime = 60*3 + round(random(60*20));
 
             p.carryingBeer = false;
-            p.drinkingTimestamp = millis();
+            p.givingTimestamp = millis();
             for (Player otherPlayer : players) {
               if (otherPlayer != p) {
                 otherPlayer.drink();
@@ -282,6 +282,23 @@ enum NPCState {
     }
   }
 
+  void renderHUD() {
+    if (state == NPCState.REQUESTING) {
+      fill(255);
+      textFont(talkFont);
+      drawText("9", x+28+random(4.0*waitTime/maxRequestTime), y-50+random(4.0*waitTime/maxRequestTime), random(0.08*PI*waitTime/maxRequestTime), 0.90+random(0.2*waitTime/maxRequestTime));
+      translate(x+28+random(6.0*waitTime/maxRequestTime), y-60+random(6.0*waitTime/maxRequestTime));
+      scale(0.90+random(0.2*waitTime/maxRequestTime));
+      rotate(random(0.15*PI*waitTime/maxRequestTime));
+      image(beerIconImage, -10, -14);
+      resetMatrix();
+      //fill(255, 64, 255, 180); //PINK
+      //fill(255);
+      //textFont(comicFont);
+      //drawText("!", x+28+random(6.0*waitTime/maxRequestTime), y-60+random(6.0*waitTime/maxRequestTime), random(0.15*PI*waitTime/maxRequestTime), 0.90+random(0.2*waitTime/maxRequestTime));
+    }
+  }
+
   void render() {
     if (state != NPCState.GONE) {
       image(shadow, x-32, y-32);
@@ -319,22 +336,6 @@ enum NPCState {
         stroke(255);
         ellipse(x, y, radius, radius);
       }
-
-      if (state == NPCState.REQUESTING) {
-        fill(255);
-        textFont(talkFont);
-        drawText("9", x+28+random(4.0*waitTime/maxRequestTime), y-50+random(4.0*waitTime/maxRequestTime), random(0.08*PI*waitTime/maxRequestTime), 0.90+random(0.2*waitTime/maxRequestTime));
-        translate(x+28+random(6.0*waitTime/maxRequestTime), y-60+random(6.0*waitTime/maxRequestTime));
-        scale(0.90+random(0.2*waitTime/maxRequestTime));
-        rotate(random(0.15*PI*waitTime/maxRequestTime));
-        image(beerIconImage, -10, -14);
-        resetMatrix();
-        //fill(255, 64, 255, 180); //PINK
-        //fill(255);
-        //textFont(comicFont);
-        //drawText("!", x+28+random(6.0*waitTime/maxRequestTime), y-60+random(6.0*waitTime/maxRequestTime), random(0.15*PI*waitTime/maxRequestTime), 0.90+random(0.2*waitTime/maxRequestTime));
-      }
-
       if (DEBUG) {
         textFont(regularFont);
         stroke(255);
