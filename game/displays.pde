@@ -14,18 +14,13 @@ Display display = Display.TITLESCREEN;
 void showTitlescreen() {
   pushStyle();
   
-  background(0);
+  image(titleScreenImage, 0, 0);
   
   textAlign(CENTER);
-    
-  textFont(introFont);
-  textSize(100);
-
-  text("Frat Trap", width/2, height/2);
   
   textSize(32);
 
-  text("Press any key...", width/2, height/2+200);
+  text("Press any key...", width/2, height/2+300);
   
   popStyle();
 }

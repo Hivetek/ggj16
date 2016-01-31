@@ -19,7 +19,7 @@ PFont regularFont;
 PFont emojiFont;
 PFont introFont; 
 
-PImage bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, bunny1dead, bunny2dead, bunny3dead, bunny4dead, beerImage, shoeImage, beerstationImage, beerIconImage, guardImage;  
+PImage titleScreenImage, bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, bunny1dead, bunny2dead, bunny3dead, bunny4dead, beerImage, shoeImage, beerstationImage, beerIconImage, guardImage;  
 PImage[] smallTableImages = new PImage[3];
 
 Obstacle[] obstacles = new Obstacle[22];
@@ -58,6 +58,7 @@ void setup() {
   introFont = loadFont("data/fonts/FreeMono-48.vlw");
 
   //IMAGES
+  titleScreenImage = loadImage("data/images/logo_introscreen.png");
   bgImage = loadImage("data/images/floor.png");
   smallTableImage = loadImage("data/images/table_small.png");
   smallTableImages[0] = loadImage("data/images/table_small_details_1.png");
