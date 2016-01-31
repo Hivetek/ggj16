@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   int id = -1;
 
   float animationSpeed = 0.07;
@@ -178,7 +178,6 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 
   void collisionHandling() {
     //boundaries
-    float bounds = 70.0;
     if (x < radius+bounds || x > width-(radius+bounds))
       vx = -vx*bounciness;
     if (y < radius+bounds || y > height-(radius+bounds))

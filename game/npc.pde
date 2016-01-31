@@ -319,7 +319,6 @@ enum NPCState {
 
   void collisionHandling() {
     //boundaries
-    float bounds = 55.0;
     if (x < radius+bounds || x > width-(radius+bounds))
       vx = -vx*bounciness;
     if (y < radius+bounds || y > height-(radius+bounds))

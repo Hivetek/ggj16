@@ -36,6 +36,8 @@ Minim minim; // Audio context
 
 float countdown = 5.0;
 
+float bounds = 70.0;
+
 void initPlayers() {
   players[0] = new Player(0, width-90, height-150, false); // Arrows
   players[1] = new Player(1, 90, 150, false); // WASD
@@ -195,6 +197,9 @@ void render() {
     for (Obstacle obstacle : staticObstacles) {
       obstacle.render();
     }
+    noFill();
+    stroke(255);
+    rect(bounds, bounds, width-bounds*2, height-bounds*2);
   }
 
   if (paused) {
