@@ -17,7 +17,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   //Drunkenness parameters
   float drunkOscillationFreq = 0.02; //Swerving oscillation frequency when drunk
   float drunkOscillationAmpl = 0.20; //Swerving oscillation amplitude when drunk
-  float drunkMoveDamp = 0.7; //Reduction of acceleration when drunk 
+  float drunkMoveDamp = 0.7; //Reduction of acceleration when drunk  //<>//
   float drunkFriction = 0.5; //Reduction of friction when drunk, 50%
   float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
@@ -92,6 +92,9 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>//
     if (!this.active) return;
 
     if (bladder > 1.0) {
+      if (!death_sound.isPlaying()) {
+        death_sound.play();
+      }
       exploding++;
     }
 
