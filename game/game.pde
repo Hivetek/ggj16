@@ -72,9 +72,19 @@ void setup() {
   initScenery();
 }
 
-void draw() {  
-  update();
-  render();
+void draw() {
+  switch(display) {
+    case GAME:
+      update();
+      render();
+      break;
+    case TITLESCREEN:
+      showTitlescreen();
+      break;
+   case INTRO:
+      showIntro();
+      break;
+  }
 }
 
 void update() {
