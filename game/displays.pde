@@ -74,11 +74,17 @@ void showIntro() {
   
   background(0);
   
-  textAlign(CENTER);
-    
+  
   textFont(introFont);
   
+  textSize(20);
+  textAlign(RIGHT);
+  
+  text("Press any key to skip...", width-10, 20);
+  
   textSize(28);
+  textAlign(CENTER);
+ 
 
   int i;
   int j = 0;
