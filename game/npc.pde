@@ -357,14 +357,14 @@ enum NPCState {
             bumpedTimestamp = millis();
             if (type == 1) {
               if (p.targeted || state == NPCState.WAITING) {
-                angry_guard_sound.play(0);
+                if(!p.immune()) angry_guard_sound.play(0);
                 
                 p.drink();
                 p.targeted = false;
               }
             } else {
               int r = round(random(1.0));
-              angry_bro_sound[r].play(0);
+              if(!p.immune()) angry_bro_sound[r].play(0);
 
               p.drink();
             }
