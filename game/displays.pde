@@ -135,7 +135,7 @@ void showEnd() {
     return;
   }
   
-  paused = true;
+  //paused = true;
   
   pushStyle();
   

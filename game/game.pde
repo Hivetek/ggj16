@@ -106,6 +106,7 @@ void draw() {
   case GAME:
     update();
     render();
+    checkWinning();
     break;
   case TITLESCREEN:
     showTitlescreen();
@@ -276,7 +277,17 @@ void drawKeys(int id, float x, float y) {
   }
 }
 
+int endTimestamp = -1;
+int endInterval = 1000;
+boolean gameEnd = false;
+
 void decideWinning() {
+  if (gameEnd) {
+    if (millis() - endTimestamp >= endInterval) {
+      changeDisplay(Display.END);
+    }
+    return;
+  }
   ArrayList<Player> alivePlayers = new ArrayList<Player>();
   int deadCount = 0;
   for (Player p : players) {
@@ -290,7 +301,17 @@ void decideWinning() {
   }
   if (deadCount >= 0 && alivePlayers.size() == 1) {
     winningPlayer = alivePlayers.get(0);
-    changeDisplay(Display.END);
+    
+    endTimestamp = millis();
+    gameEnd = true;
+  }
+}
+
+void checkWinning() {
+ if (gameEnd) {
+   if (millis() - endTimestamp >= endInterval) {
+      changeDisplay(Display.END);
+    }
   }
 }
 
