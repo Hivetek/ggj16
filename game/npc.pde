@@ -31,6 +31,7 @@ enum NPCState {
 
   int waitTime = 0;
   int maxRequestTime = 600;
+  int aggroTimeout = 150;
 
   float requestChanceBase = 0.10; //15% for beer request
   float requestChanceAddition =  0.06; //6% higher chance per player
@@ -40,6 +41,8 @@ enum NPCState {
 
   float lookFreq = 0.0002+random(0.001);
   float lookSpeed = 0.006+random(0.008);
+
+  float maxTargetDist = height/2;
 
   Seat seat;
 
@@ -60,7 +63,7 @@ enum NPCState {
     if (type == 0) {
       speed = 2.0;
     } else {
-      speed = 4.0;
+      speed = 3.4;
     }
   }
 
@@ -72,7 +75,14 @@ enum NPCState {
         dir += (atan2(vy, vx)-dir)*0.15;
       }
 
-      //TODO: Go to either nearest door OR assigned seat, whichever is closer
+      for (Player p : players) {
+        if (p.targeted && p.active && !p.dead) {
+          state = NPCState.AGGRESSIVE;
+          waitTime = 0;
+          break;
+        }
+      }
+
       dx = seat.x - x;
       dy = seat.y - y;
       dist = sqrt(dx*dx + dy*dy);
@@ -96,6 +106,7 @@ enum NPCState {
       for (Player p : players) {
         if (p.targeted && p.active && !p.dead) {
           state = NPCState.AGGRESSIVE;
+          waitTime = 0;
           break;
         }
       }
@@ -112,7 +123,17 @@ enum NPCState {
       }
       break;
     case AGGRESSIVE:
-      dir += cos(2*PI*millis()*lookFreq*6.5)*lookSpeed*10;
+      waitTime++;
+      if (waitTime > aggroTimeout) {
+        state = NPCState.ENTERING;
+        for (Player p : players) {
+          if (p.targeted && p.active && !p.dead) {
+            p.targeted = false;
+          }
+        }
+        break;
+      }
+
       int ntargets = 0;
       for (Player p : players) {
         if (p.targeted && p.active && !p.dead) {
@@ -140,12 +161,15 @@ enum NPCState {
             }
           }
         }
-        if (targetDist > speed) {
-          vx = (dx/targetDist)*speed;
-          vy = (dy/targetDist)*speed;
-        } else {
-          vx = dx;
-          vy = dy;
+        if (targetDist < maxTargetDist) {
+          dir += cos(2*PI*millis()*lookFreq*6.5)*lookSpeed*10; //Add angry wobble!
+          if (targetDist > speed) {
+            vx = (dx/targetDist)*speed;
+            vy = (dy/targetDist)*speed;
+          } else {
+            vx = dx;
+            vy = dy;
+          }
         }
       }
 
@@ -214,7 +238,8 @@ enum NPCState {
         waitTime--;
       } else {
         waitTime = 0;
-        if (activeRequests == 0 && !carryingBeer) {
+        float rand = random(1.0);
+        if ((activeRequests == 0 || rand <= requestChanceBase + requestChanceAddition*activePlayers) && !carryingBeer) {
           state = NPCState.REQUESTING;
           activeRequests++;
           vx = 0;
@@ -323,6 +348,7 @@ enum NPCState {
             for (Player otherPlayer : players) {
               if (otherPlayer != p) {
                 otherPlayer.targeted = true;
+                p.targeted = false;
               }
             }
           } else {
@@ -423,12 +449,18 @@ enum NPCState {
       image(beerIconImage, -10, -14);
       resetMatrix();
     } else if (state == NPCState.AGGRESSIVE && target != null) {
-      fill(255);
-      textFont(talkFont);
-      drawText("9", x+28+random(4.0), y-50+random(4.0), random(0.08*PI), 0.90+random(0.2));
-      fill(red(target.playerColor), green(target.playerColor), blue(target.playerColor), 180);
-      textFont(comicFont);
-      drawText("!", x+28+random(6.0), y-60+random(6.0), random(0.15*PI), 0.90+random(0.2));
+      float dx = target.x - x;
+      float dy = target.y -y;
+      float dist = sqrt(dx*dx+dy*dy);
+      if (dist < maxTargetDist)
+      {
+        fill(255);
+        textFont(talkFont);
+        drawText("9", x+28+random(4.0), y-50+random(4.0), random(0.08*PI), 0.90+random(0.2));
+        fill(red(target.playerColor), green(target.playerColor), blue(target.playerColor), 180);
+        textFont(comicFont);
+        drawText("!", x+28+random(6.0), y-60+random(6.0), random(0.15*PI), 0.90+random(0.2));
+      }
     }
   }
 
