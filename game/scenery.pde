@@ -276,15 +276,12 @@ void initScenery() {
 
 
   // Guard seats
-  guardSeats.add(new Seat(800, 90));
-  guardSeats.add(new Seat(800, 625));
-  guardSeats.add(new Seat(480, 625));
-  guardSeats.add(new Seat(460, 90));
-  
-  guardSeats.add(new Seat(200, 625));
-  guardSeats.add(new Seat(1070, 625));
-  guardSeats.add(new Seat(200, 90));
-  guardSeats.add(new Seat(1070, 90));
+  guardSeats.add(new Seat(90, 435));
+  guardSeats.add(new Seat(715, 625));
+  guardSeats.add(new Seat(90, 290));
+  guardSeats.add(new Seat(570, 90));
+  guardSeats.add(new Seat(1185, 290));
+
 
 
   // Find doors for seats
