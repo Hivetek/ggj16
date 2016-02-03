@@ -356,17 +356,19 @@ enum NPCState {
           } else {
             bumpedTimestamp = millis();
             if (type == 1) {
-              if (p.targeted || state == NPCState.WAITING) {
-                if(!p.immune()) angry_guard_sound.play(0);
+              if (p.targeted && state == NPCState.AGGRESSIVE) {
+                if (!p.immune()) angry_guard_sound.play(0);
                 
+                state = NPCState.ENTERING;
+
                 p.drink();
                 p.targeted = false;
               }
             } else {
-              int r = round(random(1.0));
-              if(!p.immune()) angry_bro_sound[r].play(0);
-
-              p.drink();
+              /*int r = round(random(1.0));
+               if (!p.immune()) angry_bro_sound[r].play(0);
+               
+               p.drink();*/
             }
           }
 
@@ -516,6 +518,7 @@ enum NPCState {
         }
       } else {
         image(guardImage, -18+ox, -18+oy);
+        image(beerImage, -18, -18);
       }
       if (carryingBeer) {
         image(beerImage, -18, -18);
@@ -526,8 +529,6 @@ enum NPCState {
         noFill();
         stroke(255);
         ellipse(x, y, radius, radius);
-      }
-      if (DEBUG) {
         textFont(regularFont);
         stroke(255);
         fill(255);

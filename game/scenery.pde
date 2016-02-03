@@ -156,6 +156,8 @@ class BeerStation {
   float w = 95;
   float h = 40;
 
+  int beers = 6; 
+
   Obstacle assocObstacle;
 
   BeerStation(float x, float y) {
@@ -167,6 +169,19 @@ class BeerStation {
 
   void render() {
     image(beerstationImage, x-w/2, y-h/2-7);
+    float bx = x+67-w/2;
+    float by = y-h/2;
+    for (int i = 0; i < beers; i++) {
+      image(beerBigImage, bx, by);
+      bx += 13;
+      if (i == 0) {
+        bx -= 19;
+        by += 10;
+      } else if(i == 2){
+        bx -= 32;
+        by += 10;
+      }
+    }
   }
 
 

@@ -1,4 +1,4 @@
-class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+class Player { //<>// //<>//
   int id = -1;
 
   float animationSpeed = 0.07;
@@ -17,12 +17,12 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //
   //Drunkenness parameters
   float drunkOscillationFreq = 0.02; //Swerving oscillation frequency when drunk
   float drunkOscillationAmpl = 0.20; //Swerving oscillation amplitude when drunk
-  float drunkMoveDamp = 0.7; //Reduction of acceleration when drunk  //<>// //<>// //<>// //<>//
+  float drunkMoveDamp = 0.7; //Reduction of acceleration when drunk  //<>// //<>// //<>//
   float drunkFriction = 0.5; //Reduction of friction when drunk, 50%
   float drunkTurnDamp = 0.9; //90% reduction in turn acceleration when drunk
   float drunkTurnSpeed = 0.75; //Extra turnspeed when drunk... Adds 75% extra turnspeed
   int drunkDelay = 8; //Amount of input lag/delay when drunk, in frames 
-  float drunkReductionRate = 0.0002;//0.00025 
+  float drunkReductionRate = 0.00012;//0.00025 
 
   float radius = 12;
 
@@ -91,7 +91,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //
   void update() {
     if (!this.active) return;
 
-    if (bladder > 1.0) {
+    if (bladder >= 1.0) {
       if (!death_sound.isPlaying()) {
         death_sound.play(0);
       }
@@ -108,7 +108,7 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //
     }
 
     if (drunk > 0) {
-      drunk -= drunkReductionRate+drunk/900.0;
+      drunk -= drunkReductionRate+drunk/1500.0;
     }
 
     px = x;
@@ -202,6 +202,14 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //
           vx -= p.vx+(dx/dist)*100.0;
           vy -= p.vy+(dy/dist)*100.0;
 
+          if (p.carryingBeer && !this.carryingBeer) {
+            p.carryingBeer = false;
+            this.carryingBeer = true;
+          } else if (!p.carryingBeer && this.carryingBeer) {
+            p.carryingBeer = true;
+            this.carryingBeer = false;
+          }
+
           x += mx;
           y += my;
           p.x -= mx;
@@ -214,7 +222,10 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //
 
     for (BeerStation beerstation : beerstations) {
       if (beerstation.assocObstacle.intersects(x, y, radius)) {
-        carryingBeer = true;
+        if (beerstation.beers > 0 && !carryingBeer) {
+          carryingBeer = true;
+          beerstation.beers--;
+        }
       }
     }
 
@@ -261,12 +272,11 @@ class Player { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //
     if (!this.immune() && this.active && !this.dead) {
       player_drinking[id].play(0);
       this.drinkingTimestamp = millis();
-      if (this.drunk < 1.0) {
-        this.drunk += 0.20;
-      }
-      if (this.bladder < 1.0) {
-        this.bladder += 0.05;
-      }
+      this.drunk += 0.25;
+      this.drunk = min(this.drunk, 1.0);
+
+      this.bladder += 0.0833;
+      this.bladder = min(this.bladder, 1.0);
     }
   }
 

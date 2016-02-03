@@ -139,7 +139,7 @@ void showEnd() {
   
   pushStyle();
   
-  fill(0,0,0,128);
+  fill(0,0,0,196);
   rect(0,0,width,height);
   
   textAlign(CENTER);

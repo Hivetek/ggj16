@@ -20,7 +20,7 @@ PFont emojiFont;
 PFont introFont;
 PFont winFont; 
 
-PImage titleScreenImage, bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, bunny1dead, bunny2dead, bunny3dead, bunny4dead, beerImage, shoeImage, beerstationImage, beerIconImage, guardImage;  
+PImage titleScreenImage, bgImage, smallTableImage, bigTableImage, commanderTableImage, fratBroImage1, fratBroImage2, fratBroImage3, shadow, bunny1, bunny2, bunny3, bunny4, bunny1dead, bunny2dead, bunny3dead, bunny4dead, beerImage, shoeImage, beerstationImage, beerIconImage, guardImage, beerBigImage;  
 PImage[] smallTableImages = new PImage[3];
 
 Obstacle[] obstacles = new Obstacle[22];
@@ -84,9 +84,10 @@ void setup() {
   shadow = loadImage("data/images/shadow.png");
   beerImage = loadImage("data/images/big_beer_left.png");
   shoeImage = loadImage("data/images/shoe.png");
-  beerstationImage = loadImage("data/images/station.png");
+  beerstationImage = loadImage("data/images/station_nobeers.png");
   beerIconImage = loadImage("data/images/beer_icon.png");
   guardImage = loadImage("data/images/commander.png");
+  beerBigImage = loadImage("data/images/beer_12x13.png");
 
   textAlign(CENTER, CENTER);
   textFont(comicFont);
